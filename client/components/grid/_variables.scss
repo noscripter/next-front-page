@@ -1,0 +1,38 @@
+
+/// @link http://origami.ft.com/docs/syntax/scss/#silent-styles "Silent" styles in Origami's documentation
+$ng-grid-is-silent: true !default;
+
+// Grid settings
+
+/// Number of columns
+///
+/// @type Number (unitless)
+$nh-grid-columns: 12 !default;
+
+// maximum widths of a grid in each layout
+// above the largest one, the container stays fixed
+$nh-grid-layouts: (
+	XS: 520px,
+	S: 750px,
+	M: 980px,
+	L: 1210px,
+	XL: 1440px
+) !default;
+
+/// Column width as a fraction of the full width
+///
+/// @type Number (unitless)
+$nh-grid-column: 100 / 1440 !default;
+
+/// Gutter width as a fraction of the full width
+///
+/// @type Number (unitless
+$nh-grid-gutter: 20 / 1440 !default;
+
+// Derived useful variables
+
+$_nh-grid-layout-names: map-keys($nh-grid-layouts) !default;
+$_nh-grid-max-width: map-get($nh-grid-layouts, nth($_nh-grid-layout-names, -1));
+
+
+

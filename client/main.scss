@@ -1,6 +1,22 @@
-
 @import "colors";
 @import "o-colors/main";
 @import "next-type/main";
 @import "o-assets/main";
-@impotr "o-grid"
+@import "components/grid/main";
+
+html {
+	@include oColorsFor(page);
+	@include nTypeAlpha(3);
+
+	// Prevent navigation menus from creating
+	// extra space on sides of the page
+	overflow-x: hidden;
+}
+
+body {
+	margin: 0;
+
+	@include nhGridGenerate();
+}
+
+

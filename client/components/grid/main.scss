@@ -1,0 +1,151 @@
+@import "sass-mq/mq";
+@import "variables";
+
+// This mostly follows o-grid, except the columns and gutters
+// are all flexible and derived from the total width of the grid
+// which changes all the width calculations.
+//
+// prefixed nh- for "next homepage" for now.
+
+// TODO support dynamically adding layouts
+
+@mixin nhGridRespondTo($from: false, $until: false) {
+	@include mq(
+		$from: $from,
+		$until: $until,
+		$breakpoints: $nh-grid-layouts
+	) {
+		@content;
+	}
+}
+
+@mixin nhGridColumn($span: null, $total-cols: $nh-grid-columns) {
+	margin-left: percentage($nh-grid-gutter / 2);
+	margin-right: percentage($nh-grid-gutter / 2);
+	box-sizing: border-box;
+	min-height: 1px;
+	float: left;
+
+	@if $span {
+		@include nhGridColspan($span, $total-cols)
+	}
+}
+
+/// % width of an item in the grid
+///
+/// Result is always an integer - number of columns to span
+/// this function is a helper to make fractional spans decoupled
+/// from the number of columns
+///
+/// @param {Number}
+/// @returns {Number} width of the element in percents
+@function nhGridColspan($span, $total-cols: $nh-grid-columns) {
+	// TODO named spans
+
+	@if $span < 1 {
+		// A fraction (1/2) or a number (0.5) is supplied:
+		// converting it into a percentage
+		$span: $span * $total-cols;
+		@if round($span) != $span {
+			@error "Colspan $span doesn't result in an integer column number (= $cols).";
+		}
+	}
+
+	// final width of the grid item
+	@return percentage($span * $nh-grid-column + ($span - 1) * $nh-grid-gutter)
+}
+
+/// Colspan mixin
+///
+/// @example scss
+///   el { @include oGridColspan(4); }
+///   el { @include oGridColspan(1/2); }
+///   el { @include oGridColspan((default: 12, M: 8, L: hide)); }
+@mixin nhGridColspan($span, $total-cols) {
+	@if type-of($span) == number {
+		width: nhGridColspan($span);
+	}
+
+	@if type-of($span) == map {
+		// iterate through the map
+		@each $layout-name, $layout-span in $span {
+			@if $layout-name == 'default' {
+				// no media query
+				display: block;
+				width: nhGridColspan($layout-span);
+			} @else {
+				// media query specific
+				@include nhGridRespondTo($layout-name) {
+					display: block;
+					width: nhGridColspan($layout-span);
+				}
+			}
+		}
+	}
+}
+
+@mixin nhGridRow() {
+	clear: both;
+
+	// negative margin to swallow the outer column's margins
+	@include nhGridRespondTo($from: XS) {
+		margin-left: percentage(-$nh-grid-gutter / 2);
+		margin-right: percentage(-$nh-grid-gutter / 2);
+	}
+}
+
+@mixin nhGridContainer() {
+	box-sizing: border-box;
+	margin-right: auto;
+	margin-left: auto;
+	padding-left: percentage($nh-grid-gutter / 2);
+	padding-right: percentage($nh-grid-gutter / 2);
+
+	// Clearfix
+	zoom: 1;
+
+	&:before,
+	&:after {
+		content: ' ';
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+
+	@include nhGridRespondTo($from: XS, $until: XL) {
+		width: 100%;
+	}
+	@include nhGridRespondTo($from: XL) {
+		width: $_nh-grid-max-width;
+	}
+}
+
+// TODO pushes, pulls and skips
+
+@mixin nhGridGenerate {
+	.nh-grid-container {
+		@include nhGridContainer();
+	}
+
+	.nh-grid-row {
+		@include nhGridRow();
+	}
+
+	@for $span from 1 through $nh-grid-columns {
+		[data-nh-grid-colspan~="#{$span}"] {
+			@include nhGridColumn($span)
+		}
+	}
+
+	@each $layout-name in $_nh-grid-layout-names {
+		@include nhGridRespondTo($layout-name) {
+			@for $span from 1 through $nh-grid-columns {
+				[data-nh-grid-colspan~="#{$layout-name}#{$span}"] {
+					@include nhGridColumn($span);
+				}
+			}
+		}
+	}
+}
+
