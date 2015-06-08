@@ -10,29 +10,30 @@
 // TODO support dynamically adding layouts
 
 @mixin nhGridRespondTo($from: false, $until: false) {
-	@include mq(
-		$from: $from,
-		$until: $until,
-		$breakpoints: $nh-grid-layouts
-	) {
+	@include mq($from: $from, $until: $until, $breakpoints: $nh-grid-layouts) {
 		@content;
 	}
 }
 
 @mixin nhGridColumn($span: null, $total-cols: $nh-grid-columns) {
-	$subgrid-ratio: $nh-grid-columns / $total-cols;
-
 	display: block;
 	width: 100%;
 	box-sizing: border-box;
 	float: left;
-	margin-left: percentage($subgrid-ratio * $nh-grid-gutter / 2);
-	margin-right: percentage($subgrid-ratio * $nh-grid-gutter / 2);
 	min-height: 1px;
 
+	@include nhGridColmargins($total-cols);
+
 	@if $span {
-		@include nhGridColspan($span, $total-cols)
+		@include nhGridColspan($span, $total-cols);
 	}
+}
+
+@mixin nhGridColmargins($total-cols: $nh-grid-columns) {
+	$subgrid-ratio: $nh-grid-columns / $total-cols;
+
+	margin-left: percentage($subgrid-ratio * $nh-grid-gutter / 2);
+	margin-right: percentage($subgrid-ratio * $nh-grid-gutter / 2);
 }
 
 /// % width of an item in the grid
@@ -44,28 +45,36 @@
 /// @param {Number}
 /// @returns {Number} width of the element in percents
 @function nhGridColspan($span, $total-cols: $nh-grid-columns) {
-	// TODO named spans
+	@return nhGridSpan($span, $total-cols, -1);
+}
 
+@function nhGridSkip($span, $total-cols: $nh-grid-columns) {
+	@return nhGridSpan($span, $total-cols, 0);
+}
+
+// private
+@function nhGridSpan($span, $total-cols, $gutters: -1) {
 	@if $span < 1 {
 		// A fraction (1/2) or a number (0.5) is supplied:
 		// converting it into a percentage
-		$span: $span * $total-cols;
-		@if round($span) != $span {
-			@error "Colspan $span doesn't result in an integer column number (= $cols).";
+		@if round($span * $total-cols) != ($span * $total-cols) {
+			@error "Colspan #{$span} doesn't result in an integer column number (= #{$span * $total-cols}).";
 		}
+
+		$span: $span * $total-cols;
 	}
 
 	// final width of the grid item
 	$subgrid-ratio: $nh-grid-columns / $total-cols;
-	@return percentage($subgrid-ratio * ($span * $nh-grid-column + ($span - 1) * $nh-grid-gutter))
+	@return percentage($subgrid-ratio * ($span * $nh-grid-column + ($span + $gutters) * $nh-grid-gutter))
 }
 
 /// Colspan mixin
 ///
 /// @example scss
-///   el { @include oGridColspan(4); }
-///   el { @include oGridColspan(1/2); }
-///   el { @include oGridColspan((default: 12, M: 8, L: hide)); }
+///   el { @include nhGridColspan(4); }
+///   el { @include nhGridColspan(1/2); }
+///   el { @include nhGridColspan((default: 12, M: 8, L: hide)); }
 @mixin nhGridColspan($span, $total-cols) {
 	@if type-of($span) == number {
 		width: nhGridColspan($span, $total-cols);

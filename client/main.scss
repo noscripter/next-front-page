@@ -24,6 +24,29 @@ body {
 
 .main-content {
 	@include nhGridColumn($span: (default: 12, L: 9));
+
+	.flexipod {
+		&.five-loud {
+			// TODO think about sinking the breakpoints into nhFlexipod
+			@include nhFlexipod(map-get($layout-five-loud, default));
+
+			@include nhGridRespondTo(XS) {
+				@include nhFlexipod(map-get($layout-five-loud, XS));
+			}
+
+			@include nhGridRespondTo(S) {
+				@include nhFlexipod(map-get($layout-five-loud, S), 12);
+			}
+
+			@include nhGridRespondTo(L) {
+				@include nhFlexipod(map-get($layout-five-loud, S), 9);
+			}
+		}
+	}
+
+	.cards > article {
+		@include nhStoryCard();
+	}
 }
 
 body .sidebar {
@@ -36,8 +59,4 @@ body .sidebar {
 
 .cards > article {
 	@include nhStoryCard();
-}
-
-.flexipod .five-loud {
-	@include nhFlexipod(five-loud);
 }
