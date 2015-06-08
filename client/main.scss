@@ -3,6 +3,9 @@
 @import "next-type/main";
 @import "o-assets/main";
 @import "components/grid/main";
+@import "components/story-card/main";
+@import "components/flexipod/main";
+@import "flexipod-layouts";
 
 html {
 	@include oColorsFor(page);
@@ -21,16 +24,6 @@ body {
 
 .main-content {
 	@include nhGridColumn($span: (default: 12, L: 9));
-
-	.flexipod {
-		// XS has the default 12 columns
-		@include nhGridRow(12);
-
-		@include nhGridRespondTo($from: L) {
-			@include nhGridRow(9);
-			@include nhGridGenerate(9);
-		}
-	}
 }
 
 body .sidebar {
@@ -39,4 +32,12 @@ body .sidebar {
 	@include nhGridRespondTo($from: L) {
 		display: block;
 	}
+}
+
+.cards > article {
+	@include nhStoryCard();
+}
+
+.flexipod .five-loud {
+	@include nhFlexipod(five-loud);
 }

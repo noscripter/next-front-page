@@ -1,0 +1,16 @@
+
+// layouts storage, we don't provide any defaults
+$nh-flexipod-layouts: ();
+
+// based on nh-grid
+$nh-flexipod-row: 150 / 1440 !default;
+$nh-flexipod-gutter: 20 / 1440 !default;
+
+// type-name: (width, height)
+$nh-flexipod-cards: (
+	A: (6, 5),
+	B: (3, 4),
+	C: (6, 2),
+	D: (6, 1),
+	E: (3, 1)
+);

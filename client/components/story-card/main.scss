@@ -1,0 +1,10 @@
+
+@mixin nhStoryCard() {
+	p {
+		background-color: #ddd;
+		width: 100%;
+		height: 100%;
+		font-size: 4em;
+		color: #aaa;
+	}
+}

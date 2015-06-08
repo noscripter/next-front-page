@@ -23,6 +23,7 @@
 	$subgrid-ratio: $nh-grid-columns / $total-cols;
 
 	display: block;
+	width: 100%;
 	box-sizing: border-box;
 	float: left;
 	margin-left: percentage($subgrid-ratio * $nh-grid-gutter / 2);
@@ -87,29 +88,29 @@
 }
 
 @mixin nhGridRow($total-cols: $nh-grid-columns) {
-	clear: both;
-
 	// negative margin to swallow the outer column's margins
 	$subgrid-ratio: $nh-grid-columns / $total-cols;
 
 	margin-left: percentage($subgrid-ratio * -$nh-grid-gutter / 2);
 	margin-right: percentage($subgrid-ratio * -$nh-grid-gutter / 2);
+
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
 }
 
 @mixin nhGridContainer() {
 	box-sizing: border-box;
 	margin-right: auto;
 	margin-left: auto;
+	padding-left: percentage($nh-grid-gutter / 2);
+	padding-right: percentage($nh-grid-gutter / 2);
 
-	// Clearfix
-	zoom: 1;
-
-	&:before,
 	&:after {
-		content: ' ';
+		content: "";
 		display: table;
-	}
-	&:after {
 		clear: both;
 	}
 
