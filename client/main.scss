@@ -19,4 +19,24 @@ body {
 	@include nhGridGenerate();
 }
 
+.main-content {
+	@include nhGridColumn($span: (default: 12, L: 9));
 
+	.flexipod {
+		// XS has the default 12 columns
+		@include nhGridRow(12);
+
+		@include nhGridRespondTo($from: L) {
+			@include nhGridRow(9);
+			@include nhGridGenerate(9);
+		}
+	}
+}
+
+body .sidebar {
+	display: none;
+
+	@include nhGridRespondTo($from: L) {
+		display: block;
+	}
+}

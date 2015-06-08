@@ -20,11 +20,14 @@
 }
 
 @mixin nhGridColumn($span: null, $total-cols: $nh-grid-columns) {
-	margin-left: percentage($nh-grid-gutter / 2);
-	margin-right: percentage($nh-grid-gutter / 2);
+	$subgrid-ratio: $nh-grid-columns / $total-cols;
+
+	display: block;
 	box-sizing: border-box;
-	min-height: 1px;
 	float: left;
+	margin-left: percentage($subgrid-ratio * $nh-grid-gutter / 2);
+	margin-right: percentage($subgrid-ratio * $nh-grid-gutter / 2);
+	min-height: 1px;
 
 	@if $span {
 		@include nhGridColspan($span, $total-cols)
@@ -52,7 +55,8 @@
 	}
 
 	// final width of the grid item
-	@return percentage($span * $nh-grid-column + ($span - 1) * $nh-grid-gutter)
+	$subgrid-ratio: $nh-grid-columns / $total-cols;
+	@return percentage($subgrid-ratio * ($span * $nh-grid-column + ($span - 1) * $nh-grid-gutter))
 }
 
 /// Colspan mixin
@@ -63,7 +67,7 @@
 ///   el { @include oGridColspan((default: 12, M: 8, L: hide)); }
 @mixin nhGridColspan($span, $total-cols) {
 	@if type-of($span) == number {
-		width: nhGridColspan($span);
+		width: nhGridColspan($span, $total-cols);
 	}
 
 	@if type-of($span) == map {
@@ -71,35 +75,31 @@
 		@each $layout-name, $layout-span in $span {
 			@if $layout-name == 'default' {
 				// no media query
-				display: block;
-				width: nhGridColspan($layout-span);
+				width: nhGridColspan($layout-span, $total-cols);
 			} @else {
 				// media query specific
 				@include nhGridRespondTo($layout-name) {
-					display: block;
-					width: nhGridColspan($layout-span);
+					width: nhGridColspan($layout-span, $total-cols);
 				}
 			}
 		}
 	}
 }
 
-@mixin nhGridRow() {
+@mixin nhGridRow($total-cols: $nh-grid-columns) {
 	clear: both;
 
 	// negative margin to swallow the outer column's margins
-	@include nhGridRespondTo($from: XS) {
-		margin-left: percentage(-$nh-grid-gutter / 2);
-		margin-right: percentage(-$nh-grid-gutter / 2);
-	}
+	$subgrid-ratio: $nh-grid-columns / $total-cols;
+
+	margin-left: percentage($subgrid-ratio * -$nh-grid-gutter / 2);
+	margin-right: percentage($subgrid-ratio * -$nh-grid-gutter / 2);
 }
 
 @mixin nhGridContainer() {
 	box-sizing: border-box;
 	margin-right: auto;
 	margin-left: auto;
-	padding-left: percentage($nh-grid-gutter / 2);
-	padding-right: percentage($nh-grid-gutter / 2);
 
 	// Clearfix
 	zoom: 1;
@@ -123,26 +123,30 @@
 
 // TODO pushes, pulls and skips
 
-@mixin nhGridGenerate {
+@mixin nhGridGenerate($total-cols: $nh-grid-columns) {
 	.nh-grid-container {
 		@include nhGridContainer();
 	}
 
 	.nh-grid-row {
-		@include nhGridRow();
+		@include nhGridRow($total-cols);
 	}
 
-	@for $span from 1 through $nh-grid-columns {
+	[data-nh-grid-colspan] {
+		@include nhGridColumn($total-cols: $total-cols);
+	}
+
+	@for $span from 1 through $total-cols {
 		[data-nh-grid-colspan~="#{$span}"] {
-			@include nhGridColumn($span)
+			@include nhGridColspan($span, $total-cols);
 		}
 	}
 
 	@each $layout-name in $_nh-grid-layout-names {
 		@include nhGridRespondTo($layout-name) {
-			@for $span from 1 through $nh-grid-columns {
+			@for $span from 1 through $total-cols {
 				[data-nh-grid-colspan~="#{$layout-name}#{$span}"] {
-					@include nhGridColumn($span);
+					@include nhGridColspan($span, $total-cols);
 				}
 			}
 		}
