@@ -46,7 +46,7 @@
 	$height: 0;
 
 	@if type-of($layout-spec) == list {
-		@for $i from 1 to length($layout-spec) {
+		@for $i from 1 through length($layout-spec) {
 			$card-height: nhFlexipodCardTotal(nth($layout-spec, $i));
 			@if $card-height > $height {
 				$height: $card-height;
