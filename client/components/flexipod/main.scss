@@ -1,11 +1,16 @@
 @import "variables";
+@import "next-type/main";
 
 @import "../grid/main";
 
 @mixin nhFlexipod($layout-spec, $total-cols: $nh-grid-columns) {
 	@include nhGridRow($total-cols);
 
-	.cards {
+	h1 {
+		@include nhGridColmargins($total-cols);
+	}
+
+	.flexipod__cards {
 		position: relative;
 		@include nhFlexipodHeight($layout-spec);
 

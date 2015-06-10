@@ -25,6 +25,15 @@ body {
 .main-content {
 	@include nhGridColumn($span: (default: 12, M: 9));
 
+	.flexipod {
+		h1 {
+			@include nTypeAlpha(1);
+			color: map-get($o-colors-palette, 'warm-4');
+			border: solid map-get($o-colors-palette, 'warm-3');
+			border-width: 0 0 1px 0;
+		}
+	}
+
 	.flexipod--lead-today {
 		// TODO think about sinking the breakpoints into nhFlexipod
 		@include nhFlexipod(map-get($layout-lead-today, default));
@@ -76,7 +85,7 @@ body {
 		}
 	}
 
-	.cards > article {
+	.flexipod__cards > article {
 		@include nhStoryCard();
 	}
 }
