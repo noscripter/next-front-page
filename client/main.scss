@@ -25,56 +25,54 @@ body {
 .main-content {
 	@include nhGridColumn($span: (default: 12, M: 9));
 
-	.flexipod {
-		&.lead-today {
-			// TODO think about sinking the breakpoints into nhFlexipod
-			@include nhFlexipod(map-get($layout-lead-today, default));
+	.flexipod--lead-today {
+		// TODO think about sinking the breakpoints into nhFlexipod
+		@include nhFlexipod(map-get($layout-lead-today, default));
 
-			@include nhGridRespondTo(XS) {
-				@include nhFlexipod(map-get($layout-lead-today, XS));
-			}
-
-			@include nhGridRespondTo(S) {
-				@include nhFlexipod(map-get($layout-lead-today, S), 12);
-			}
-
-			@include nhGridRespondTo(M) {
-				@include nhFlexipod(map-get($layout-lead-today, S), 9);
-			}
+		@include nhGridRespondTo(XS) {
+			@include nhFlexipod(map-get($layout-lead-today, XS));
 		}
 
-		&.five-loud {
-			// TODO think about sinking the breakpoints into nhFlexipod
-			@include nhFlexipod(map-get($layout-five-loud, default));
-
-			@include nhGridRespondTo(XS) {
-				@include nhFlexipod(map-get($layout-five-loud, XS));
-			}
-
-			@include nhGridRespondTo(S) {
-				@include nhFlexipod(map-get($layout-five-loud, S), 12);
-			}
-
-			@include nhGridRespondTo(M) {
-				@include nhFlexipod(map-get($layout-five-loud, S), 9);
-			}
+		@include nhGridRespondTo(S) {
+			@include nhFlexipod(map-get($layout-lead-today, S), 12);
 		}
 
-		&.eight-medium {
-			// TODO think about sinking the breakpoints into nhFlexipod
-			@include nhFlexipod(map-get($layout-eight-medium, default));
+		@include nhGridRespondTo(M) {
+			@include nhFlexipod(map-get($layout-lead-today, S), 9);
+		}
+	}
 
-			@include nhGridRespondTo(XS) {
-				@include nhFlexipod(map-get($layout-eight-medium, XS));
-			}
+	.flexipod--five-loud {
+		// TODO think about sinking the breakpoints into nhFlexipod
+		@include nhFlexipod(map-get($layout-five-loud, default));
 
-			@include nhGridRespondTo(S) {
-				@include nhFlexipod(map-get($layout-eight-medium, S), 12);
-			}
+		@include nhGridRespondTo(XS) {
+			@include nhFlexipod(map-get($layout-five-loud, XS));
+		}
 
-			@include nhGridRespondTo(M) {
-				@include nhFlexipod(map-get($layout-eight-medium, S), 9);
-			}
+		@include nhGridRespondTo(S) {
+			@include nhFlexipod(map-get($layout-five-loud, S), 12);
+		}
+
+		@include nhGridRespondTo(M) {
+			@include nhFlexipod(map-get($layout-five-loud, S), 9);
+		}
+	}
+
+	.flexipod--eight-medium {
+		// TODO think about sinking the breakpoints into nhFlexipod
+		@include nhFlexipod(map-get($layout-eight-medium, default));
+
+		@include nhGridRespondTo(XS) {
+			@include nhFlexipod(map-get($layout-eight-medium, XS));
+		}
+
+		@include nhGridRespondTo(S) {
+			@include nhFlexipod(map-get($layout-eight-medium, S), 12);
+		}
+
+		@include nhGridRespondTo(M) {
+			@include nhFlexipod(map-get($layout-eight-medium, S), 9);
 		}
 	}
 
