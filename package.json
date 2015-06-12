@@ -4,7 +4,10 @@
   "private": "true",
   "dependencies": {
     "express-errors-handler": "^1.0.0",
-    "ft-next-express": "^10.0.0"
+    "ft-api-client": "^4.0.1",
+    "ft-next-express": "^10.0.0",
+    "ft-poller": "0.0.4",
+    "next-ft-api-client": "^3.6.1"
   },
   "scripts": {
     "test": "make test"
