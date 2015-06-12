@@ -3,7 +3,13 @@
 var express = require('ft-next-express');
 var frontPage = require('./routes/front-page');
 
-var app = express();
+var app = express({
+	helpers: {
+		dump: function(it) {
+			return JSON.stringify(it);
+		}
+	}
+});
 
 app.get('/__gtg', function(req, res) {
 	res.status(200).end();
