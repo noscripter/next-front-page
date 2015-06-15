@@ -86,6 +86,7 @@ body {
 
 	.flexipod__cards > article {
 		@include nhStoryCard();
+		background-color: oColorsGetPaletteColor('warm-1');
 	}
 }
 
@@ -95,8 +96,4 @@ body .sidebar {
 	@include nhGridRespondTo($from: M) {
 		display: block;
 	}
-}
-
-.cards > article {
-	@include nhStoryCard();
 }
