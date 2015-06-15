@@ -23,5 +23,8 @@ ContentApi.pollList(uuids.ukTop, false, function(page) {
 });
 
 module.exports = function(req, res, next) {
-	var articles = res.locals.flags.elasticSearchItemGet.isSwitchedOn ? content.elastic : content.capi1;
+	var articles = (res.locals.flags.elasticSearchItemGet.isSwitchedOn ? content.elastic : content.capi1);
+	if(articles.items && articles.items.slice) {
+		articles.items = articles.items.slice(0, 10);
+	}
 	res.render('uk', { layout: 'vanilla', articles: articles });

@@ -2,41 +2,16 @@
 	<div class="nh-grid-row">
 		<section class="main-content">
 			<div class="flexipod flexipod--lead-today">
-				<h1>Lead today flexipod</h1>
-				<p>
-					{{dump articles}}
-				</p>
+				<h1>{{articles.title}}</h1>
 				<div class="flexipod__cards">
-					<article>
-						<p><span>1</span></p>
-					</article>
-					<article>
-						<p><span>2</span></p>
-					</article>
-					<article>
-						<p><span>3</span></p>
-					</article>
-					<article>
-						<p><span>4</span></p>
-					</article>
-					<article>
-						<p><span>5</span></p>
-					</article>
-					<article>
-						<p><span>6</span></p>
-					</article>
-					<article>
-						<p><span>7</span></p>
-					</article>
-					<article>
-						<p><span>8</span></p>
-					</article>
-					<article>
-						<p><span>9</span></p>
-					</article>
-					<article>
-						<p><span>10</span></p>
-					</article>
+					{{#each articles.items}}
+						<article>
+							<h2>{{this.item.title.title}}</h2>
+							<div>
+								{{{this.item.body.body}}}
+							</div>
+						</article>
+					{{/each}}
 				</div>
 			</div>
 			<div class="flexipod flexipod--five-loud">
