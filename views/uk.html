@@ -65,9 +65,18 @@
 			</div>
 		</section>
 		<aside class="sidebar" data-nh-grid-colspan="S4 M3">
-			<p style="height: 600px; background-color: #ddd">Sidebar 1</p>
-			<p style="height: 400px; background-color: #ddd">Sidebar 2</p>
-			<p style="height: 400px; background-color: #ddd">Sidebar 3</p>
+			<section>
+				<h1>fastFT</h1>
+				{{#each fastFt.items}}
+					<article>
+						<h2>{{this.title}}</h2>
+						<p>{{this.publishedDate}}</p>
+						<div>
+							{{this.bodyXML}}
+						</div>
+					</article>
+				{{/each}}
+			</section>
 		</aside>
 	</div>
 </div>
