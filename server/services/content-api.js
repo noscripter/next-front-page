@@ -11,7 +11,7 @@ var uuid = function(thingUri) {
 }
 
 var fetchArticles = function(pageId, useElasticSearch) {
-	return ApiClient.lists({ uuid: pageId,})
+	return ApiClient.lists({ uuid: pageId })
 	.then(function(list) {
 		var title = list.title;
 		var ids = list.items.map(function(it) { return uuid(it.id) });
@@ -28,8 +28,25 @@ var fetchArticles = function(pageId, useElasticSearch) {
 	});
 }
 
+var fetchFastFt = function(conceptId, useElasticSearch) {
+	return ApiClient.contentAnnotatedBy({ uuid: conceptId, useElasticSearch: useElasticSearch })
+	.then(function(content) {
+		var ids = content;
+
+		return ApiClient.content({
+			uuid: ids,
+			useElasticSearch: useElasticSearch
+		}).then(function(articles) {
+			return {
+				title: "fastFT",
+				items: articles
+			}
+		})
+	})
+}
+
 var logFetched = function(list, useElasticSearch) {
-	var source = useElasticSearch ? 'elasticsearch' : 'CAPIv1';
+	var source = useElasticSearch ? 'elasticsearch' : 'CAPI';
 	console.log('Fetched list', list.title, 'with', list.items.length, 'articles from', source);
 
 	return list;
@@ -41,14 +58,30 @@ var pollList = function(pageId, useElasticSearch, updateContent) {
 		.then(function(it) { return logFetched(it, useElasticSearch); })
 		.then(updateContent)
 		.catch(function(err) {
-			console.log("Error fetching from", (useElasticSearch ? "elasticsearch" : "CAPIv1"), err);
+			console.log("Error fetching from", (useElasticSearch ? "elasticsearch" : "CAPI"), err);
 		});
 	};
 
 	poller();
-	return setInterval(poller, 5*60*1000);
+	return setInterval(poller, 1*60*1000);
+}
+
+var pollFastFt = function(fastFtId, useElasticSearch, updateContent) {
+	var poller = function(data) {
+		fetchFastFt(fastFtId, useElasticSearch)
+		.then(function(it) { return logFetched(it, useElasticSearch); })
+
+		.then(updateContent)
+		.catch(function(err) {
+			console.log("Error fetching fastFT", err);
+		});
+	}
+
+	poller();
+	return setInterval(poller, 30*1000);
 }
 
 module.exports = {
-	pollList: pollList
+	pollList: pollList,
+	pollFastFt: pollFastFt
 }
