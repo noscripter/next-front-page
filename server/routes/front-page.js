@@ -1,8 +1,6 @@
-'use strict';
+import {pollContent} from '../services/content-api';
 
-var ContentApi = require('../services/content-api');
-
-var pollConfig = {
+const pollConfig = {
 	ukTop: {
 		type: 'page',
 		uuid: '520ddb76-e43d-11e4-9e89-00144feab7de', // list id
@@ -39,16 +37,21 @@ var content = {
 
 // Poll both APIs so that we can feature flag between them
 
-Object.keys(pollConfig).forEach(function(it) {
+Object.keys(pollConfig)
+.forEach(it => {
 	if(pollConfig[it].useElasticSearch) {
-		ContentApi.pollContent(pollConfig[it], true, function(page) {
-			content.elastic[it] = page;
-		});
+		pollContent(
+			pollConfig[it],
+			true,
+			page => content.elastic[it] = page
+		);
 	}
 
-	ContentApi.pollContent(pollConfig[it], false, function(page) {
-		content.capi1[it] = page;
-	});
+	pollContent(
+		pollConfig[it],
+		false,
+		page => content.capi1[it] = page
+	);
 });
 
 module.exports = function(req, res) {
