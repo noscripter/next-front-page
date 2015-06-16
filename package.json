@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": "true",
   "dependencies": {
+    "babel": "^5.5.8",
     "express-errors-handler": "^1.0.0",
     "ft-api-client": "^4.0.1",
     "ft-next-express": "^10.0.0",

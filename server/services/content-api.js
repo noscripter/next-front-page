@@ -1,25 +1,23 @@
-'use strict';
+import errorHandler from 'express-errors-handler';
+import ApiClient from 'next-ft-api-client';
 
-var errorHandler = require('express-errors-handler');
-var ApiClient = require('next-ft-api-client');
+const ftErrorHandler = (process.env.NODE_ENV === 'production') ? errorHandler.captureMessage : console.log;
 
-var ftErrorHandler = (process.env.NODE_ENV === 'production') ? errorHandler.captureMessage : console.log;
-
-var uuid = function(thingUri) {
+function uuid(thingUri) {
 	return thingUri.replace('http://api.ft.com/thing/', '');
-};
+}
 
-var fetchContent = {
-	page: function(pageId, useElasticSearch) {
+const fetchContent = {
+	page(pageId, useElasticSearch) {
 		return ApiClient.lists({ uuid: pageId })
-		.then(function(list) {
+		.then(list => {
 			var title = list.title;
-			var ids = list.items.map(function(it) { return uuid(it.id); });
+			var ids = list.items.map(it => uuid(it.id));
 
 			return ApiClient.contentLegacy({
 				uuid: ids,
 				useElasticSearch: useElasticSearch
-			}).then(function(articles) {
+			}).then(articles => {
 				return {
 					title: title,
 					items: articles
@@ -28,42 +26,35 @@ var fetchContent = {
 		});
 	},
 
-	concept: function(conceptId, useElasticSearch) {
+	concept(conceptId, useElasticSearch) {
 		return ApiClient.contentAnnotatedBy({ uuid: conceptId, useElasticSearch: useElasticSearch })
-		.then(function(content) {
-			var ids = content;
-
+		.then(ids => {
 			return ApiClient.content({
 				uuid: ids,
 				useElasticSearch: useElasticSearch
-			}).then(function(articles) {
+			}).then(articles => {
 				return {
-					title: "fastFT",
 					items: articles
 				};
 			});
 		});
 	}
-
 };
 
-var logFetched = function(list, useElasticSearch) {
-	var source = useElasticSearch ? 'elasticsearch' : 'CAPI';
+function logFetched(list, useElasticSearch) {
+	const source = useElasticSearch ? 'elasticsearch' : 'CAPI';
 	console.log('Fetched list', list.title, 'with', list.items.length, 'articles from', source);
 
 	return list;
-};
+}
 
-var pollContent = function(opt, useElasticSearch, updateContent) {
-	var poller = function(/*data*/) {
-
+function pollContent(opt, useElasticSearch, updateContent) {
+	const poller = (/*data*/) => {
 		fetchContent[opt.type](opt.uuid, useElasticSearch)
-		.then(function(it) {
-			return logFetched(it, useElasticSearch);
-		})
+		.then(it => logFetched(it, useElasticSearch))
 		.then(updateContent)
-		.catch(function(err) {
-			console.log("Error fetching from", (useElasticSearch ? "elasticsearch" : "CAPI"), err);
+		.catch(err => {
+			console.log('Error fetching from', (useElasticSearch ? 'elasticsearch' : 'CAPI'), err);
 		});
 	};
 
@@ -72,8 +63,8 @@ var pollContent = function(opt, useElasticSearch, updateContent) {
 		poller,
 		opt.interval
 	);
-};
+}
 
-module.exports = {
+export default {
 	pollContent: pollContent
 };
