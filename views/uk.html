@@ -10,6 +10,9 @@
 							<div>
 								{{{this.item.body.body}}}
 							</div>
+							<time data-o-component="o-date" class="o-date" datetime="{{#dateformat}}{{publishedDate}}{{/dateformat}}">
+								{{#dateformat "dddd, d mmmm, yyyy"}}{{publishedDate}}{{/dateformat}}
+							</time>
 						</article>
 					{{/each}}
 				</div>
@@ -69,10 +72,12 @@
 				<h1>fastFT</h1>
 				{{#each fastFt.items}}
 					<article>
-						<h2>{{this.title}}</h2>
-						<p>{{this.publishedDate}}</p>
+						<h2>{{title}}</h2>
+						<time data-o-component="o-date" class="o-date" datetime="{{#dateformat}}{{publishedDate}}{{/dateformat}}">
+							{{#dateformat "dddd, d mmmm, yyyy"}}{{publishedDate}}{{/dateformat}}
+						</time>
 						<div>
-							{{this.bodyXML}}
+							{{{summary}}}
 						</div>
 					</article>
 				{{/each}}

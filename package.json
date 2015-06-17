@@ -4,6 +4,7 @@
   "private": "true",
   "dependencies": {
     "babel": "^5.5.8",
+    "cheerio": "^0.19.0",
     "express-errors-handler": "^1.0.0",
     "ft-api-client": "^4.0.1",
     "ft-next-express": "^10.0.0",
