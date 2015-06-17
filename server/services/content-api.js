@@ -1,5 +1,6 @@
 import errorHandler from 'express-errors-handler';
 import ApiClient from 'next-ft-api-client';
+import cheerio from 'cheerio';
 
 const ftErrorHandler = (process.env.NODE_ENV === 'production') ? errorHandler.captureMessage : console.log;
 
@@ -34,7 +35,10 @@ const fetchContent = {
 				useElasticSearch: useElasticSearch
 			}).then(articles => {
 				return {
-					items: articles
+					items: articles.map(it => {
+						it.summary = cheerio.load(it.bodyXML)('body p:first-child').html();
+						return it;
+					})
 				};
 			});
 		});
