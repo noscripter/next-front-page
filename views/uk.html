@@ -2,17 +2,23 @@
 	<div class="nh-grid-row">
 		<section class="main-content">
 			<div class="flexipod flexipod--lead-today">
-				<h1>{{articles.title}}</h1>
 				<div class="flexipod__cards">
 					{{#each articles.items}}
-						<article>
-							<h2>{{this.item.title.title}}</h2>
-							<div>
-								{{{this.item.body.body}}}
+						<article class='story-card'>
+							<img class='story-card__image' src="{{item.images.4.url}}" />
+							<div class="story-card__content">
+								<div class="story-card__taxon">News</div>
+								<h2 class="story-card__title">{{item.title.title}}</h2>
+								<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
 							</div>
-							<time data-o-component="o-date" class="o-date" datetime="{{#dateformat}}{{publishedDate}}{{/dateformat}}">
-								{{#dateformat "dddd, d mmmm, yyyy"}}{{publishedDate}}{{/dateformat}}
-							</time>
+							<div class='story-card__footer'>
+								<time
+									data-o-component="o-date"
+									class="o-date"
+									datetime="{{#dateformat}}{{publishedDate}}{{/dateformat}}">
+										{{#dateformat "dddd, d mmmm, yyyy"}}{{publishedDate}}{{/dateformat}}
+								</time>
+							<div>
 						</article>
 					{{/each}}
 				</div>
@@ -69,16 +75,17 @@
 		</section>
 		<aside class="sidebar" data-nh-grid-colspan="S4 M3">
 			<section>
-				<h1>fastFT</h1>
+				<h1 class='pod-heading'>Fast FT</h1>
 				{{#each fastFt.items}}
 					<article>
 						<h2>{{title}}</h2>
-						<time data-o-component="o-date" class="o-date" datetime="{{#dateformat}}{{publishedDate}}{{/dateformat}}">
-							{{#dateformat "dddd, d mmmm, yyyy"}}{{publishedDate}}{{/dateformat}}
+						<p>{{{summary}}}</p>
+						<time
+							data-o-component="o-date"
+							class="o-date"
+							datetime="{{#dateformat}}{{publishedDate}}{{/dateformat}}">
+								{{#dateformat "dddd, d mmmm, yyyy"}}{{publishedDate}}{{/dateformat}}
 						</time>
-						<div>
-							{{{summary}}}
-						</div>
 					</article>
 				{{/each}}
 			</section>
