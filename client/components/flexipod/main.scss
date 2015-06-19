@@ -47,6 +47,7 @@
 		top: nhFlexipodCardTop($top);
 
 		@include nhStoryCard($type);
+		background-color: oColorsGetPaletteColor('warm-base');
 	}
 }
 
