@@ -1,6 +1,132 @@
+@import 'variables';
 
-@mixin nhStoryCard() {
+@mixin nhStoryCard($type) {
 	display: block;
 	overflow: hidden;
-	padding: 0.3em 0.5em;
+	padding-bottom: 42px; // TODO Footer height variable
+
+	.story-card__title {
+		@include nTypeCharlie(3);
+		font-style: normal;
+	}
+	.story-card__taxon {
+		@include nTypeBeta(3);
+		text-transform: uppercase;
+		color: map-get($o-colors-palette, 'red-1');
+	}
+	.story-card__summary { @include nTypeDelta(3); }
+	.story-card__content {
+		& > * { margin-bottom: 10px; }
+		padding: 0.3em 0.5em;
+	}
+
+	.story-card__footer {
+	  position: absolute;
+	  bottom: 0;
+	  right: 0;
+	  left: 0;
+		background-color: map-get($o-colors-palette, 'warm-2');
+		@include nTypeAlpha(5);
+		text-transform: uppercase;
+		height: 42px; // TODO Footer height variable
+		border-bottom: 1px map-get($o-colors-palette, 'cold-1') solid;
+
+		padding: 0 20px;
+		line-height: 42px; // TODO Footer height variable
+	}
+
+	@include nhGridRespondTo(XL) {
+		.story-card__title { font-size: 30px; }
+		.story-card__summary { @include nTypeDeltaSize(3); }
+	}
+
+	@include nhGridRespondTo(L) {
+		.story-card__taxon { @include nTypeBeta(3); }
+		.story-card__title { @include nTypeCharlieSize(2); }
+		.story-card__summary { @include nTypeDeltaSize(3); }
+	}
+
+	@include nhGridRespondTo(M) {
+		.story-card__taxon { font-size: 20px; }
+		.story-card__title { font-size: 28px; }
+		.story-card__summary { font-size: 24px; }
+	}
+
+	@include nhGridRespondTo(S) {
+		.story-card__taxon { font-size: 20px; }
+		.story-card__title { font-size: 28px; }
+		.story-card__summary { font-size: 24px; }
+	}
+
+	@include nhGridRespondTo(XS) {
+		.story-card__taxon { font-size: 20px; }
+		.story-card__title { font-size: 28px; }
+		.story-card__summary { font-size: 24px; }
+	}
+
+	@if $type == 'large' {
+		@include nhLargeCard();
+	} @else if $type == 'tall' {
+		@include nhTallCard();
+	} @else if $type == 'medium' {
+		@include nhMediumCard();
+	} @else if $type == 'wide' {
+		@include nhWideCard();
+	} @else if $type == 'small' {
+		@include nhSmallCard();
+	}
+
+}
+
+@mixin nhLargeCard {
+	.story-card__image {
+		width: 100%;
+		height: initial;
+		display: block;
+	}
+
+	.story-card__summary { display: initial; }
+
+}
+
+@mixin nhMediumCard {
+	.story-card__image {
+		display: none;
+	}
+
+	.story-card__summary { display: initial; }
+
+
+}
+
+@mixin nhSmallCard {
+	.story-card__image { display: none; }
+	.story-card__summary { display: none; }
+}
+
+@mixin nhTallCard {
+	.story-card__image {
+		width: 100%;
+		height: initial;
+		display: block;
+	}
+
+	.story-card__summary { display: intital; }
+
+}
+
+@mixin nhWideCard {
+	.story-card__image {
+		width: initial;
+		height: 100%;
+		display: block;
+		float: left;
+		margin-right: 10px;
+	}
+
+	.story-card__summary { display: none; }
+	.story-card__content {
+		margin: 0;
+	}
+
 }
