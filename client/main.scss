@@ -10,6 +10,7 @@
 html {
 	@include oColorsFor(page);
 	@include nTypeAlpha(3);
+	background-color: map-get($o-colors-palette, 'warm-bg');
 
 	// Prevent navigation menus from creating
 	// extra space on sides of the page
