@@ -38,12 +38,15 @@
 	$height: nth($card-spec, 2);
 	$left: nth($card-spec, 3);
 	$top:  nth($card-spec, 4);
+	$type: nth($card-spec, 5);
 
 	&:nth-child(#{$int}) {
 		width: nhGridColspan($width, $total-cols);
 		height: nhFlexipodCardHeight($height);
 		left: nhGridSkip($left, $total-cols);
 		top: nhFlexipodCardTop($top);
+
+		@include nhStoryCard($type);
 	}
 }
 
