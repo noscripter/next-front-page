@@ -1,0 +1,17 @@
+.sidebar article {
+	padding: 10px 0;
+	h2 {
+		@include nTypeCharlie(4);
+		font-size: 19px;
+		font-style: normal;
+	}
+	p { display: none; }
+
+	border-bottom: 1px #ddd solid;
+
+	time {
+		@include nTypeAlpha(5);
+		text-transform: uppercase;
+		height: 42px; // TODO Footer height variable
+	}
+}
