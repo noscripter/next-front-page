@@ -1,6 +1,7 @@
 @import "colors";
 @import "o-colors/main";
 @import "next-type/main";
+@import "type";
 @import "o-assets/main";
 @import "components/grid/main";
 @import "components/story-card/main";
@@ -24,15 +25,6 @@ body {
 
 .main-content {
 	@include nhGridColumn($span: (default: 12, M: 9));
-
-	.flexipod {
-		h1 {
-			@include nTypeAlpha(1);
-			color: map-get($o-colors-palette, 'warm-4');
-			border: solid map-get($o-colors-palette, 'warm-3');
-			border-width: 0 0 1px;
-		}
-	}
 
 	.flexipod--lead-today {
 		// TODO think about sinking the breakpoints into nhFlexipod
