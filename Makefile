@@ -1,7 +1,7 @@
 API_KEY := $(shell cat ~/.ftapi 2>/dev/null)
 GIT_HASH := $(shell git rev-parse --short HEAD)
-TEST_HOST := "ft-next-front-page-branch-${GIT_HASH}"
-TEST_URL := "http://ft-next-front-page-branch-${GIT_HASH}.herokuapp.com/uk"
+TEST_HOST := "ft-next-front-page-${GIT_HASH}"
+TEST_URL := "http://ft-next-front-page-${GIT_HASH}.herokuapp.com/uk"
 ELASTIC_SEARCH_HOST := $(shell cat ~/.elastic_search_host 2>/dev/null)
 
 .PHONY: test build
