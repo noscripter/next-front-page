@@ -19,7 +19,13 @@ html {
 	overflow-x: hidden;
 }
 
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+
 body {
+	padding: 0;
 	@include nhGridGenerate();
 	margin: 0;
 }
@@ -36,7 +42,7 @@ body {
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-lead-today, S), 12);
+			@include nhFlexipod(map-get($layout-lead-today, XS));
 		}
 
 		@include nhGridRespondTo(M) {
@@ -53,7 +59,7 @@ body {
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-five-loud, S), 12);
+			@include nhFlexipod(map-get($layout-five-loud, XS));
 		}
 
 		@include nhGridRespondTo(M) {
@@ -70,7 +76,7 @@ body {
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-eight-medium, S), 12);
+			@include nhFlexipod(map-get($layout-eight-medium, XS));
 		}
 
 		@include nhGridRespondTo(M) {
