@@ -1,5 +1,6 @@
 var oDate = require('o-date');
+var setup = require('next-js-setup');
 
-document.addEventListener("DOMContentLoaded", function() {
+setup.bootstrap(function (/*result*/) {
 	oDate.init();
-}, false);
+});
