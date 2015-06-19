@@ -33,6 +33,3 @@ $nh-grid-gutter: 20 / 1440 !default;
 
 $_nh-grid-layout-names: map-keys($nh-grid-layouts) !default;
 $_nh-grid-max-width: map-get($nh-grid-layouts, nth($_nh-grid-layout-names, -1));
-
-
-
