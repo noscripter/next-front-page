@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('ft-next-express');
-var frontPage = require('./routes/front-page')
+var frontPage = require('./routes/front-page');
 
 var app = express();
 
@@ -19,7 +19,7 @@ app.get('/uk', frontPage);
 
 var port = process.env.PORT || 3001;
 
-module.exports = app
+module.exports = app;
 module.exports.listen = app.listen(port, function() {
 	console.log('Listening on ' + port);
 });
