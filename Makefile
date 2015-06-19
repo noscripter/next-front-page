@@ -1,8 +1,7 @@
 API_KEY := $(shell cat ~/.ftapi 2>/dev/null)
-API2_KEY := $(shell cat ~/.ftapi_v2 2>/dev/null)
 GIT_HASH := $(shell git rev-parse --short HEAD)
-TEST_HOST := "ft-next-dobi-branch-${GIT_HASH}"
-TEST_URL := "http://ft-next-dobi-branch-${GIT_HASH}.herokuapp.com/"
+TEST_HOST := "ft-next-front-page-branch-${GIT_HASH}"
+TEST_URL := "http://ft-next-front-page-branch-${GIT_HASH}.herokuapp.com/uk"
 ELASTIC_SEARCH_HOST := $(shell cat ~/.elastic_search_host 2>/dev/null)
 
 .PHONY: test build
@@ -14,7 +13,7 @@ verify:
 	nbt verify
 
 unit-test:
-	export apikey=12345; export api2key=67890; export ELASTIC_SEARCH_HOST='asnlasnd.foundcluster.com:9243'; export ELASTIC_SEARCH_URL='https://asnlasnd.foundcluster.com:9243/v1_api_v2/item'; export HOSTEDGRAPHITE_APIKEY=123; export ENVIRONMENT=production; mocha --recursive --reporter spec tests/server/
+	export apikey=12345; export api2key=67890; export ELASTIC_SEARCH_HOST='asnlasnd.foundcluster.com:9243'; export ELASTIC_SEARCH_HOST='https://asnlasnd.foundcluster.com:9243/v1_api_v2/item'; export HOSTEDGRAPHITE_APIKEY=123; export ENVIRONMENT=production; mocha --recursive --reporter spec tests/server/
 
 test: verify build-production unit-test
 
@@ -33,17 +32,19 @@ endif
 
 run: check-env
 	export USER_PREFS_API_KEY=${USER_PREFS_API_KEY}; \
-	export ELASTIC_SEARCH_URL=${ELASTIC_SEARCH_URL}; \
+	export ELASTIC_SEARCH_HOST=${ELASTIC_SEARCH_HOST}; \
 	export HOSTEDGRAPHITE_APIKEY=123; \
 	export apikey=${API_KEY}; \
+	export api2key=${API_KEY}; \
 	export PORT=${PORT}; \
 	nbt run
 
 run-local: check-env
 	export USER_PREFS_API_KEY=${USER_PREFS_API_KEY}; \
-	export ELASTIC_SEARCH_URL=${ELASTIC_SEARCH_URL}; \
+	export ELASTIC_SEARCH_HOST=${ELASTIC_SEARCH_HOST}; \
 	export HOSTEDGRAPHITE_APIKEY=123; \
 	export apikey=${API_KEY}; \
+	export api2key=${API_KEY}; \
 	export PORT=${PORT}; \
 	nbt run --local
 
@@ -64,9 +65,9 @@ tidy:
 
 provision:
 	nbt provision ${TEST_HOST}
-	nbt configure ft-next-dobi-v002 ${TEST_HOST} --overrides "NODE_ENV=branch,DEBUG=*"
+	nbt configure ft-next-front-page ${TEST_HOST} --overrides "NODE_ENV=branch,DEBUG=*"
 	nbt deploy-hashed-assets
-	nbt deploy ${TEST_HOST} --skip-enable-preboot
+	nbt deploy ${TEST_HOST}
 	make smoke
 
 deploy:
