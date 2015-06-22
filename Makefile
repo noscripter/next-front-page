@@ -65,13 +65,13 @@ tidy:
 
 provision:
 	nbt provision ${TEST_HOST}
-	nbt configure ft-next-front-page ${TEST_HOST} --overrides "NODE_ENV=branch,DEBUG=*" --no-splunk
+	nbt configure ft-next-front-page ${TEST_HOST} --overrides "NODE_ENV=branch,DEBUG=*"
 	nbt deploy-hashed-assets
 	nbt deploy ${TEST_HOST}
 	make smoke
 
 deploy:
-	nbt configure --no-splunk
+	nbt configure
 	nbt deploy-hashed-assets
 	nbt deploy
 
