@@ -32,8 +32,7 @@
 @mixin nhGridColmargins($total-cols: $nh-grid-columns) {
 	$subgrid-ratio: $nh-grid-columns / $total-cols;
 
-	margin-left: percentage($subgrid-ratio * $nh-grid-gutter / 2);
-	margin-right: percentage($subgrid-ratio * $nh-grid-gutter / 2);
+	margin: percentage($subgrid-ratio * $nh-grid-gutter / 2);
 }
 
 /// % width of an item in the grid

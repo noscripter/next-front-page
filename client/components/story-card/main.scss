@@ -4,11 +4,13 @@
 	display: block;
 	overflow: hidden;
 	padding-bottom: 42px; // TODO Footer height variable
+	position: relative;
 
 	.story-card__title {
 		@include nTypeCharlie(3);
 		font-style: normal;
 	}
+	.story-card__image { width: 100%; }
 	.story-card__taxon {
 		@include nTypeBeta(3);
 		text-transform: uppercase;
@@ -72,6 +74,8 @@
 		@include nhMediumCard();
 	} @else if $type == 'wide' {
 		@include nhWideCard();
+	} @else if $type == 'wideImageless' {
+		@include nhWideImagelessCard();
 	} @else if $type == 'small' {
 		@include nhSmallCard();
 	}
@@ -117,7 +121,7 @@
 
 @mixin nhWideCard {
 	.story-card__image {
-		width: initial;
+		@include nhGridColumn(4, 9);
 		height: 100%;
 		display: block;
 		float: left;
@@ -129,4 +133,9 @@
 		margin: 0;
 	}
 
+}
+
+@mixin nhWideImagelessCard {
+	@include nhWideCard();
+	.story-card__image { display: none; }
 }

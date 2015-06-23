@@ -1,28 +1,7 @@
 <div class="nh-grid-container">
 	<div class="nh-grid-row">
 		<section class="main-content">
-			<div class="flexipod flexipod--lead-today">
-				<div class="flexipod__cards">
-					{{#each articles.items}}
-						<article class='story-card'>
-							<img class='story-card__image' src="{{item.images.4.url}}" />
-							<div class="story-card__content">
-								<div class="story-card__taxon">News</div>
-								<h2 class="story-card__title">{{item.title.title}}</h2>
-								<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
-							</div>
-							<div class='story-card__footer'>
-								<time
-									data-o-component="o-date"
-									class="o-date"
-									datetime="{{#dateformat}}{{publishedDate}}{{/dateformat}}">
-										{{#dateformat "dddd, d mmmm, yyyy"}}{{publishedDate}}{{/dateformat}}
-								</time>
-							<div>
-						</article>
-					{{/each}}
-				</div>
-			</div>
+			{{> lead-today items=articles.items }}
 			<div class="flexipod flexipod--five-loud">
 				<h1>Five loud flexipod</h1>
 				<div class="flexipod__cards">

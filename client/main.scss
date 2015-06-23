@@ -35,7 +35,7 @@ body {
 }
 
 .main-content {
-	@include nhGridColumn($span: (default: 12, M: 9));
+	@include nhGridColumn($span: (default: 12, M: 9, S: 8));
 
 	margin-top: 40px;
 
@@ -48,11 +48,11 @@ body {
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-lead-today, XS));
+			@include nhFlexipod(map-get($layout-lead-today, S));
 		}
 
 		@include nhGridRespondTo(M) {
-			@include nhFlexipod(map-get($layout-lead-today, S), 9);
+			@include nhFlexipod(map-get($layout-lead-today, M), 9);
 		}
 	}
 
@@ -94,7 +94,7 @@ body {
 body .sidebar {
 	display: none;
 
-	@include nhGridRespondTo($from: M) {
+	@include nhGridRespondTo($from: S) {
 		display: block;
 	}
 }
