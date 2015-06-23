@@ -60,7 +60,7 @@ module.exports = function(req, res) {
 		source.ukTop.items = source.ukTop.items.slice(0, 10);
 	}
 	res.render('uk', {
-		layout: 'vanilla',
+		layout: 'wrapper',
 		articles: source.ukTop,
 		fastFt: source.fastFt
 	});

@@ -1,5 +1,9 @@
 @import "colors";
 @import "o-colors/main";
+
+@import "n-header-footer/main";
+@import "next-welcome/main";
+
 @import "next-type/main";
 @import "type";
 @import "o-assets/main";
@@ -32,6 +36,8 @@ body {
 
 .main-content {
 	@include nhGridColumn($span: (default: 12, M: 9));
+
+	margin-top: 40px;
 
 	.flexipod--lead-today {
 		// TODO think about sinking the breakpoints into nhFlexipod
