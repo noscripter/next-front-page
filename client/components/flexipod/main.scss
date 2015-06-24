@@ -14,13 +14,7 @@
 
 @mixin nhFlexipodCardPositioning($int, $card-spec, $total-cols: $nh-grid-columns) {
 	$width: nth($card-spec, 1);
-	$type: nth($card-spec, 5);
-
-	// @if $width < $total-cols {
-	// 	.article-group { display: flex; }
-	// } @else {
-	// 	.article-group { display: block; }
-	// }
+	$type: nth($card-spec, 2);
 
  	.article-group:nth-child(#{$int}) .story-card {
 		@include nhStoryCard($type);
@@ -34,6 +28,8 @@
 	.article-group {
 		width: 100%;
 		clear: both;
+		overflow: hidden;
+		// display: flex;
 
 		.story-card {
 			@include nhGridColmargins($total-cols);
@@ -45,73 +41,3 @@
 	@include nhFlexipodLayout($layout-spec, $total-cols);
 
 }
-
-
-// 	@include nhGridRow($total-cols);
-//
-// 	h1 { @include nhGridColmargins($total-cols); }
-//
-// 	.flexipod__cards {
-// 		@include nhFlexipodHeight($layout-spec);
-// 		position: relative;
-//
-// 		.article-group {
-// 			display: flex;
-//
-// 			& > * {
-// 				@include nhGridColmargins($total-cols);
-// 				@include nhFlexipodLayout($layout-spec, $total-cols);
-//
-// 				display: block;
-// 				position: relative;
-// 				box-sizing: border-box;
-// 			}
-// 		}
-// 	}
-// }
-//
-// @mixin nhFlexipodLayout($layout-spec, $total-cols: $nh-grid-columns) {
-// 	@if type-of($layout-spec) == list {
-// 		@for $int from 1 through length($layout-spec) {
-// 			@include nhFlexipodCardPositioning($int, nth($layout-spec, $int), $total-cols);
-// 		}
-// 	}
-// }
-//
-// @mixin nhFlexipodCardPositioning($int, $card-spec, $total-cols: $nh-grid-columns) {
-// 	$width: nth($card-spec, 1);
-// 	$type: nth($card-spec, 5);
-//
-//  	.article-group.#{$type} article {
-// 		width: nhGridColspan($width, $total-cols);
-// 		@include nhStoryCard($type);
-// 		background-color: oColorsGetPaletteColor('warm-base');
-// 	}
-// }
-//
-// @mixin nhFlexipodHeight($layout-spec) {
-// 	$height: 0;
-//
-// 	@if type-of($layout-spec) == list {
-// 		@for $int from 1 through length($layout-spec) {
-// 			$card-height: nhFlexipodCardTotal(nth($layout-spec, $int));
-// 			@if $card-height > $height {
-// 				$height: $card-height;
-// 			}
-// 		}
-//
-// 		height: nhFlexipodCardHeight($height);
-// 	}
-// }
-//
-// @function nhFlexipodCardTotal($card-spec) {
-// 	@return nth($card-spec, 4) + nth($card-spec, 2);
-// }
-//
-// @function nhFlexipodCardTop($top) {
-// 	@return ($top * ($nh-flexipod-row + $nh-flexipod-gutter));
-// }
-//
-// @function nhFlexipodCardHeight($height) {
-// 	@return ($height * $nh-flexipod-row + ($height - 1) * $nh-flexipod-gutter);
-// }

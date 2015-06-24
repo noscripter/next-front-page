@@ -30,8 +30,8 @@ html {
 
 body {
 	padding: 0;
-	@include nhGridGenerate();
 	margin: 0;
+	@include nhGridGenerate();
 }
 
 .main-content {
