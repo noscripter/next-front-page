@@ -2,11 +2,14 @@
 
 import express from 'ft-next-express';
 import frontPage from './routes/front-page';
+import React from 'react';
 
 var app = express({
 	helpers: {
-		json: (it) => JSON.stringify(it, null, 2)
-	}
+		reactRenderToString: (klass, props) => {
+			return React.renderToString(React.createElement(klass, props));
+		}
+	},
 });
 
 app.get('/__gtg', (req, res) => {

@@ -12,6 +12,7 @@
     "ft-next-express": "^10.0.0",
     "ft-poller": "0.0.4",
     "next-ft-api-client": "^3.6.1",
+    "o-date": "https://github.com/Financial-Times/o-date/archive/1.1.1.tar.gz",
     "react": "^0.13.3"
   },
   "scripts": {

@@ -1,5 +1,6 @@
 'use strict';
 import {pollContent} from '../services/content-api';
+import Feed from '../../components/fastft/feed';
 
 const pollConfig = {
 	ukTop: {
@@ -73,6 +74,7 @@ module.exports = function(req, res) {
 
 	res.render('uk', {
 		layout: 'wrapper',
+		Feed: Feed,
 		articles: source.ukTop,
 		fastFt: fastFt
 	});

@@ -12,10 +12,12 @@ class Feed extends React.Component {
 	render() {
 		const articles = this.state.items.map((it) => <Article article={it} key={it.id} />)
 
-		return (<section>
-			<h1>fastFT</h1>
-			{articles}
-		</section>);
+		return (
+			<div>
+				<h1>fastFT</h1>
+				{articles}
+			</div>
+		);
 	}
 }
 
