@@ -1,3 +1,5 @@
+'use strict';
+
 import express from 'ft-next-express';
 import frontPage from './routes/front-page';
 

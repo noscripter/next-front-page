@@ -16,21 +16,21 @@
 	}
 	.story-card__summary { @include nTypeDelta(3); }
 	.story-card__content {
-		& > * { margin-bottom: 10px; }
 		padding: 0.3em 0.5em;
+		& > * { margin-bottom: 10px; }
 	}
 
 	.story-card__footer {
-	  position: absolute;
-	  bottom: 0;
-	  right: 0;
-	  left: 0;
-		background-color: map-get($o-colors-palette, 'warm-2');
 		@include nTypeAlpha(5);
+
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		background-color: map-get($o-colors-palette, 'warm-2');
 		text-transform: uppercase;
 		height: 42px; // TODO Footer height variable
 		border-bottom: 1px map-get($o-colors-palette, 'cold-1') solid;
-
 		padding: 0 20px;
 		line-height: 42px; // TODO Footer height variable
 	}

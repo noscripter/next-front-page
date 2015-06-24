@@ -1,3 +1,4 @@
+'use strict';
 import {pollContent} from '../services/content-api';
 
 const pollConfig = {
@@ -37,6 +38,8 @@ var content = {
 
 // Poll both APIs so that we can feature flag between them
 
+// Poll both APIs so that we can feature flag between them
+
 Object.keys(pollConfig)
 .forEach(it => {
 	if(pollConfig[it].useElasticSearch) {
@@ -59,6 +62,7 @@ module.exports = function(req, res) {
 	if(source.ukTop.items && source.ukTop.items.slice) {
 		source.ukTop.items = source.ukTop.items.slice(0, 10);
 	}
+
 	res.render('uk', {
 		layout: 'wrapper',
 		articles: source.ukTop,

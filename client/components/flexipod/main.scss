@@ -41,12 +41,13 @@
 	$type: nth($card-spec, 5);
 
 	&:nth-child(#{$int}) {
+		@include nhStoryCard($type);
+
 		width: nhGridColspan($width, $total-cols);
 		height: nhFlexipodCardHeight($height);
 		left: nhGridSkip($left, $total-cols);
 		top: nhFlexipodCardTop($top);
 
-		@include nhStoryCard($type);
 		background-color: oColorsGetPaletteColor('warm-base');
 	}
 }
