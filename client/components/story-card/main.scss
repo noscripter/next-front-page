@@ -91,7 +91,8 @@
 
 	.story-card__content { @include nhGridColumn(3, 9); }
 
-	.story-card__image, .story-card__content {
+	.story-card__image,
+	.story-card__content {
 		@include nhGridRespondTo($until: XS) {
 			@include nhGridColumn(9, 9);
 		}
@@ -128,7 +129,7 @@
 	.story-card__title { font-size: 1.2em; }
 	.story-card__summary {
 		font-size: 1.1em;
-		line-height: 1.2em
+		line-height: 1.2em;
 	}
 
 }
