@@ -63,9 +63,17 @@ module.exports = function(req, res) {
 		source.ukTop.items = source.ukTop.items.slice(0, 10);
 	}
 
+	// strip fastFt down to bare minimum
+	const fastFt = source.fastFt;
+	if(fastFt.items && fastFt.items.map) {
+		fastFt.items = fastFt.items.map(it => {
+			return {id: it.id, title: it.title, publishedDate: it.publishedDate}
+		});
+	}
+
 	res.render('uk', {
 		layout: 'wrapper',
 		articles: source.ukTop,
-		fastFt: source.fastFt
+		fastFt: fastFt
 	});
 };
