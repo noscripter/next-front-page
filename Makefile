@@ -73,7 +73,7 @@ provision:
 deploy:
 	nbt configure
 	nbt deploy-hashed-assets
-	nbt deploy
+	nbt deploy --skip-enable-preboot
 
 clean-deploy: clean install build-production deploy
 
