@@ -134,9 +134,6 @@
 	@include nhGridRespondTo($from: L) {
 		width: 1210px;
 	}
-	@include nhGridRespondTo($from: XL) {
-		width: $_nh-grid-max-width;
-	}
 }
 
 // TODO pushes, pulls and skips

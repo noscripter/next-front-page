@@ -1,8 +1,10 @@
 <article class='story-card'>
 	<img class='story-card__image' src="{{item.images.4.url}}" />
 	<div class="story-card__content">
-		<div class="story-card__taxon">{{item.metadata.primarySection.term.name}}</div>
-		<h2 class="story-card__title">{{item.title.title}}</h2>
+		<h2 class="story-card__title">
+			<span class="story-card__taxon">{{item.metadata.genre.0.term.name}}</span>|
+			{{item.title.title}}
+		</h2>
 		<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
 	</div>
 	<div class='story-card__footer'>

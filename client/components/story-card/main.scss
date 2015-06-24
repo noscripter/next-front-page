@@ -5,22 +5,26 @@
 	overflow: hidden;
 	padding-bottom: 42px; // TODO Footer height variable
 	position: relative;
+	margin-bottom: 20px;
 
 	.story-card__title {
 		@include nTypeCharlie(3);
 		font-style: normal;
+		line-height: 1.2em;
 	}
 	.story-card__image { width: 100%; }
 	.story-card__taxon {
-		@include nTypeBeta(3);
+		@include nTypeBeta(4);
 		text-transform: uppercase;
 		color: map-get($o-colors-palette, 'red-1');
 		letter-spacing: 1px;
+		margin-right: 5px;
 	}
 	.story-card__summary { @include nTypeDelta(3); }
 	.story-card__content {
 		& > * { margin-bottom: 10px; }
 		padding: 0.3em 0.5em;
+		overflow: hidden;
 	}
 
 	.story-card__footer {
@@ -32,7 +36,7 @@
 		@include nTypeAlpha(5);
 		text-transform: uppercase;
 		height: 42px; // TODO Footer height variable
-		border-bottom: 1px map-get($o-colors-palette, 'cold-1') solid;
+		border-bottom: 1px #cac7c4 solid;
 
 		padding: 0 20px;
 		line-height: 42px; // TODO Footer height variable
@@ -55,6 +59,26 @@
 }
 
 @mixin nhLargeCard {
+	@include nhGridRespondTo($until: M) {
+		font-size: 20px;
+
+		.story-card__title { font-size: 1.1em; }
+		.story-card__summary {
+			font-size: 1em;
+			line-height: 0.9em;
+		}
+	}
+
+	@include nhGridRespondTo($from: M) {
+		.story-card__title { font-size: 0.6em; }
+		.story-card__summary {
+			font-size: 0.54em;
+			line-height: 0.7em;
+			display: initial;
+		}
+	}
+
+
 	font-size: 40px;
 
 	.story-card__image {
@@ -65,19 +89,13 @@
 		display: block;
 	}
 
-	.story-card__content {
-		@include nhGridColumn(3, 9);
+	.story-card__content { @include nhGridColumn(3, 9); }
+
+	.story-card__image, .story-card__content {
+		@include nhGridRespondTo($until: XS) {
+			@include nhGridColumn(9, 9);
+		}
 	}
-
-	.story-card__summary { display: initial; }
-
-	.story-card__taxon {
-		font-size: 1em;
-		line-height: 0.9em;
-	}
-	.story-card__title { font-size: 0.6em; }
-	.story-card__summary { font-size: 0.54em; }
-
 }
 
 @mixin nhMediumCard {
@@ -92,12 +110,13 @@
 	.story-card__image { display: none; }
 	.story-card__summary { display: none; }
 
-	.story-card__taxon { font-size: 1em; }
 	.story-card__title { font-size: 0.9em; }
 
 }
 
 @mixin nhTallCard {
+	padding-bottom: 62px;
+
 	.story-card__image {
 		width: 100%;
 		height: initial;
@@ -106,22 +125,27 @@
 
 	.story-card__summary { display: initial; }
 
-	.story-card__taxon { font-size: 1em; }
 	.story-card__title { font-size: 1.2em; }
-	.story-card__summary { font-size: 1.1rem; }
+	.story-card__summary {
+		font-size: 1.1em;
+		line-height: 1.2em
+	}
 
 }
 
 @mixin nhWideCard {
+	@include nhGridRespondTo($until: M) {
+		font-size: 20px;
+	}
 	.story-card__image {
 		@include nhGridColumn(4, 9);
 		height: 100%;
 		display: block;
 		float: left;
 		margin: 0;
-		margin-right: 10px;
 	}
 
+	.story-card__title { font-size: 1em; }
 	.story-card__summary { display: none; }
 	.story-card__content { margin: 0; }
 }
