@@ -1,8 +1,7 @@
-import errorHandler from 'express-errors-handler';
+'use strict';
+
 import ApiClient from 'next-ft-api-client';
 import cheerio from 'cheerio';
-
-const ftErrorHandler = (process.env.NODE_ENV === 'production') ? errorHandler.captureMessage : console.log;
 
 function uuid(thingUri) {
 	return thingUri.replace('http://api.ft.com/thing/', '');

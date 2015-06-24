@@ -15,9 +15,10 @@
 @mixin nhFlexipodCardPositioning($int, $card-spec, $total-cols: $nh-grid-columns) {
 	$width: nth($card-spec, 1);
 	$type: nth($card-spec, 2);
+		@include nhStoryCard($type);
+
 
  	.article-group:nth-child(#{$int}) .story-card {
-		@include nhStoryCard($type);
 		width: nhGridColspan($width, $total-cols);
 	}
 }
