@@ -122,8 +122,17 @@
 		clear: both;
 	}
 
-	@include nhGridRespondTo($from: XS, $until: XL) {
+	@include nhGridRespondTo($from: XS, $until: S) {
 		width: 100%;
+	}
+	@include nhGridRespondTo($from: S, $until: M) {
+		width: 730px;
+	}
+	@include nhGridRespondTo($from: M, $until: L) {
+		width: 970px;
+	}
+	@include nhGridRespondTo($from: L) {
+		width: 1210px;
 	}
 	@include nhGridRespondTo($from: XL) {
 		width: $_nh-grid-max-width;
