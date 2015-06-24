@@ -1,38 +1,43 @@
 @import "colors";
 @import "o-colors/main";
+
+@import "n-header-footer/main";
+@import "next-welcome/main";
+
 @import "next-type/main";
+@import "type";
 @import "o-assets/main";
 @import "components/grid/main";
 @import "components/story-card/main";
+@import "components/feed/main";
 @import "components/flexipod/main";
 @import "flexipod-layouts";
 
 html {
 	@include oColorsFor(page);
 	@include nTypeAlpha(3);
+	background-color: map-get($o-colors-palette, 'warm-bg');
 
 	// Prevent navigation menus from creating
 	// extra space on sides of the page
 	overflow-x: hidden;
 }
 
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+
 body {
 	@include nhGridGenerate();
+	padding: 0;
 	margin: 0;
 }
 
 .main-content {
 	@include nhGridColumn($span: (default: 12, M: 9));
 
-	.flexipod {
-		h1 {
-			@include nTypeAlpha(1);
-			color: map-get($o-colors-palette, 'warm-4');
-			border: solid map-get($o-colors-palette, 'warm-3');
-			border-width: 0 0 1px;
-		}
-	}
-
+	margin-top: 40px;
 	.flexipod--lead-today {
 		// TODO think about sinking the breakpoints into nhFlexipod
 		@include nhFlexipod(map-get($layout-lead-today, default));
@@ -42,7 +47,7 @@ body {
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-lead-today, S), 12);
+			@include nhFlexipod(map-get($layout-lead-today, XS));
 		}
 
 		@include nhGridRespondTo(M) {
@@ -59,7 +64,7 @@ body {
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-five-loud, S), 12);
+			@include nhFlexipod(map-get($layout-five-loud, XS));
 		}
 
 		@include nhGridRespondTo(M) {
@@ -76,16 +81,12 @@ body {
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-eight-medium, S), 12);
+			@include nhFlexipod(map-get($layout-eight-medium, XS));
 		}
 
 		@include nhGridRespondTo(M) {
 			@include nhFlexipod(map-get($layout-eight-medium, S), 9);
 		}
-	}
-
-	.flexipod__cards > article {
-		@include nhStoryCard();
 	}
 }
 
@@ -95,8 +96,4 @@ body .sidebar {
 	@include nhGridRespondTo($from: M) {
 		display: block;
 	}
-}
-
-.cards > article {
-	@include nhStoryCard();
 }
