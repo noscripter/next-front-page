@@ -7,6 +7,10 @@ function uuid(thingUri) {
 	return thingUri.replace('http://api.ft.com/thing/', '');
 }
 
+function firstParagraph(html) {
+	cheerio.load(html)('body p:first-child').html()
+}
+
 const fetchContent = {
 	page(pageId, useElasticSearch) {
 		return ApiClient.lists({ uuid: pageId })
@@ -29,13 +33,11 @@ const fetchContent = {
 	concept(conceptId, useElasticSearch) {
 		return ApiClient.contentAnnotatedBy({ uuid: conceptId, useElasticSearch: useElasticSearch })
 		.then(ids => {
-			return ApiClient.content({
-				uuid: ids,
-				useElasticSearch: useElasticSearch
-			}).then(articles => {
+			return ApiClient.content({ uuid: ids, useElasticSearch: useElasticSearch})
+			.then(articles => {
 				return {
 					items: articles.map(it => {
-						it.summary = cheerio.load(it.bodyXML)('body p:first-child').html();
+						it.summary = firstParagraph(it.bodyXML);
 						return it;
 					})
 				};
@@ -52,8 +54,10 @@ function logFetched(list, useElasticSearch) {
 }
 
 function pollContent(opt, useElasticSearch, updateContent) {
+	const fetch = fetchContent[opt.type];
+
 	const poller = (/*data*/) => {
-		fetchContent[opt.type](opt.uuid, useElasticSearch)
+		fetch(opt.uuid, useElasticSearch)
 		.then(it => logFetched(it, useElasticSearch))
 		.then(updateContent)
 		.catch(err => {
