@@ -1,11 +1,19 @@
 'use strict';
 
-import {format} from 'o-date'
+import {init as initDate, format} from 'o-date'
 import React from 'react';
 
-const dateFormat = "EEEE, d MMMM, yyyy";
+const dateFormat = "h:mm a";
 
 class Article extends React.Component {
+	componentDidMount() {
+		const el = React.findDOMNode(this);
+
+		console.log("o-datifying", el);
+
+		initDate(el);
+	}
+
 	render() {
 		const {title, publishedDate} = this.props.article;
 
