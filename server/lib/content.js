@@ -45,7 +45,7 @@ Object.keys(pollConfig)
 	.forEach(source => {
 		pollContent(
 			pollConfig[it],
-			(source == 'elastic'),
+			(source === 'elastic'),
 			content => contentCache[source][it] = content
 		);
 	});
@@ -69,15 +69,15 @@ const cachedContent = (topStoriesRegion) => {
 		const fastFt = contentCache[src].fastFt;
 		if(fastFt.items && fastFt.items.map) {
 			fastFt.items = fastFt.items.map(it => {
-				return {id: it.id, title: it.title, publishedDate: it.publishedDate}
+				return {id: it.id, title: it.title, publishedDate: it.publishedDate};
 			});
 		}
 
 		return Object.assign({}, contentCache[src], {top: top, fastFt: fastFt});
-	}
-}
+	};
+};
 
 export default {
 	uk: cachedContent('ukTop'),
 	intl: cachedContent('ukTop')
-}
+};

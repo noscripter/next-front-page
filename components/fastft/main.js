@@ -6,7 +6,7 @@ import 'isomorphic-fetch';
 import Feed from './feed';
 
 const init = (el, opts) => {
-	const el = el || document.body;
+	el = el || document.body;
 	const initialItems = JSON.parse(el.getAttribute('data-fastft-articles'));
 
 	const feedInstance = React.render(<Feed title="fastFt" items={initialItems} />, el);

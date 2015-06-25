@@ -1,6 +1,6 @@
 'use strict';
 
-import {init as initDate, format} from 'o-date'
+import {init as initDate, format} from 'o-date';
 import React from 'react';
 
 const dateFormat = "h:mm a";

@@ -1,6 +1,6 @@
 'use strict';
 
-import content from '../lib/content'
+import content from '../lib/content';
 import Feed from '../../components/fastft/feed';
 
 module.exports = function(req, res) {
