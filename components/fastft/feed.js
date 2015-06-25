@@ -6,7 +6,7 @@ import Article from './article';
 class Feed extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {items: props.items};
+		this.state = {items: props.items || []};
 	}
 
 	render() {
