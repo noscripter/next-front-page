@@ -104,6 +104,7 @@ body .sidebar {
 #fastft {
 	h1 {
 		@include podHeading;
+		border-bottom: none;
 	}
 
 	article {

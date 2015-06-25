@@ -1,13 +1,46 @@
 @import "next-type/main";
+@import "o-colors/main";
 
 @mixin nhFastFtItem {
-	padding: 10px 0;
-	border-bottom: 1px #dddddd solid;
+	padding: 14px 0;
+	border: 1px #dddddd solid;
+	border-width: 0 0 1px 0;
+
+	&:hover, &:focus {
+		border-width: 1px 0 1px;
+		margin-top: -1px;
+		border-color: oColorsGetPaletteColor(fastft-brand);
+
+		h2 a {
+			color: oColorsGetPaletteColor(fastft-brand);
+		}
+	}
+
+	&:first-of-type {
+		border-width: 1px 0 1px;
+		&:hover, &:focus {
+			margin-top: 0px;
+		}
+	}
 
 	h2 {
 		@include nTypeCharlie(4);
 		font-size: 19px;
 		font-style: normal;
+		line-height: 1.2;
+
+		a {
+			// FIXME lifted from next-sass-setup, once updated to allow
+			// nh-grid, use the existing 'nLinksHeadline' mixin
+			color: oColorsGetPaletteColor(cold-2);
+			text-decoration: none;
+
+			&:hover, &:focus {
+				color: oColorsGetPaletteColor(fastft-brand);
+				border-bottom-width: 1px;
+				border-bottom-style: dotted;
+			}
+		}
 	}
 
 	p { display: none; }
