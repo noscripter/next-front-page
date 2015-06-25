@@ -64,11 +64,11 @@ body {
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-opinion, XS));
+			@include nhFlexipod(map-get($layout-opinion, S));
 		}
 
 		@include nhGridRespondTo(M) {
-			@include nhFlexipod(map-get($layout-opinion, S), 12);
+			@include nhFlexipod(map-get($layout-opinion, M), 12);
 		}
 	}
 
@@ -81,11 +81,11 @@ body {
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-column, XS));
+			@include nhFlexipod(map-get($layout-column, S));
 		}
 
 		@include nhGridRespondTo(M) {
-			@include nhFlexipod(map-get($layout-column, S));
+			@include nhFlexipod(map-get($layout-column, M));
 		}
 
 	}

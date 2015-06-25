@@ -1,11 +1,17 @@
 @import 'variables';
 
+@mixin nhStoryGenreColors($color) {
+	.story-card__footer { border-bottom: 1px $color solid; }
+	.story-card__taxon { color: $color; }
+}
+
 @mixin nhStoryCard($type) {
+	@include nhGridRespondTo($until: XS) { margin-bottom: 10px; }
+	@include nhGridRespondTo($from: XS) { margin-bottom: 20px; }
 	display: block;
 	overflow: hidden;
 	padding-bottom: 42px; // TODO Footer height variable
 	position: relative;
-	margin-bottom: 20px;
 
 	.story-card__title {
 		@include nTypeCharlie(3);
@@ -15,6 +21,7 @@
 	.story-card__image { width: 100%; }
 	.story-card__taxon {
 		@include nTypeBeta(4);
+		font-size: 18px;
 		text-transform: uppercase;
 		color: map-get($o-colors-palette, 'red-1');
 		letter-spacing: 1px;
@@ -37,10 +44,14 @@
 		background-color: map-get($o-colors-palette, 'warm-2');
 		text-transform: uppercase;
 		height: 42px; // TODO Footer height variable
-		border-bottom: 1px #cac7c4 solid;
 		padding: 0 20px;
 		line-height: 42px; // TODO Footer height variable
 	}
+
+	&.news { @include nhStoryGenreColors(map-get($o-colors-palette, 'news')); }
+	&.comment { @include nhStoryGenreColors(map-get($o-colors-palette, 'opinion')); }
+	&.lifestyle { @include nhStoryGenreColors(map-get($o-colors-palette, 'lifestyle')); }
+	// &.lifestyle { @include nhStoryGenreColors(map-get($o-colors-palette, 'lifestyle')); }
 
 	@if $type == 'large' {
 		@include nhLargeCard();
@@ -104,6 +115,10 @@
 		display: none;
 	}
 
+	// .story-card__taxon { font-size: 20px; }
+	.story-card__title { font-size: 20px; }
+	.story-card__summary { font-size: 18px; }
+
 	.story-card__summary { display: initial; }
 }
 
@@ -117,6 +132,7 @@
 
 @mixin nhTallCard {
 	padding-bottom: 62px;
+	font-size: 20px;
 
 	.story-card__image {
 		width: 100%;
@@ -127,6 +143,7 @@
 	.story-card__summary { display: initial; }
 
 	.story-card__title { font-size: 1.2em; }
+	// .story-card__taxon { font-size: 1em; }
 	.story-card__summary {
 		font-size: 1.1em;
 		line-height: 1.2em;
@@ -135,8 +152,10 @@
 }
 
 @mixin nhWideCard {
-	@include nhGridRespondTo($until: M) {
-		font-size: 20px;
+	font-size: 24px;
+	@include nhGridRespondTo($from: M) {
+		.story-card__title { font-size: 1em; }
+		// .story-card__taxon { font-size: 0.8em; }
 	}
 	.story-card__image {
 		@include nhGridColumn(4, 9);
@@ -146,7 +165,7 @@
 		margin: 0;
 	}
 
-	.story-card__title { font-size: 1em; }
+	// .story-card__title { font-size: 1em; }
 	.story-card__summary { display: none; }
 	.story-card__content { margin: 0; }
 }

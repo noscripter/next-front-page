@@ -5,7 +5,8 @@ import frontPage from './routes/front-page';
 
 var app = express({
 	helpers: {
-		dump: (it) => JSON.stringify(it, null, 2)
+		dump: (it) => JSON.stringify(it, null, 2),
+		lowercase: (it) => it.toLowerCase()
 	}
 });
 
