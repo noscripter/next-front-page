@@ -7,12 +7,12 @@
 	@if type-of($layout-spec) == list {
 		@for $int from 1 through length($layout-spec) {
 			$card-spec: nth($layout-spec, $int);
-			@include nhFlexipodCardPositioning($int, $card-spec, $total-cols);
+			@include nhFlexipodCard($int, $card-spec, $total-cols);
 		}
 	}
 }
 
-@mixin nhFlexipodCardPositioning($int, $card-spec, $total-cols: $nh-grid-columns) {
+@mixin nhFlexipodCard($int, $card-spec, $total-cols: $nh-grid-columns) {
 	@if type-of(nth($card-spec, 1)) == number {
 		$width: nth($card-spec, 1);
 		$type: nth($card-spec, 2);
@@ -54,11 +54,7 @@
 		clear: both;
 		overflow: hidden;
 
-		.story-card {
-			@include nhGridColmargins($total-cols);
-			background-color: oColorsGetPaletteColor('warm-base');
-			float: left;
-		}
+		.story-card { @include nhGridColmargins($total-cols); }
 	}
 
 }

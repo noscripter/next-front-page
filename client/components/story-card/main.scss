@@ -5,13 +5,16 @@
 	.story-card__taxon { color: $color; }
 }
 
-@mixin nhStoryCard($type) {
-	@include nhGridRespondTo($until: XS) { margin-bottom: 10px; }
-	@include nhGridRespondTo($from: XS) { margin-bottom: 20px; }
+.story-card {
+	background-color: oColorsGetPaletteColor('warm-base');
+	float: left;
 	display: block;
 	overflow: hidden;
 	padding-bottom: 42px; // TODO Footer height variable
 	position: relative;
+
+	@include nhGridRespondTo($until: XS) { margin-bottom: 10px; }
+	@include nhGridRespondTo($from: XS) { margin-bottom: 20px; }
 
 	.story-card__title {
 		@include nTypeCharlie(3);
@@ -51,6 +54,9 @@
 	&.news { @include nhStoryGenreColors(map-get($o-colors-palette, 'news')); }
 	&.comment { @include nhStoryGenreColors(map-get($o-colors-palette, 'opinion')); }
 	&.lifestyle { @include nhStoryGenreColors(map-get($o-colors-palette, 'lifestyle')); }
+}
+
+@mixin nhStoryCard($type) {
 	// &.lifestyle { @include nhStoryGenreColors(map-get($o-colors-palette, 'lifestyle')); }
 
 	@if $type == 'large' {
