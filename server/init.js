@@ -1,8 +1,11 @@
 'use strict';
 
 import express from 'ft-next-express';
-import frontPage from './routes/front-page';
 import React from 'react';
+
+// routes
+import frontPage from './routes/front-page';
+import fastft from './routes/fastft';
 
 var app = express({
 	helpers: {
@@ -23,6 +26,7 @@ app.get('/', (req, res) => {
 
 app.get('/international', frontPage);
 app.get('/uk', frontPage);
+app.get('/fastft.json', fastft);
 
 var port = process.env.PORT || 3001;
 
