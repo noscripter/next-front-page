@@ -10,9 +10,6 @@ const linkHref = (id) => '/' + id.split('/').slice(-1)[0];
 class Article extends React.Component {
 	componentDidMount() {
 		const el = React.findDOMNode(this);
-
-		console.log("o-datifying", el);
-
 		initDate(el);
 	}
 
