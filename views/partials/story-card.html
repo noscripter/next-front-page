@@ -1,8 +1,8 @@
 <article class='story-card'>
-	<img class='story-card__image' src="{{item.images.4.url}}" />
+	<img class='story-card__image' src="{{item.images.0.url}}" />
 	<div class="story-card__content">
 		<h2 class="story-card__title">
-			<span class="story-card__taxon">{{item.metadata.genre.0.term.name}}</span>|
+			<span class="story-card__taxon">{{item.metadata.primarySection.term.name}}</span>|
 			{{item.title.title}}
 		</h2>
 		<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
@@ -11,8 +11,8 @@
 		<time
 			data-o-component="o-date"
 			class="o-date"
-			datetime="{{#dateformat}}{{publishedDate}}{{/dateformat}}">
-				{{#dateformat "dddd, d mmmm, yyyy"}}{{publishedDate}}{{/dateformat}}
+			datetime="{{#dateformat}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}">
+				{{#dateformat "dddd, d mmmm, yyyy"}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}
 		</time>
 	<div>
 </article>

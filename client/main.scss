@@ -55,38 +55,39 @@ body {
 		}
 	}
 
-	.flexipod--five-loud {
+	.flexipod--opinion {
 		// TODO think about sinking the breakpoints into nhFlexipod
-		@include nhFlexipod(map-get($layout-five-loud, default));
+		@include nhFlexipod(map-get($layout-opinion, default));
 
 		@include nhGridRespondTo(XS) {
-			@include nhFlexipod(map-get($layout-five-loud, XS));
+			@include nhFlexipod(map-get($layout-opinion, XS));
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-five-loud, XS));
+			@include nhFlexipod(map-get($layout-opinion, XS));
 		}
 
 		@include nhGridRespondTo(M) {
-			@include nhFlexipod(map-get($layout-five-loud, S), 9);
+			@include nhFlexipod(map-get($layout-opinion, S), 12);
 		}
 	}
 
-	.flexipod--eight-medium {
+	.flexipod--column {
 		// TODO think about sinking the breakpoints into nhFlexipod
-		@include nhFlexipod(map-get($layout-eight-medium, default));
+		@include nhFlexipod(map-get($layout-column, default));
 
 		@include nhGridRespondTo(XS) {
-			@include nhFlexipod(map-get($layout-eight-medium, XS));
+			@include nhFlexipod(map-get($layout-column, XS));
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-eight-medium, XS));
+			@include nhFlexipod(map-get($layout-column, XS));
 		}
 
 		@include nhGridRespondTo(M) {
-			@include nhFlexipod(map-get($layout-eight-medium, S), 9);
+			@include nhFlexipod(map-get($layout-column, S));
 		}
+
 	}
 }
 

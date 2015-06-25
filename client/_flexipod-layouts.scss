@@ -25,18 +25,24 @@ $layout-lead-today: (
 	)
 );
 
-$layout-five-loud: (
+$layout-opinion: (
+	default: (
+		(12, 'wide'),
+		(12, 'wide'),
+		(12, 'wideImageless'),
+		),
 	S: (
-		(1/3, 'wide'),
-		(1/3, 'small'),
-		(1/3, 'small'),
+		((2/3, 'wide'), (1/3, 'small')),
+		(1/3, 'medium'),
+		((1/3, 'small'), (2/3, 'wide')),
 	)
 );
 
-$layout-eight-medium: (
-	S: (
-		(2/3, 'wide'),
-		(1/3, 'small'),
-		(1/3, 'medium'),
-	)
+$layout-column: (
+	default: append((), (
+		((12, 'wide'), (12, 'small'))
+	)),
+	XS: append((), (
+		((12, 'tall'), (12, 'small'))
+	)),
 );

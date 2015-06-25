@@ -22,7 +22,7 @@
 	}
 	.story-card__summary { @include nTypeDelta(3); }
 	.story-card__content {
-		padding: 0.3em 0.5em;
+		padding: 10px; //0.3em 0.5em;
 		overflow: hidden;
 		& > * { margin-bottom: 10px; }
 	}
