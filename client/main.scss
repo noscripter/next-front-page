@@ -9,7 +9,9 @@
 @import "o-assets/main";
 @import "components/grid/main";
 @import "components/story-card/main";
-@import "components/feed/main";
+
+@import "components/fastft/main";
+
 @import "components/flexipod/main";
 @import "flexipod-layouts";
 
@@ -95,5 +97,17 @@ body .sidebar {
 
 	@include nhGridRespondTo($from: M) {
 		display: block;
+	}
+
+}
+
+#fastft {
+	h1 {
+		@include podHeading;
+		border-bottom: none;
+	}
+
+	article {
+		@include nhFastFtItem;
 	}
 }
