@@ -8,9 +8,10 @@ import headerFooter from 'n-header-footer';
 setup.bootstrap((result) => {
 	var flags = result.flags;
 
-	oDate.init();
 	headerFooter.init(flags);
 
 	const feedContainer = document.getElementById("fastft");
 	fastFT.init(feedContainer);
+
+	oDate.init();
 });
