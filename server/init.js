@@ -1,5 +1,3 @@
-'use strict';
-
 import express from 'ft-next-express';
 import React from 'react';
 
@@ -9,12 +7,11 @@ import fastft from './routes/fastft';
 
 var app = express({
 	helpers: {
-		dump: (it) => JSON.stringify(it, null, 2),
 		lowercase: (it) => it.toLowerCase(),
 		reactRenderToString: (klass, props) => {
 			return React.renderToString(React.createElement(klass, props));
 		}
-	},
+	}
 });
 
 app.get('/__gtg', (req, res) => {
