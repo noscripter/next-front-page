@@ -13,7 +13,7 @@
 	padding-bottom: 42px; // TODO Footer height variable
 	position: relative;
 
-	@include nhGridRespondTo($until: XS) { margin-bottom: 10px; }
+	margin-bottom: 10px;
 	@include nhGridRespondTo($from: XS) { margin-bottom: 20px; }
 
 	.story-card__title {
@@ -76,14 +76,12 @@
 }
 
 @mixin nhLargeCard {
-	@include nhGridRespondTo($until: M) {
-		font-size: 20px;
+	font-size: 20px;
 
-		.story-card__title { font-size: 1.1em; }
-		.story-card__summary {
-			font-size: 1em;
-			line-height: 0.9em;
-		}
+	.story-card__title { font-size: 1.1em; }
+	.story-card__summary {
+		font-size: 1em;
+		line-height: 0.9em;
 	}
 
 	@include nhGridRespondTo($from: M) {
