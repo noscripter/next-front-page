@@ -7,9 +7,10 @@ function uuid(thingUri) {
 	return thingUri.replace('http://api.ft.com/thing/', '');
 }
 
+	return cheerio.load(html)('body p:first-child').html();
 const fetchContent = {
-	page(pageId, useElasticSearch) {
-		return ApiClient.lists({ uuid: pageId })
+	list(listId, useElasticSearch) {
+		return ApiClient.lists({ uuid: listId })
 		.then(list => {
 			var title = list.title;
 			var ids = list.items.map(it => uuid(it.id));
@@ -20,6 +21,20 @@ const fetchContent = {
 			}).then(articles => {
 				return {
 					title: title,
+					items: articles
+				};
+			});
+		});
+	},
+
+	page(pageId, useElasticSearch) {
+		return ApiClient.pages({ uuid: pageId })
+		.then(ids => {
+			return ApiClient.contentLegacy({
+				uuid: ids,
+				useElasticSearch: useElasticSearch
+			}).then(articles => {
+				return {
 					items: articles
 				};
 			});

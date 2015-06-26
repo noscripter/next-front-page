@@ -22,14 +22,14 @@
 	float: left;
 	min-height: 1px;
 
-	@include nhGridColmargins($total-cols);
+	@include nhGridmargins($total-cols);
 
 	@if $span {
 		@include nhGridColspan($span, $total-cols);
 	}
 }
 
-@mixin nhGridColmargins($total-cols: $nh-grid-columns) {
+@mixin nhGridmargins($total-cols: $nh-grid-columns) {
 	$subgrid-ratio: $nh-grid-columns / $total-cols;
 
 	margin: percentage($subgrid-ratio * $nh-grid-gutter / 2);
@@ -120,6 +120,12 @@
 		content: "";
 		display: table;
 		clear: both;
+	}
+
+	@each $layout in $nh-container-widths {
+		@include nhGridRespondTo(nth($layout, 1)) {
+			width: nth($layout, 2);
+		}
 	}
 
 	@include nhGridRespondTo($from: XS, $until: S) {

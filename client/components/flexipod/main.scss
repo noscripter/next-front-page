@@ -54,7 +54,7 @@
 		clear: both;
 		overflow: hidden;
 
-		.story-card { @include nhGridColmargins($total-cols); }
+		.story-card { @include nhGridmargins($total-cols); }
 	}
 
 }
