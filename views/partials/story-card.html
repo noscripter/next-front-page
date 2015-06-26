@@ -1,5 +1,8 @@
 <article class='story-card {{lowercase item.metadata.genre.0.term.name}}'>
-	<a href="/{{item.id}}"><img class='story-card__image' src="{{item.images.0.url}}" /><a>
+
+	{{#if item.images.4.url}}
+		<a href="/{{item.id}}"><img class='story-card__image' src="{{item.images.4.url}}" /><a>
+	{{/if}}
 	<div class="story-card__content">
 		<a href="/{{item.id}}">
 			<h2 class="story-card__title">
