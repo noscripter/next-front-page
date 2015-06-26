@@ -9,21 +9,7 @@
 			{{> column items=articles.items title="Technology" }}
 		</section>
 		<aside class="sidebar" data-nh-grid-colspan="S4 M3">
-			<section>
-				<h1 class='pod-heading'>Fast FT</h1>
-				{{#each fastFt.items}}
-					<article>
-						<h2>{{title}}</h2>
-						<p>{{{summary}}}</p>
-						<time
-							data-o-component="o-date"
-							class="o-date"
-							datetime="{{#dateformat}}{{publishedDate}}{{/dateformat}}">
-								{{#dateformat "dddd, d mmmm, yyyy"}}{{publishedDate}}{{/dateformat}}
-						</time>
-					</article>
-				{{/each}}
-			</section>
+			<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString Feed fastFt }}}</section>
 		</aside>
 	</div>
 </div>

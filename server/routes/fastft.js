@@ -1,16 +1,10 @@
 'use strict';
 
 import content from '../lib/content';
-import Feed from '../../components/fastft/feed';
 
 module.exports = function(req, res) {
 	const useElasticSearch = res.locals.flags.elasticSearchItemGet.isSwitchedOn;
 	const contentData = content.uk(useElasticSearch);
 
-	res.render('uk', {
-		layout: 'wrapper',
-		Feed: Feed,
-		articles: contentData.top,
-		fastFt: contentData.fastFt
-	});
+	res.json(contentData.fastFt);
 };

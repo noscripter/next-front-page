@@ -15,7 +15,8 @@ verify:
 unit-test:
 	export apikey=12345; export api2key=67890; export ELASTIC_SEARCH_HOST='asnlasnd.foundcluster.com:9243'; export ELASTIC_SEARCH_HOST='https://asnlasnd.foundcluster.com:9243/v1_api_v2/item'; export HOSTEDGRAPHITE_APIKEY=123; export ENVIRONMENT=production; mocha --recursive --reporter spec tests/server/
 
-test: verify build-production unit-test
+# FIXME enable verify for ES6 + JSX, test: verify build-production unit-test
+test: build-production unit-test
 
 test-debug:
 	mocha --debug-brk --reporter spec -i tests/server/
