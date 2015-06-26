@@ -5,21 +5,45 @@ import {pollContent} from '../services/content-api';
 const pollConfig = {
 	ukTop: {
 		type: 'page',
-		uuid: '520ddb76-e43d-11e4-9e89-00144feab7de', // list id
-		supportsElasticsearch: true,
-		interval: 60 * 1000
-	},
-	intlTop: {
-		type: 'page',
-		uuid: 'b0d8e4fe-10ff-11e5-8413-00144feabdc0', // list id
-		supportsElasticsearch: true,
+		uuid: '4c499f12-4e94-11de-8d4c-00144feabdc0',
+		elasticSearchSupported: true,
 		interval: 60 * 1000
 	},
 	fastFt: {
 		type: 'concept',
-		uuid: '5c7592a8-1f0c-11e4-b0cb-b2227cce2b54', // concept id
-		supportsElasticsearch: true,
+		uuid: '5c7592a8-1f0c-11e4-b0cb-b2227cce2b54',
+		elasticSearchSupported: true,
 		interval: 30 * 1000
+	},
+	opinion: {
+		type: 'list',
+		uuid: 'bc81b5bc-1995-11e5-a130-2e7db721f996',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
+	},
+	markets: {
+		type: 'list',
+		uuid: 'ce659fb4-199f-11e5-a130-2e7db721f996',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
+	},
+	technology: {
+		type: 'list',
+		uuid: 'd990bc34-199f-11e5-a130-2e7db721f996',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
+	},
+	lifestyle: {
+		type: 'list',
+		uuid: 'ba161cf0-199f-11e5-a130-2e7db721f996',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
+	},
+	editors: {
+		type: 'list',
+		uuid: '73667f46-1a55-11e5-a130-2e7db721f996',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
 	}
 };
 

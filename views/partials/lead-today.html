@@ -1,0 +1,19 @@
+<div class="flexipod flexipod--lead-today">
+	<div class="flexipod__cards">
+		<div class="article-group">
+			{{#slice items limit=1}}
+				{{> story-card }}
+			{{/slice}}
+		</div>
+		<div class="article-group">
+			{{#slice items limit=3 offset=1}}
+				{{> story-card }}
+			{{/slice}}
+		</div>
+		<div class="article-group">
+			{{#slice items limit=3 offset=4}}
+				{{> story-card }}
+			{{/slice}}
+		</div>
+	</div>
+</div>

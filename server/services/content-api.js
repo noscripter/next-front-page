@@ -1,15 +1,12 @@
-'use strict';
-
 import ApiClient from 'next-ft-api-client';
-import cheerio from 'cheerio';
 
 function uuid(thingUri) {
 	return thingUri.replace('http://api.ft.com/thing/', '');
 }
 
 const fetchContent = {
-	page(pageId, useElasticSearch) {
-		return ApiClient.lists({ uuid: pageId })
+	list(listId, useElasticSearch) {
+		return ApiClient.lists({ uuid: listId })
 		.then(list => {
 			var title = list.title;
 			var ids = list.items.map(it => uuid(it.id));
@@ -26,6 +23,20 @@ const fetchContent = {
 		});
 	},
 
+	page(pageId, useElasticSearch) {
+		return ApiClient.pages({ uuid: pageId })
+		.then(ids => {
+			return ApiClient.contentLegacy({
+				uuid: ids,
+				useElasticSearch: useElasticSearch
+			}).then(articles => {
+				return {
+					items: articles
+				};
+			});
+		});
+	},
+
 	concept(conceptId, useElasticSearch) {
 		return ApiClient.contentAnnotatedBy({ uuid: conceptId, useElasticSearch: useElasticSearch })
 		.then(ids => {
@@ -35,7 +46,6 @@ const fetchContent = {
 			}).then(articles => {
 				return {
 					items: articles.map(it => {
-						it.summary = cheerio.load(it.bodyXML)('body p:first-child').html();
 						return it;
 					})
 				};

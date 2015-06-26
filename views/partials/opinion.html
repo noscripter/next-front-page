@@ -1,0 +1,20 @@
+<div class="flexipod flexipod--opinion">
+	<h1 class='pod-heading'>{{title}}</h1>
+	<div class="flexipod__cards">
+		<div class="article-group">
+			{{#slice items limit=2}}
+				{{> story-card }}
+			{{/slice}}
+		</div>
+		<div class="article-group">
+			{{#slice items limit=3 offset=2}}
+				{{> story-card }}
+			{{/slice}}
+		</div>
+		<div class="article-group">
+			{{#slice items limit=2 offset=5}}
+				{{> story-card }}
+			{{/slice}}
+		</div>
+	</div>
+</div>

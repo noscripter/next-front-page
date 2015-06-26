@@ -1,14 +1,14 @@
 'use strict';
 
-var oDate = require('o-date');
-var setup = require('next-js-setup');
-var fastFT = require('../components/fastft/main');
+import oDate from 'o-date';
+import setup from 'next-js-setup';
+import fastFT  from '../components/fastft/main';
+import headerFooter from 'n-header-footer';
 
-setup.bootstrap(function (result) {
+setup.bootstrap((result) => {
 	var flags = result.flags;
 
 	oDate.init();
-	var headerFooter = require('n-header-footer');
 	headerFooter.init(flags);
 
 	const feedContainer = document.getElementById("fastft");

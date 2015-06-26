@@ -1,0 +1,23 @@
+<article class='story-card {{lowercase item.metadata.genre.0.term.name}}'>
+
+	{{#if item.images.4.url}}
+		<a href="/{{item.id}}"><img class='story-card__image' src="{{item.images.4.url}}" /><a>
+	{{/if}}
+	<div class="story-card__content">
+		<a href="/{{item.id}}">
+			<h2 class="story-card__title">
+				<span class="story-card__taxon">{{item.metadata.primarySection.term.name}}</span>|
+				{{item.title.title}}
+			</h2>
+		</a>
+		<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
+	</div>
+	<div class='story-card__footer'>
+		<time
+			data-o-component="o-date"
+			class="o-date"
+			datetime="{{#dateformat}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}">
+				{{#dateformat "dddd, d mmmm, yyyy"}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}
+		</time>
+	<div>
+</article>

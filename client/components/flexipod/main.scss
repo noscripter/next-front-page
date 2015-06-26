@@ -3,78 +3,58 @@
 
 @import "../grid/main";
 
-@mixin nhFlexipod($layout-spec, $total-cols: $nh-grid-columns) {
-	@include nhGridRow($total-cols);
-
-	h1 {
-		@include nhGridColmargins($total-cols);
-	}
-
-	.flexipod__cards {
-		@include nhFlexipodHeight($layout-spec);
-		position: relative;
-
-		& > * {
-			@include nhGridColmargins($total-cols);
-			@include nhFlexipodLayout($layout-spec, $total-cols);
-
-			display: block;
-			position: absolute;
-			box-sizing: border-box;
-		}
-	}
-}
-
 @mixin nhFlexipodLayout($layout-spec, $total-cols: $nh-grid-columns) {
 	@if type-of($layout-spec) == list {
 		@for $int from 1 through length($layout-spec) {
-			@include nhFlexipodCardPositioning($int, nth($layout-spec, $int), $total-cols);
+			$card-spec: nth($layout-spec, $int);
+			@include nhFlexipodCard($int, $card-spec, $total-cols);
 		}
 	}
 }
 
-@mixin nhFlexipodCardPositioning($int, $card-spec, $total-cols: $nh-grid-columns) {
-	$width: nth($card-spec, 1);
-	$height: nth($card-spec, 2);
-	$left: nth($card-spec, 3);
-	$top:  nth($card-spec, 4);
-	$type: nth($card-spec, 5);
+@mixin nhFlexipodCard($int, $card-spec, $total-cols: $nh-grid-columns) {
+	@if type-of(nth($card-spec, 1)) == number {
+		$width: nth($card-spec, 1);
+		$type: nth($card-spec, 2);
 
-	&:nth-child(#{$int}) {
-		@include nhStoryCard($type);
+		.article-group:nth-child(#{$int}) {
+			@if $width < 1 { display: flex; } @else { display: block; }
+			.story-card {
+				@include nhStoryCard($type);
+				width: nhGridColspan($width, $total-cols);
 
-		width: nhGridColspan($width, $total-cols);
-		height: nhFlexipodCardHeight($height);
-		left: nhGridSkip($left, $total-cols);
-		top: nhFlexipodCardTop($top);
-
-		background-color: oColorsGetPaletteColor('warm-base');
-	}
-}
-
-@mixin nhFlexipodHeight($layout-spec) {
-	$height: 0;
-
-	@if type-of($layout-spec) == list {
-		@for $int from 1 through length($layout-spec) {
-			$card-height: nhFlexipodCardTotal(nth($layout-spec, $int));
-			@if $card-height > $height {
-				$height: $card-height;
 			}
 		}
 
-		height: nhFlexipodCardHeight($height);
+	} @else {
+		.article-group:nth-child(#{$int}) {
+			@for $card-int from 1 through length($card-spec) {
+				$nested-card: nth($card-spec, $card-int);
+				$width: nth($nested-card, 1);
+				$type: nth($nested-card, 2);
+
+				.story-card:nth-child(#{$card-int}) {
+					@include nhStoryCard($type);
+					width: nhGridColspan($width, $total-cols);
+				}
+
+				@if $width < 1 { display: flex; } @else { display: block; }
+			}
+
+		}
 	}
 }
 
-@function nhFlexipodCardTotal($card-spec) {
-	@return nth($card-spec, 4) + nth($card-spec, 2);
-}
 
-@function nhFlexipodCardTop($top) {
-	@return ($top * ($nh-flexipod-row + $nh-flexipod-gutter));
-}
+@mixin nhFlexipod($layout-spec, $total-cols: $nh-grid-columns) {
+	@include nhFlexipodLayout($layout-spec, $total-cols);
 
-@function nhFlexipodCardHeight($height) {
-	@return ($height * $nh-flexipod-row + ($height - 1) * $nh-flexipod-gutter);
+	.article-group {
+		width: 100%;
+		clear: both;
+		overflow: hidden;
+
+		.story-card { @include nhGridmargins($total-cols); }
+	}
+
 }

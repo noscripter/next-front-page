@@ -1,22 +1,44 @@
 @import 'variables';
 
-@mixin nhStoryCard($type) {
+@mixin nhStoryGenreColors($color) {
+	.story-card__footer { border-bottom: 1px $color solid; }
+	.story-card__taxon { color: $color; }
+}
+
+.story-card {
+	background-color: oColorsGetPaletteColor('warm-base');
+	float: left;
 	display: block;
 	overflow: hidden;
-	padding-bottom: 42px; // TODO Footer height variable
+	padding-bottom: $story-card--footer-height;
+	position: relative;
+
+	margin-bottom: 10px;
+	@include nhGridRespondTo($from: XS) { margin-bottom: 20px; }
+
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
 
 	.story-card__title {
 		@include nTypeCharlie(3);
 		font-style: normal;
+		line-height: 1.2em;
 	}
+	.story-card__image { width: 100%; }
 	.story-card__taxon {
-		@include nTypeBeta(3);
+		@include nTypeBeta(4);
+		font-size: 18px;
 		text-transform: uppercase;
 		color: map-get($o-colors-palette, 'red-1');
+		letter-spacing: 1px;
+		margin-right: 5px;
 	}
 	.story-card__summary { @include nTypeDelta(3); }
 	.story-card__content {
-		padding: 0.3em 0.5em;
+		padding: 10px;
+		overflow: hidden;
 		& > * { margin-bottom: 10px; }
 	}
 
@@ -29,41 +51,17 @@
 		left: 0;
 		background-color: map-get($o-colors-palette, 'warm-2');
 		text-transform: uppercase;
-		height: 42px; // TODO Footer height variable
-		border-bottom: 1px map-get($o-colors-palette, 'cold-1') solid;
+		height: $story-card--footer-height;
 		padding: 0 20px;
-		line-height: 42px; // TODO Footer height variable
+		line-height: $story-card--footer-height;
 	}
 
-	@include nhGridRespondTo(XL) {
-		.story-card__title { font-size: 30px; }
-		.story-card__summary { @include nTypeDeltaSize(3); }
-	}
+	&.news { @include nhStoryGenreColors(map-get($o-colors-palette, 'news')); }
+	&.comment { @include nhStoryGenreColors(map-get($o-colors-palette, 'opinion')); }
+	&.lifestyle { @include nhStoryGenreColors(map-get($o-colors-palette, 'lifestyle')); }
+}
 
-	@include nhGridRespondTo(L) {
-		.story-card__taxon { @include nTypeBeta(3); }
-		.story-card__title { @include nTypeCharlieSize(2); }
-		.story-card__summary { @include nTypeDeltaSize(3); }
-	}
-
-	@include nhGridRespondTo(M) {
-		.story-card__taxon { font-size: 20px; }
-		.story-card__title { font-size: 28px; }
-		.story-card__summary { font-size: 24px; }
-	}
-
-	@include nhGridRespondTo(S) {
-		.story-card__taxon { font-size: 20px; }
-		.story-card__title { font-size: 28px; }
-		.story-card__summary { font-size: 24px; }
-	}
-
-	@include nhGridRespondTo(XS) {
-		.story-card__taxon { font-size: 20px; }
-		.story-card__title { font-size: 28px; }
-		.story-card__summary { font-size: 24px; }
-	}
-
+@mixin nhStoryCard($type) {
 	@if $type == 'large' {
 		@include nhLargeCard();
 	} @else if $type == 'tall' {
@@ -72,21 +70,51 @@
 		@include nhMediumCard();
 	} @else if $type == 'wide' {
 		@include nhWideCard();
+	} @else if $type == 'wideImageless' {
+		@include nhWideImagelessCard();
 	} @else if $type == 'small' {
 		@include nhSmallCard();
 	}
 
 }
 
-@mixin nhLargeCard {
+@mixin nhLargeCard() {
+	font-size: 20px;
+
+	.story-card__title { font-size: 1.1em; }
+	.story-card__summary {
+		font-size: 1em;
+		line-height: 0.9em;
+	}
+
+	@include nhGridRespondTo($from: M) {
+		.story-card__title { font-size: 0.6em; }
+		.story-card__summary {
+			font-size: 0.54em;
+			line-height: 0.7em;
+			display: initial;
+		}
+		font-size: 40px;
+	}
+
+
+
 	.story-card__image {
-		width: 100%;
+		@include nhGridColumn(6, 9);
+		margin-top: 0;
+		margin-left: 0;
 		height: initial;
 		display: block;
 	}
 
-	.story-card__summary { display: initial; }
+	.story-card__content { @include nhGridColumn(3, 9); }
 
+	.story-card__image,
+	.story-card__content {
+		@include nhGridRespondTo($until: XS) {
+			width: 100%;
+		}
+	}
 }
 
 @mixin nhMediumCard {
@@ -94,39 +122,63 @@
 		display: none;
 	}
 
+	// .story-card__taxon { font-size: 20px; }
+	.story-card__title { font-size: 20px; }
+	.story-card__summary { font-size: 18px; }
+
 	.story-card__summary { display: initial; }
-
-
 }
 
 @mixin nhSmallCard {
 	.story-card__image { display: none; }
 	.story-card__summary { display: none; }
+
+	.story-card__title { font-size: 0.9em; }
+
 }
 
 @mixin nhTallCard {
+	padding-bottom: 62px;
+	font-size: 20px;
+
 	.story-card__image {
 		width: 100%;
 		height: initial;
 		display: block;
 	}
 
-	.story-card__summary { display: intital; }
+	.story-card__summary { display: initial; }
+
+	.story-card__title { font-size: 1.2em; }
+	// .story-card__taxon { font-size: 1em; }
+	.story-card__summary {
+		font-size: 1.1em;
+		line-height: 1.2em;
+	}
 
 }
 
-@mixin nhWideCard {
+@mixin nhWideCard() {
+	font-size: 24px;
+	@include nhGridRespondTo($from: M) {
+		.story-card__title { font-size: 1em; }
+		// .story-card__taxon { font-size: 0.8em; }
+	}
 	.story-card__image {
-		width: initial;
+		@include nhGridColumn(4, 9);
 		height: 100%;
 		display: block;
 		float: left;
-		margin-right: 10px;
-	}
-
-	.story-card__summary { display: none; }
-	.story-card__content {
 		margin: 0;
 	}
 
+	// .story-card__title { font-size: 1em; }
+	.story-card__summary { display: none; }
+	.story-card__content { margin: 0; }
+	.story-card__title { font-size: 1em; }
+}
+
+@mixin nhWideImagelessCard {
+	@include nhWideCard();
+	.story-card__image { display: none; }
 }
