@@ -1,13 +1,9 @@
-'use strict';
-
 import ApiClient from 'next-ft-api-client';
-import cheerio from 'cheerio';
 
 function uuid(thingUri) {
 	return thingUri.replace('http://api.ft.com/thing/', '');
 }
 
-	return cheerio.load(html)('body p:first-child').html();
 const fetchContent = {
 	list(listId, useElasticSearch) {
 		return ApiClient.lists({ uuid: listId })
@@ -50,7 +46,6 @@ const fetchContent = {
 			}).then(articles => {
 				return {
 					items: articles.map(it => {
-						it.summary = cheerio.load(it.bodyXML)('body p:first-child').html();
 						return it;
 					})
 				};
