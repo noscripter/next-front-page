@@ -19,7 +19,7 @@ class Article extends React.Component {
 		return (
 			<article>
 				<h2><a href={linkHref(id)}>{title}</a></h2>
-				<time data-o-component="o-date" className="o-date" dateTime={format(publishedDate, 'datetime')}>
+				<time data-o-component="o-date" className="o-date" dateTime={publishedDate}>
 					{format(publishedDate, dateFormat)}
 				</time>
 			</article>
