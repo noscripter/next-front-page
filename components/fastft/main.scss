@@ -18,6 +18,10 @@
 		text-indent: -9999px;
 		@include nextIcon(brand-ft, oColorsGetPaletteColor(warm-4), 40px);
 	}
+
+	.fastft__more-icon {
+		float: right;
+	}
 }
 
 @mixin nhFastFtItem {
@@ -55,6 +59,10 @@
 	}
 
 	p { display: none; }
+
+	i {
+		margin: 2px 4px 0 0;
+	}
 
 	time {
 		@include nTypeAlpha(5);

@@ -18,6 +18,7 @@ class Feed extends React.Component {
 					<a href="/fastft">
 						<span className="fastft__logo__fast">fast</span>
 						<span className="fastft__logo__ft">FT</span>
+						<i className="fastft__more-icon more-icon" />
 					</a>
 				</h1>
 				{articles}
