@@ -24,7 +24,6 @@ app.get('/', (req, res) => {
 // app routes
 app.get('/front-page', frontPage);
 
-app.get('/front-page', frontPage);
 app.get('/international', frontPage);
 app.get('/uk', frontPage);
 
