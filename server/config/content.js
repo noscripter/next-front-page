@@ -1,11 +1,15 @@
 'use strict';
 
-// UK
-
-const homeUk = {
-	top: {
+const sources = {
+	ukTop: {
 		type: 'page',
-		uuid: '520ddb76-e43d-11e4-9e89-00144feab7de',
+		uuid: '4c499f12-4e94-11de-8d4c-00144feabdc0',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
+	},
+	usTop: {
+		type: 'page',
+		uuid: 'b0ed86f4-4e94-11de-8d4c-00144feabdc0',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
 	},
@@ -17,53 +21,36 @@ const homeUk = {
 	},
 	opinion: {
 		type: 'page',
-		uuid: 'bc81b5bc-1995-11e5-a130-2e7db721f996',
+		uuid: 'ec66fcc8-cd25-11de-a748-00144feabdc0',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
 	},
 	markets: {
 		type: 'page',
-		uuid: 'ce659fb4-199f-11e5-a130-2e7db721f996',
+		genres: ['analysis', 'comment'],
+		uuid: '011debcc-cd26-11de-a748-00144feabdc0',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
 	},
 	technology: {
 		type: 'page',
-		uuid: 'd990bc34-199f-11e5-a130-2e7db721f996',
+		genres: ['analysis', 'comment'],
+		uuid: 'e900741c-f7e8-11df-8d91-00144feab49a',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
 	},
 	lifestyle: {
 		type: 'page',
-		uuid: 'ba161cf0-199f-11e5-a130-2e7db721f996',
+		uuid: 'cec106aa-cd25-11de-a748-00144feabdc0',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
 	},
 	editors: {
-		type: 'page',
+		type: 'list',
 		uuid: '73667f46-1a55-11e5-a130-2e7db721f996',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
 	}
-};
+}
 
-// International
-
-const homeIntl = {
-	top: {
-		type: 'page',
-		uuid: 'b0d8e4fe-10ff-11e5-8413-00144feabdc0',
-		elasticSearchSupported: true,
-		interval: 60 * 1000
-	},
-	fastFt: {
-		type: 'concept',
-		uuid: '5c7592a8-1f0c-11e4-b0cb-b2227cce2b54',
-		elasticSearchSupported: true,
-		interval: 30 * 1000
-	}
-};
-
-export default {
-	uk: homeUk
-};
+export default sources;
