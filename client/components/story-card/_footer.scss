@@ -1,0 +1,23 @@
+@mixin storyCardFooter {
+	@include nTypeAlpha(5);
+
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	width: 100%;
+	background-color: map-get($o-colors-palette, 'warm-2');
+	text-transform: uppercase;
+	height: $story-card--footer-height;
+	padding: 0 20px;
+	line-height: $story-card--footer-height;
+
+	.myft-ui.myft-ui--save {
+		display: inline-block;
+		float: right;
+		button {
+			border: 0;
+			color: transparent;
+		}
+	}
+}

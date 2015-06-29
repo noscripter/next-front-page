@@ -1,0 +1,40 @@
+@import "../grid/main";
+
+.carousel-card {
+	width: 100%;
+	text-align: center;
+
+	@include nhGridRespondTo(XS) {
+		@include nhGridColspan(4, 12);
+	}
+
+	@include nhGridRespondTo(M) {
+		@include nhGridColspan(2, 12);
+	}
+
+	@include nhGridmargins(12);
+	margin-top: 0px;
+	margin-bottom: 20px;
+	float: left;
+
+	.story-card__title {
+		font-size: 0.9em;
+	}
+
+	.story-card__taxon {
+		margin-bottom: 5px;
+		font-size: 0.9em;
+	}
+
+}
+
+.carousel-card__image {
+	display: none;
+	width: 100%;
+	margin-bottom: 10px;
+
+	@include nhGridRespondTo(S) {
+		display: inline;
+	}
+
+}

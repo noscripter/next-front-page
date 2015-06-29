@@ -57,3 +57,9 @@ $layout-column: (
 		((12, 'tall'), (12, 'small'))
 	)),
 );
+
+$layout-editors: (
+	default: append((), (
+		(2, 'tall')
+	))
+);
