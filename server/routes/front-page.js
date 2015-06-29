@@ -13,6 +13,16 @@ module.exports = function(req, res) {
 		opinion: contentData.opinion,
 		tech: contentData.technology,
 		markets: contentData.markets,
-		weekend: contentData.lifestyle
+		weekend: contentData.lifestyle,
+		editors: {
+			items: [
+				contentData.bigRead.items[0],
+				contentData.lunch.items[0],
+				contentData.management.items[0],
+				contentData.frontPageSkyline.items[0],
+				contentData.personInNews.items[0],
+				contentData.lex.items[0]
+			]
+		}
 	});
 };
