@@ -31,7 +31,7 @@
 		@include nTypeBeta(4);
 		font-size: 18px;
 		text-transform: uppercase;
-		color: map-get($o-colors-palette, 'red-1');
+		color: oColorsGetPaletteColor('red-1');
 		letter-spacing: 1px;
 		margin-right: 5px;
 	}
@@ -49,16 +49,16 @@
 		bottom: 0;
 		right: 0;
 		left: 0;
-		background-color: map-get($o-colors-palette, 'warm-2');
+		background-color: oColorsGetPaletteColor('warm-2');
 		text-transform: uppercase;
 		height: $story-card--footer-height;
 		padding: 0 20px;
 		line-height: $story-card--footer-height;
 	}
 
-	&.news { @include nhStoryGenreColors(map-get($o-colors-palette, 'news')); }
-	&.comment { @include nhStoryGenreColors(map-get($o-colors-palette, 'opinion')); }
-	&.lifestyle { @include nhStoryGenreColors(map-get($o-colors-palette, 'lifestyle')); }
+	&.news { @include nhStoryGenreColors(oColorsGetPaletteColor('news')); }
+	&.comment { @include nhStoryGenreColors(oColorsGetPaletteColor('opinion')); }
+	&.lifestyle { @include nhStoryGenreColors(oColorsGetPaletteColor('lifestyle')); }
 }
 
 @mixin nhStoryCard($type) {
