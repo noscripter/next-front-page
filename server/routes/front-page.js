@@ -5,8 +5,6 @@ module.exports = function(req, res) {
 	const useElasticSearch = res.locals.flags.elasticSearchItemGet.isSwitchedOn;
 	const contentData = content.uk(useElasticSearch);
 
-	console.log(contentData);
-
 	res.render('uk', {
 		layout: 'wrapper',
 		Feed: Feed,

@@ -44,7 +44,6 @@ const fetchContent = {
 			useElasticSearch: useElasticSearch
 		})
 		.then(ids => {
-			console.log(ids);
 			return ApiClient.contentLegacy({
 				uuid: ids,
 				useElasticSearch: useElasticSearch
