@@ -1,9 +1,28 @@
 @import "next-type/main";
 @import "o-colors/main";
 
+@mixin nhFastFtTitle {
+	a {
+		display: block;
+		width: 100%;
+		hight: 100%;
+	}
+
+	.fastft__logo__fast {
+		text-indent: -9999px;
+		@include nextIcon(brand-fast, oColorsGetPaletteColor(fastft-brand), 40px);
+		height: 45px;
+	}
+
+	.fastft__logo__ft {
+		text-indent: -9999px;
+		@include nextIcon(brand-ft, oColorsGetPaletteColor(warm-4), 40px);
+	}
+}
+
 @mixin nhFastFtItem {
 	padding: 14px 0;
-	border: 1px #dddddd solid;
+	border: 1px oColorsGetPaletteColor(blue-2) solid;
 	border-width: 0 0 1px 0;
 
 	&:hover, &:focus {
@@ -30,16 +49,8 @@
 		line-height: 1.2;
 
 		a {
-			// FIXME lifted from next-sass-setup, once updated to allow
-			// nh-grid, use the existing 'nLinksHeadline' mixin
-			color: oColorsGetPaletteColor(cold-2);
-			text-decoration: none;
-
-			&:hover, &:focus {
-				color: oColorsGetPaletteColor(fastft-brand);
-				border-bottom-width: 1px;
-				border-bottom-style: dotted;
-			}
+			@include nLinksHeadline();
+			border-color: oColorsGetPaletteColor(fastft-brand);
 		}
 	}
 
@@ -47,7 +58,8 @@
 
 	time {
 		@include nTypeAlpha(5);
+		color: oColorsGetPaletteColor(timestamp);
 		text-transform: uppercase;
-		height: 42px; // TODO Footer height variable
+		height: 42px;
 	}
 }

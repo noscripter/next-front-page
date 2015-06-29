@@ -59,6 +59,7 @@ body {
 
 .main-content {
 	@include nhGridColumn($span: (default: 12, M: 9, S: 8));
+
 	.flexipod--lead-today {
 		// TODO think about sinking the breakpoints into nhFlexipod
 		@include nhFlexipodStory(map-get($layout-lead-today, default));
@@ -118,7 +119,7 @@ body {
 }
 
 .next-header {
-	@include nhGridRespondTo($from: S) { margin-bottom: 40px; }
+	@include nhGridRespondTo($from: S) { margin-bottom: 20px; }
 }
 
 body .sidebar {
@@ -132,8 +133,7 @@ body .sidebar {
 
 #fastft {
 	h1 {
-		@include podHeading;
-		border-bottom: none;
+		@include nhFastFtTitle;
 	}
 
 	article {
