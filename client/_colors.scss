@@ -1,31 +1,8 @@
-$o-colors-palette: (
-	'warm-bg': #fdf8f2,
-	'warm-base': #fff1e0,
+// TODO get these back into o-colors on the next branch
 
-	'warm-1': #ffe9d7,
-	'warm-2': #f6e9d8,
-	'warm-3': #cec6b9,
-	'warm-4': #1d1d1d,
-
-	'cold-1': #505050,
-	'cold-2': #333333,
-	'cold-3': #1d1d1d,
-
-	'red-1': #e2281a,
-	'red-2': #f99d9d,
-
-	'blue-1': #002758,
-	'blue-2': #eeeeee,
-
-	'purple-1': #410057,
-	'purple-2': #f3dee3,
-
-	'link-1': #27757b,
-	'link-2': #2bbbbf,
-
-	'fastft-brand': #cf191d,
-	'opinion': #00a68e,
-	'news': #955252,
-	'lifestyle': #7d4d93
-
-) !default;
+@include oColorsSetColor('warm-bg', #fdf8f2);
+@include oColorsSetColor('warm-base', #fff1e0);
+@include oColorsSetColor('fastft-brand', #cf191d);
+@include oColorsSetColor('opinion', #00a68e);
+@include oColorsSetColor('news', #955252);
+@include oColorsSetColor('lifestyle', #7d4d93);

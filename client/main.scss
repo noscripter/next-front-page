@@ -1,24 +1,24 @@
+@import "next-sass-setup/main";
+
 @import "colors";
-@import "o-colors/main";
+@import "type";
 
 @import "n-header-footer/main";
 @import "next-welcome/main";
 
-@import "next-type/main";
-@import "type";
-@import "o-assets/main";
 @import "components/grid/main";
 @import "components/story-card/main";
 
 @import "components/fastft/main";
 
 @import "components/flexipod/main";
+
 @import "flexipod-layouts";
 
 html {
 	@include oColorsFor(page);
 	@include nTypeAlpha(3);
-	background-color: map-get($o-colors-palette, 'warm-bg');
+	background-color: oColorsGetPaletteColor('warm-bg');
 
 	// Prevent navigation menus from creating
 	// extra space on sides of the page
