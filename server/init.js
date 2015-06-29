@@ -1,11 +1,16 @@
-'use strict';
-
 import express from 'ft-next-express';
+import React from 'react';
+
+// routes
 import frontPage from './routes/front-page';
+import fastft from './routes/fastft';
 
 var app = express({
 	helpers: {
-		dump: (it) => JSON.stringify(it, null, 2)
+		lowercase: (it) => it.toLowerCase(),
+		reactRenderToString: (klass, props) => {
+			return React.renderToString(React.createElement(klass, props));
+		}
 	}
 });
 
@@ -20,6 +25,7 @@ app.get('/', (req, res) => {
 
 app.get('/international', frontPage);
 app.get('/uk', frontPage);
+app.get('/fastft.json', fastft);
 
 var port = process.env.PORT || 3001;
 

@@ -1,8 +1,12 @@
-.pod-heading {
-	@include nTypeAlpha(1);
+@mixin podHeading {
+	@include nTypeAlpha(2);
 	margin-bottom: 20px;
-	padding: 20px 0;
+	padding: 10px 0;
 	color: map-get($o-colors-palette, 'warm-4');
 	border: solid map-get($o-colors-palette, 'warm-3');
 	border-width: 0 0 1px;
+}
+
+.pod-heading {
+	@include podHeading;
 }

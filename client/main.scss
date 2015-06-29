@@ -9,7 +9,9 @@
 @import "o-assets/main";
 @import "components/grid/main";
 @import "components/story-card/main";
-@import "components/feed/main";
+
+@import "components/fastft/main";
+
 @import "components/flexipod/main";
 @import "flexipod-layouts";
 
@@ -35,9 +37,9 @@ body {
 }
 
 .main-content {
-	@include nhGridColumn($span: (default: 12, M: 9));
+	@include nhGridColumn($span: (default: 12, M: 9, S: 8));
 
-	margin-top: 40px;
+	@include nhGridRespondTo($from: S) { margin-top: 40px; }
 	.flexipod--lead-today {
 		// TODO think about sinking the breakpoints into nhFlexipod
 		@include nhFlexipod(map-get($layout-lead-today, default));
@@ -47,53 +49,66 @@ body {
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-lead-today, XS));
+			@include nhFlexipod(map-get($layout-lead-today, S));
 		}
 
 		@include nhGridRespondTo(M) {
-			@include nhFlexipod(map-get($layout-lead-today, S), 9);
+			@include nhFlexipod(map-get($layout-lead-today, M), 9);
 		}
 	}
 
-	.flexipod--five-loud {
+	.flexipod--opinion {
 		// TODO think about sinking the breakpoints into nhFlexipod
-		@include nhFlexipod(map-get($layout-five-loud, default));
+		@include nhFlexipod(map-get($layout-opinion, default));
 
 		@include nhGridRespondTo(XS) {
-			@include nhFlexipod(map-get($layout-five-loud, XS));
+			@include nhFlexipod(map-get($layout-opinion, XS));
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-five-loud, XS));
+			@include nhFlexipod(map-get($layout-opinion, S));
 		}
 
 		@include nhGridRespondTo(M) {
-			@include nhFlexipod(map-get($layout-five-loud, S), 9);
+			@include nhFlexipod(map-get($layout-opinion, M), 12);
 		}
 	}
 
-	.flexipod--eight-medium {
+	.flexipod--column {
 		// TODO think about sinking the breakpoints into nhFlexipod
-		@include nhFlexipod(map-get($layout-eight-medium, default));
+		@include nhFlexipod(map-get($layout-column, default));
 
 		@include nhGridRespondTo(XS) {
-			@include nhFlexipod(map-get($layout-eight-medium, XS));
+			@include nhFlexipod(map-get($layout-column, XS));
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-eight-medium, XS));
+			@include nhFlexipod(map-get($layout-column, S));
 		}
 
 		@include nhGridRespondTo(M) {
-			@include nhFlexipod(map-get($layout-eight-medium, S), 9);
+			@include nhFlexipod(map-get($layout-column, M));
 		}
+
 	}
 }
 
 body .sidebar {
 	display: none;
 
-	@include nhGridRespondTo($from: M) {
+	@include nhGridRespondTo($from: S) {
 		display: block;
+	}
+
+}
+
+#fastft {
+	h1 {
+		@include podHeading;
+		border-bottom: none;
+	}
+
+	article {
+		@include nhFastFtItem;
 	}
 }
