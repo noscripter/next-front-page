@@ -4,10 +4,6 @@ function uuid(thingUri) {
 	return thingUri.replace('http://api.ft.com/thing/', '');
 }
 
-function firstParagraph(html) {
-	cheerio.load(html)('body p:first-child').html()
-}
-
 const fetchContent = {
 	list(listId, useElasticSearch) {
 		return ApiClient.lists({ uuid: listId })
@@ -41,34 +37,51 @@ const fetchContent = {
 		});
 	},
 
+	search(query, useElasticSearch) {
+		return ApiClient.searchLegacy({
+			query: query,
+			useLegacyContent: true,
+			useElasticSearch: useElasticSearch
+		})
+		.then(ids => {
+			console.log(ids);
+			return ApiClient.contentLegacy({
+				uuid: ids,
+				useElasticSearch: useElasticSearch
+			}).then(articles => {
+				return {
+					items: articles
+				};
+			});
+		});
+	},
+
 	concept(conceptId, useElasticSearch) {
 		return ApiClient.contentAnnotatedBy({ uuid: conceptId, useElasticSearch: useElasticSearch })
 		.then(ids => {
 			return ApiClient.content({ uuid: ids, useElasticSearch: useElasticSearch})
 			.then(articles => {
 				return {
-					items: articles.map(it => {
-						return it;
-					})
+					items: articles
 				};
 			});
 		});
 	}
 };
 
-function logFetched(list, useElasticSearch) {
+function logFetched(list, useElasticSearch, name) {
 	const source = useElasticSearch ? 'elasticsearch' : 'CAPI';
-	console.log('Fetched list', list.title, 'with', list.items.length, 'articles from', source);
+	console.log('Fetched list', list.title || name, 'with', list.items.length, 'articles from', source);
 
 	return list;
 }
 
-function pollContent(opt, useElasticSearch, updateContent) {
+function pollContent(opt, useElasticSearch, updateContent, name) {
 	const fetch = fetchContent[opt.type];
 
 	const poller = (/*data*/) => {
 		fetch(opt.uuid, useElasticSearch)
-		.then(it => logFetched(it, useElasticSearch))
+		.then(list => logFetched(list, useElasticSearch, name))
 		.then(updateContent)
 		.catch(err => {
 			console.log('Error fetching from', (useElasticSearch ? 'elasticsearch' : 'CAPI'), err);
