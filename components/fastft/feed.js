@@ -14,7 +14,13 @@ class Feed extends React.Component {
 
 		return (
 			<div>
-				<h1>fastFT</h1>
+				<h1>
+					<a href="/fastft">
+						<span className="fastft__logo__fast">fast</span>
+						<span className="fastft__logo__ft">FT</span>
+						<i className="fastft__more-icon more-icon" />
+					</a>
+				</h1>
 				{articles}
 			</div>
 		);
