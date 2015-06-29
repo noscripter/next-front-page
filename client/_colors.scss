@@ -1,12 +1,8 @@
 // TODO get these back into o-colors on the next branch
 
-$o-colors-palette: map-merge($o-colors-palette, (
-	'warm-bg': #fdf8f2,
-	'warm-base': #fff1e0,
-
-	'fastft-brand': #cf191d,
-
-	'opinion': #00a68e,
-	'news': #955252,
-	'lifestyle': #7d4d93
-));
+@include oColorsSetColor('warm-bg', #fdf8f2);
+@include oColorsSetColor('warm-base', #fff1e0);
+@include oColorsSetColor('fastft-brand', #cf191d);
+@include oColorsSetColor('opinion', #00a68e);
+@include oColorsSetColor('news', #955252);
+@include oColorsSetColor('lifestyle', #7d4d93);
