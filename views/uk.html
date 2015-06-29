@@ -2,11 +2,11 @@
 	<div class="nh-grid-row">
 		<section class="main-content">
 			{{> lead-today items=articles.items }}
-			{{> opinion items=articles.items title="Opinion" }}
+			{{> opinion items=opinion.items title="Opinion" }}
 
-			{{> column items=articles.items title="Weekend" }}
-			{{> column items=articles.items title="Markets" }}
-			{{> column items=articles.items title="Technology" }}
+			{{> column items=weekend.items title="Weekend" }}
+			{{> column items=markets.items title="Markets" }}
+			{{> column items=tech.items title="Technology" }}
 		</section>
 		<aside class="sidebar" data-nh-grid-colspan="S4 M4">
 			<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString Feed fastFt }}}</section>

@@ -37,34 +37,50 @@ const fetchContent = {
 		});
 	},
 
-	concept(conceptId, useElasticSearch) {
-		return ApiClient.contentAnnotatedBy({ uuid: conceptId, useElasticSearch: useElasticSearch })
+	search(query, useElasticSearch) {
+		return ApiClient.searchLegacy({
+			query: query,
+			useLegacyContent: true,
+			useElasticSearch: useElasticSearch
+		})
 		.then(ids => {
-			return ApiClient.content({
+			return ApiClient.contentLegacy({
 				uuid: ids,
 				useElasticSearch: useElasticSearch
 			}).then(articles => {
 				return {
-					items: articles.map(it => {
-						return it;
-					})
+					items: articles
+				};
+			});
+		});
+	},
+
+	concept(conceptId, useElasticSearch) {
+		return ApiClient.contentAnnotatedBy({ uuid: conceptId, useElasticSearch: useElasticSearch })
+		.then(ids => {
+			return ApiClient.content({ uuid: ids, useElasticSearch: useElasticSearch})
+			.then(articles => {
+				return {
+					items: articles
 				};
 			});
 		});
 	}
 };
 
-function logFetched(list, useElasticSearch) {
+function logFetched(list, useElasticSearch, name) {
 	const source = useElasticSearch ? 'elasticsearch' : 'CAPI';
-	console.log('Fetched list', list.title, 'with', list.items.length, 'articles from', source);
+	console.log('Fetched list', list.title || name, 'with', list.items.length, 'articles from', source);
 
 	return list;
 }
 
-function pollContent(opt, useElasticSearch, updateContent) {
+function pollContent(opt, useElasticSearch, updateContent, name) {
+	const fetch = fetchContent[opt.type];
+
 	const poller = (/*data*/) => {
-		fetchContent[opt.type](opt.uuid, useElasticSearch)
-		.then(it => logFetched(it, useElasticSearch))
+		fetch(opt.uuid, useElasticSearch)
+		.then(list => logFetched(list, useElasticSearch, name))
 		.then(updateContent)
 		.catch(err => {
 			console.log('Error fetching from', (useElasticSearch ? 'elasticsearch' : 'CAPI'), err);

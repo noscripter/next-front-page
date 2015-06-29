@@ -1,63 +1,27 @@
-'use strict';
-
 import {pollContent} from '../services/content-api';
+import {default as pollConfig} from '../config/content.js';
 
-const pollConfig = {
-	ukTop: {
-		type: 'page',
-		uuid: '4c499f12-4e94-11de-8d4c-00144feabdc0',
-		elasticSearchSupported: true,
-		interval: 60 * 1000
-	},
-	fastFt: {
-		type: 'concept',
-		uuid: '5c7592a8-1f0c-11e4-b0cb-b2227cce2b54',
-		elasticSearchSupported: true,
-		interval: 30 * 1000
-	},
-	opinion: {
-		type: 'list',
-		uuid: 'bc81b5bc-1995-11e5-a130-2e7db721f996',
-		elasticSearchSupported: true,
-		interval: 60 * 1000
-	},
-	markets: {
-		type: 'list',
-		uuid: 'ce659fb4-199f-11e5-a130-2e7db721f996',
-		elasticSearchSupported: true,
-		interval: 60 * 1000
-	},
-	technology: {
-		type: 'list',
-		uuid: 'd990bc34-199f-11e5-a130-2e7db721f996',
-		elasticSearchSupported: true,
-		interval: 60 * 1000
-	},
-	lifestyle: {
-		type: 'list',
-		uuid: 'ba161cf0-199f-11e5-a130-2e7db721f996',
-		elasticSearchSupported: true,
-		interval: 60 * 1000
-	},
-	editors: {
-		type: 'list',
-		uuid: '73667f46-1a55-11e5-a130-2e7db721f996',
-		elasticSearchSupported: true,
-		interval: 60 * 1000
-	}
-};
+const empty = { items: [] };
 
 // Content cache for polling
 var contentCache = {
 	elastic: {
-		ukTop: [],
-		intTop: [],
-		fastFt: []
+		ukTop: empty,
+		fastFt: empty,
+		opinion: empty,
+		markets: empty,
+		technology: empty,
+		lifestyle: empty,
+		editors: empty
 	},
 	capi1: {
-		ukTop: [],
-		intTop: [],
-		fastFt: []
+		ukTop: empty,
+		fastFt: empty,
+		opinion: empty,
+		markets: empty,
+		technology: empty,
+		lifestyle: empty,
+		editors: empty
 	}
 };
 
@@ -70,7 +34,16 @@ Object.keys(pollConfig)
 		pollContent(
 			pollConfig[it],
 			(source === 'elastic'),
-			content => contentCache[source][it] = content
+			content => {
+				contentCache[source][it] = content;
+				if (pollConfig[it].genres) {
+					contentCache[source][it].items = content.items.filter(story => {
+						const genre = story.item.metadata.genre[0].term.name.toLowerCase();
+						return ~pollConfig[it].genres.indexOf(genre);
+					});
+				}
+			},
+			it
 		);
 	});
 });
@@ -103,5 +76,5 @@ const cachedContent = (topStoriesRegion) => {
 
 export default {
 	uk: cachedContent('ukTop'),
-	intl: cachedContent('ukTop')
+	us: cachedContent('usTop')
 };

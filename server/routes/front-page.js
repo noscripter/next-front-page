@@ -1,5 +1,3 @@
-'use strict';
-
 import content from '../lib/content';
 import Feed from '../../components/fastft/feed';
 
@@ -11,6 +9,10 @@ module.exports = function(req, res) {
 		layout: 'wrapper',
 		Feed: Feed,
 		articles: contentData.top,
-		fastFt: contentData.fastFt
+		fastFt: contentData.fastFt,
+		opinion: contentData.opinion,
+		tech: contentData.technology,
+		markets: contentData.markets,
+		weekend: contentData.lifestyle
 	});
 };
