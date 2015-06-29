@@ -50,7 +50,43 @@ const sources = {
 		uuid: '73667f46-1a55-11e5-a130-2e7db721f996',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
+	},
+	bigRead: {
+		type: 'search',
+		uuid: 'sections:"The Big Read"',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
+	},
+	lunch: {
+		type: 'search',
+		uuid: 'brand:"Lunch with the FT"',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
+	},
+	lex: {
+		type: 'search',
+		uuid: 'sections:"Lex"',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
+	},
+	management: {
+		type: 'page',
+		uuid: 'fcdae4e8-cd25-11de-a748-00144feabdc0',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
+	},
+	personInNews: {
+		type: 'search',
+		uuid: 'brand:"person in the news"',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
+	},
+	frontPageSkyline: {
+		type: 'page',
+		uuid: '4c499f12-4e94-11de-8d4c-00144feabdc0',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
 	}
-}
+};
 
 export default sources;

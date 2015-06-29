@@ -12,7 +12,13 @@ var contentCache = {
 		markets: empty,
 		technology: empty,
 		lifestyle: empty,
-		editors: empty
+		editors: empty,
+		bigRead: empty,
+		lunch: empty,
+		management: empty,
+		frontPageSkyline: empty,
+		personInNews: empty,
+		lex: empty
 	},
 	capi1: {
 		ukTop: empty,
@@ -21,7 +27,13 @@ var contentCache = {
 		markets: empty,
 		technology: empty,
 		lifestyle: empty,
-		editors: empty
+		editors: empty,
+		bigRead: empty,
+		lunch: empty,
+		management: empty,
+		frontPageSkyline: empty,
+		personInNews: empty,
+		lex: empty
 	}
 };
 
