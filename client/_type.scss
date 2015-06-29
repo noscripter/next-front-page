@@ -10,3 +10,9 @@
 .pod-heading {
 	@include podHeading;
 }
+
+.carousel-heading {
+	@include podHeading;
+	border: none;
+	text-align: center;
+}

@@ -121,12 +121,6 @@
 		display: table;
 		clear: both;
 	}
-
-	@each $layout in $nh-container-widths {
-		@include nhGridRespondTo(nth($layout, 1)) {
-			width: nth($layout, 2);
-		}
-	}
 }
 
 // TODO pushes, pulls and skips

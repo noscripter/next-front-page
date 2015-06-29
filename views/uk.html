@@ -1,15 +1,28 @@
 <div class="nh-grid-container">
-	<div class="nh-grid-row">
-		<section class="main-content">
-			{{> lead-today items=articles.items }}
-			{{> opinion items=opinion.items title="Opinion" }}
+		<div class="fixed-width-container">
+			<section class="main-content">
+				{{> lead-today items=articles.items }}
+			</section>
+			<aside class="sidebar" data-nh-grid-colspan="S4 M4">
+				<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString Feed fastFt }}}</section>
+			</aside>
+		</div>
 
-			{{> column items=weekend.items title="Weekend" }}
-			{{> column items=markets.items title="Markets" }}
-			{{> column items=tech.items title="Technology" }}
-		</section>
-		<aside class="sidebar" data-nh-grid-colspan="S4 M4">
-			<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString Feed fastFt }}}</section>
-		</aside>
-	</div>
+		<div class="bordered-row nh-grid-row">
+			<div class="fixed-width-container">
+				<section class="main-content" data-nh-grid-colspan="12">
+					{{> editors items=editors.items title="Editor's Picks"}}
+				</section>
+			</div>
+		</div>
+
+		<div class="fixed-width-container">
+			<section class="main-content">
+				{{> opinion items=opinion.items title="Opinion" }}
+				<div class="bordered-spacer"></div>
+				{{> column items=weekend.items title="Weekend" }}
+				{{> column items=markets.items title="Markets" }}
+				{{> column items=tech.items title="Technology" }}
+			</section>
+		</div>
 </div>

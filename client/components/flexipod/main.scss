@@ -46,7 +46,7 @@
 }
 
 
-@mixin nhFlexipod($layout-spec, $total-cols: $nh-grid-columns) {
+@mixin nhFlexipodStory($layout-spec, $total-cols: $nh-grid-columns) {
 	@include nhFlexipodLayout($layout-spec, $total-cols);
 
 	.article-group {
@@ -54,7 +54,11 @@
 		clear: both;
 		overflow: hidden;
 
-		.story-card { @include nhGridmargins($total-cols); }
+		.story-card {
+			@include nhGridmargins($total-cols);
+			margin-top: 0px;
+			margin-bottom: 10px;
+		}
 	}
 
 }
