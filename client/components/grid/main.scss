@@ -22,14 +22,14 @@
 	float: left;
 	min-height: 1px;
 
-	@include nhGridmargins($total-cols);
+	@include nhGridMargins($total-cols);
 
 	@if $span {
 		@include nhGridColspan($span, $total-cols);
 	}
 }
 
-@mixin nhGridmargins($total-cols: $nh-grid-columns) {
+@mixin nhGridMargins($total-cols: $nh-grid-columns) {
 	$subgrid-ratio: $nh-grid-columns / $total-cols;
 
 	margin: percentage($subgrid-ratio * $nh-grid-gutter / 2);
