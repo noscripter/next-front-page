@@ -6,7 +6,7 @@
 
 @mixin linkHover {
 	&:hover, &:active {
-		border-bottom: 1px #ddd dotted;
+		border-bottom: 1px #bbb dotted;
 	}
 }
 

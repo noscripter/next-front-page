@@ -24,9 +24,16 @@
 }
 
 .story-card__title {
+	@include linkHover;
 	@include nTypeCharlie(3);
+	display: inline;
 	font-style: normal;
 	line-height: 1.2em;
+	&::after {
+		content: '';
+	  clear: both;
+	  display: block;
+	}
 }
 .story-card__image { width: 100%; }
 .story-card__taxon {
