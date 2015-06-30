@@ -18,7 +18,7 @@ var app = express({
 			});
 			return image ? `https://next-geebee.ft.com/image/v1/images/raw/${image.url}?source=next&fit=scale-down&width=710` : null;
 		},
-		getGenre(metadata) { return articleGenres(metadata); }
+		getGenre(metadata) { if (metadata) { return articleGenres(metadata); } }
 	}
 });
 
