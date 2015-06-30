@@ -11,12 +11,16 @@
 	.fastft__logo__fast {
 		text-indent: -9999px;
 		@include nextIcon(brand-fast, oColorsGetPaletteColor(fastft-brand), 40px);
+		background-size: contain;
+		background-position: center;
 		height: 45px;
 	}
 
 	.fastft__logo__ft {
 		text-indent: -9999px;
 		@include nextIcon(brand-ft, oColorsGetPaletteColor(warm-4), 40px);
+		background-size: contain;
+		background-position: center;
 	}
 
 	.fastft__more-icon {
