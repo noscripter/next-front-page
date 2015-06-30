@@ -48,6 +48,7 @@ Object.keys(pollConfig)
 			(source === 'elastic'),
 			content => {
 				contentCache[source][it] = content;
+				contentCache[source][it].url = `/stream/sectionsId/${pollConfig[it].sectionsId}`;
 				if (pollConfig[it].genres) {
 					contentCache[source][it].items = content.items.filter(story => {
 						const genre = story.item.metadata.genre[0].term.name.toLowerCase();

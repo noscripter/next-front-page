@@ -1,18 +1,38 @@
 @mixin podHeading {
 	@include nTypeAlpha(2);
-	margin-bottom: 20px;
 	padding: 10px 0;
 	color: oColorsGetPaletteColor('warm-4');
-	border: solid oColorsGetPaletteColor('warm-3');
-	border-width: 0 0 1px;
+}
+
+@mixin linkHover {
+	&:hover, &:active {
+		border-bottom: 1px #ddd dotted;
+	}
 }
 
 .pod-heading {
-	@include podHeading;
+	overflow: hidden;
+	border: solid oColorsGetPaletteColor('warm-3');
+	border-width: 0 0 1px;
+	margin-bottom: 20px;
+	h1 {
+		@include podHeading;
+		float: left;
+	}
 }
 
 .carousel-heading {
 	@include podHeading;
 	border: none;
 	text-align: center;
+}
+
+.pod-heading--link {
+	span {
+		@include linkHover;
+		line-height: 40px;
+		float: right;
+		margin-right: 10px;
+		display: inline-block
+	}
 }

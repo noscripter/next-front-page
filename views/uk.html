@@ -18,11 +18,11 @@
 
 		<div class="fixed-width-container">
 			<section class="main-content">
-				{{> opinion items=opinion.items title="Opinion" }}
+				{{> opinion items=opinion.items url=opinion.url title="Opinion" }}
 				<div class="bordered-spacer"></div>
-				{{> column items=weekend.items title="Weekend" }}
-				{{> column items=markets.items title="Markets" }}
-				{{> column items=tech.items title="Technology" }}
+				{{> column items=weekend.items url=weekend.url title="Weekend" }}
+				{{> column items=markets.items url=markets.url title="Markets" }}
+				{{> column items=tech.items url=tech.url title="Technology" }}
 			</section>
 		</div>
 </div>
