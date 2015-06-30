@@ -1,5 +1,6 @@
 import express from 'ft-next-express';
 import React from 'react';
+import articleGenres from 'ft-next-article-genre';
 
 // routes
 import frontPage from './routes/front-page';
@@ -16,7 +17,8 @@ var app = express({
 				return img.type === type;
 			});
 			return image ? `https://next-geebee.ft.com/image/v1/images/raw/${image.url}?source=next&fit=scale-down&width=710` : null;
-		}
+		},
+		getGenre(metadata) { return articleGenres(metadata); }
 	}
 });
 
