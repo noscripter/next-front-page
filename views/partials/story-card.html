@@ -1,13 +1,23 @@
 <article class='story-card {{lowercase item.metadata.genre.0.term.name}}'>
 
-	{{#if item.images.0.url}}
-		<a href="/{{item.id}}"><img class='story-card__image' src="{{item.images.0.url}}" /><a>
+	{{#if (getImageSrc item.images 'wide-format')}}
+
+		<a href="/{{item.id}}">
+			<img
+			class='story-card__image'
+			src="{{getImageSrc item.images 'wide-format'}}"
+			/>
+		<a>
 	{{/if}}
 	<div class="story-card__content">
 		<a href="/{{item.id}}">
 			<h2 class="story-card__title">
-				<span class="story-card__taxon">{{item.metadata.primarySection.term.name}}</span>|
-				{{item.title.title}}
+				{{#if item.metadata.primaryTheme.term.name}}
+					<span class="story-card__taxon">{{item.metadata.primaryTheme.term.name}}</span>
+				{{else}}
+					<span class="story-card__taxon">{{item.metadata.primarySection.term.name}}</span>
+				{{/if}}
+				| {{item.title.title}}
 			</h2>
 		</a>
 		<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>

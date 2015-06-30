@@ -5,6 +5,7 @@
 
 @import "n-header-footer/main";
 @import "next-welcome/main";
+@import "n-notification/main";
 
 @import "components/grid/main";
 @import "components/story-card/main";
@@ -35,9 +36,6 @@ html {
 a {
 		text-decoration: none;
 		color: inherit;
-	&:hover, &:active {
-		border-bottom: 1px inherit dotted;
-	}
 }
 
 

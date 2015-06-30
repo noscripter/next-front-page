@@ -12,7 +12,7 @@ const init = (el, opts) => {
 	const feedInstance = React.render(<Feed title="fastFt" items={initialItems} />, el);
 
 	const poller = () => {
-		fetch('/fastft.json')
+		fetch('/home/fastft.json')
 		.then((response) => {
 			if(response.status > 200) {
 				throw new Error('Bad response from server');

@@ -10,6 +10,12 @@ var app = express({
 		lowercase: (it) => it.toLowerCase(),
 		reactRenderToString: (klass, props) => {
 			return React.renderToString(React.createElement(klass, props));
+		},
+		getImageSrc(images, type) {
+			const image = images.find(img => {
+				return img.type === type;
+			});
+			return image ? `https://next-geebee.ft.com/image/v1/images/raw/${image.url}?source=next&fit=scale-down&width=710` : null;
 		}
 	}
 });
@@ -23,11 +29,10 @@ app.get('/', (req, res) => {
 
 // app routes
 app.get('/front-page', frontPage);
-
 app.get('/international', frontPage);
 app.get('/uk', frontPage);
 
-app.get('/fastft.json', fastft);
+app.get('/home/fastft.json', fastft);
 
 var port = process.env.PORT || 3001;
 
