@@ -57,6 +57,17 @@ body {
 	margin: 0 auto;
 }
 
+.fastft--header {
+	@include nhFastFtTitle;
+	@include nhGridMargins;
+
+	background-color: oColorsGetPaletteColor(warm-base);
+	padding: 5px 0.25em 0 0.2em;
+	border-bottom: 1px solid oColorsGetPaletteColor(fastft-brand);
+
+	@include nhGridRespondTo($from: S) { display: none };
+}
+
 .main-content {
 	@include nhGridColumn($span: (default: 12, M: 9, S: 8));
 
