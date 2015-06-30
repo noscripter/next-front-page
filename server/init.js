@@ -32,7 +32,7 @@ app.get('/front-page', frontPage);
 app.get('/international', frontPage);
 app.get('/uk', frontPage);
 
-app.get('/fastft.json', fastft);
+app.get('/home/fastft.json', fastft);
 
 var port = process.env.PORT || 3001;
 
