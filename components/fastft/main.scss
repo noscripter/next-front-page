@@ -25,16 +25,20 @@
 }
 
 @mixin nhFastFtItem {
-	padding: 14px 0;
 	border: 1px oColorsGetPaletteColor(blue-2) solid;
 	border-width: 0 0 1px 0;
+
+	a {
+		padding: 14px 0;
+		display: block;
+	}
 
 	&:hover, &:focus {
 		border-width: 1px 0 1px;
 		margin-top: -1px;
 		border-color: oColorsGetPaletteColor(fastft-brand);
 
-		h2 a {
+		h2 {
 			color: oColorsGetPaletteColor(fastft-brand);
 		}
 	}
