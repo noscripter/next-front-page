@@ -6,10 +6,10 @@
 	.story-card__taxon, .carousel-card__taxon { color: $color; }
 }
 
-.default { @include nhStoryGenreColors(map-get($o-colors-palette, 'news')); }
-.comment { @include nhStoryGenreColors(map-get($o-colors-palette, 'opinion')); }
-.lifestyle { @include nhStoryGenreColors(map-get($o-colors-palette, 'lifestyle')); }
-.analysis { @include nhStoryGenreColors(map-get($o-colors-palette, 'analysis')); }
+.default { @include nhStoryGenreColors(map-get($o-colors-palette, 'claret')); }
+.comment { @include nhStoryGenreColors(map-get($o-colors-palette, 'section-blue')); }
+.lifestyle { @include nhStoryGenreColors(map-get($o-colors-palette, 'section-purple')); }
+.analysis { @include nhStoryGenreColors(map-get($o-colors-palette, 'section-green')); }
 
 
 .story-card {
