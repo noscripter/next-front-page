@@ -92,8 +92,7 @@
 
 	.story-card__image {
 		@include nhGridColumn(6, 9);
-		margin-top: 0;
-		margin-left: 0;
+		margin: 0;
 		height: initial;
 		display: block;
 	}
@@ -129,7 +128,7 @@
 }
 
 @mixin nhTallCard {
-	padding-bottom: 62px;
+	padding-bottom: 42px;
 	font-size: 20px;
 
 	.story-card__image {
