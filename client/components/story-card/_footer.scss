@@ -9,10 +9,15 @@
 	background-color: oColorsGetPaletteColor('warm-2');
 	text-transform: uppercase;
 	height: $story-card--footer-height;
-	padding: 0 20px;
+	padding: 0 10px;
 	line-height: $story-card--footer-height;
 
+	.time-icon {
+		margin-top: -3px;
+	}
+
 	time {
+		padding-left: 3px;
 		color: oColorsGetPaletteColor('timestamp');
 	}
 
