@@ -11,6 +11,7 @@
     "ft-api-client": "^4.0.1",
     "ft-next-express": "^12.2.0",
     "ft-poller": "0.0.4",
+    "isomorphic-fetch": "^2.1.0",
     "next-ft-api-client": "^3.9.0",
     "o-date": "https://github.com/Financial-Times/o-date/archive/1.1.1.tar.gz",
     "react": "^0.13.3"
