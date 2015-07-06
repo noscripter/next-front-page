@@ -1,5 +1,5 @@
 import content from '../lib/content';
-import FastFtFeed from '../../components/feed/fastFt/main';
+import FastFtFeed from '../../components/feed/fastft/main';
 import Feed from '../../components/feed/main';
 
 module.exports = function(req, res) {
