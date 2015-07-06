@@ -12,7 +12,8 @@
 @import "components/carousel-card/main";
 @import "icons";
 
-@import "components/fastft/main";
+@import "components/feed/main";
+@import "components/feed/fastft/main";
 
 @import "components/flexipod/main";
 
@@ -144,9 +145,10 @@ body .sidebar {
 	h1 {
 		@include nhFastFtTitle;
 	}
-
+}
+.feed {
 	article {
-		@include nhFastFtItem;
+		@include nhFeedItem;
 	}
 }
 

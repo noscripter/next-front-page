@@ -19,6 +19,12 @@
 		@include podHeading;
 		float: left;
 	}
+
+	&.pod-heading--feed {
+		margin-bottom: -1px;
+		position: relative;
+		z-index: 1;
+	}
 }
 
 .carousel-heading {

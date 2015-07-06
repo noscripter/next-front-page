@@ -90,6 +90,12 @@ const sources = {
 		uuid: '4c499f12-4e94-11de-8d4c-00144feabdc0',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
+	},
+	popular: {
+		type: 'get',
+		uuid: 'http://mostpopular.sp.ft-static.com/v1/mostPopular?source=nextArticle',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
 	}
 };
 

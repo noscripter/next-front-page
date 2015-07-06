@@ -1,5 +1,3 @@
-'use strict';
-
 import {init as initDate, format} from 'o-date';
 import React from 'react';
 
@@ -28,7 +26,7 @@ class Article extends React.Component {
 					</span>
 				</a>
 			</article>
-		)
+		);
 	}
 }
 

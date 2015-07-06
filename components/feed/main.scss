@@ -1,34 +1,7 @@
 @import "next-type/main";
 @import "o-colors/main";
 
-@mixin nhFastFtTitle {
-	a {
-		display: block;
-		width: 100%;
-		hight: 100%;
-	}
-
-	.fastft__logo__fast {
-		text-indent: -9999px;
-		@include nextIcon(brand-fast, oColorsGetPaletteColor(fastft-brand), 40px);
-		background-size: contain;
-		background-position: center;
-		height: 45px;
-	}
-
-	.fastft__logo__ft {
-		text-indent: -9999px;
-		@include nextIcon(brand-ft, oColorsGetPaletteColor(warm-4), 40px);
-		background-size: contain;
-		background-position: center;
-	}
-
-	.fastft__more-icon {
-		float: right;
-	}
-}
-
-@mixin nhFastFtItem {
+@mixin nhFeedItem {
 	border: 1px oColorsGetPaletteColor(blue-2) solid;
 	border-width: 0 0 1px 0;
 

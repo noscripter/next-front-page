@@ -1,15 +1,12 @@
-'use strict';
-
-import React from 'react';
 import 'isomorphic-fetch';
-
-import Feed from './feed';
+import React from 'react';
+import FastFtFeed from "./main";
 
 const init = (el, opts) => {
 	el = el || document.body;
 	const initialItems = JSON.parse(el.getAttribute('data-fastft-articles'));
 
-	const feedInstance = React.render(<Feed title="fastFt" items={initialItems} />, el);
+	const feedInstance = React.render(<FastFtFeed items={initialItems} />, el);
 
 	const poller = () => {
 		fetch('/home/fastft.json', {credentials: 'include'})
@@ -27,8 +24,8 @@ const init = (el, opts) => {
 	};
 
 	setInterval(poller, 20000);
-}
+};
 
 export default {
 	init: init
-}
+};
