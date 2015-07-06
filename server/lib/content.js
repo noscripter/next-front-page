@@ -1,8 +1,8 @@
 import {pollContent} from '../services/content-api';
-import {default as pollConfig} from '../config/content.js';
+import pollConfig from '../config/content.js';
 
 import articleGenres from 'ft-next-article-genre';
-import {default as articlePrimaryTag} from 'ft-next-article-primary-tag';
+import articlePrimaryTag from 'ft-next-article-primary-tag';
 
 
 const empty = { items: [] };
