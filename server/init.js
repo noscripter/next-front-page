@@ -12,7 +12,7 @@ var app = express({
 			return React.renderToString(React.createElement(klass, props));
 		},
 		getImageSrc(images, type) {
-			const image = images.find(img => {
+			const image = images && images.find(img => {
 				return img.type === type;
 			});
 			return image ? `https://next-geebee.ft.com/image/v1/images/raw/${image.url}?source=next&fit=scale-down&width=710` : null;
