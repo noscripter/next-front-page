@@ -7,7 +7,7 @@ import fastft from './routes/fastft';
 
 var app = express({
 	helpers: {
-		lowercase: (it) => it.toLowerCase(),
+		lowercase: (it) => it && it.toLowerCase(),
 		reactRenderToString: (klass, props) => {
 			return React.renderToString(React.createElement(klass, props));
 		},
