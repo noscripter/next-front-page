@@ -77,15 +77,24 @@ const cachedContent = (topStoriesRegion) => {
 			top.items = top.items.slice(0, 10);
 		}
 
-		// strip fastFt down to bare minimum
-		const fastFt = contentCache[src].fastFt;
-		if(fastFt.items && fastFt.items.map) {
-			fastFt.items = fastFt.items.map(it => {
-				return {id: it.id, title: it.title, publishedDate: it.publishedDate};
-			});
-		}
+		// strip feeds down to bare minimum
+		const feeds = ['fastFt', 'popular']
+		.reduce((obj, feed) => {
+			let feedContent = contentCache[src][feed];
+			if(feedContent.items && feedContent.items.map) {
+				let result = feedContent.items.map(it => {
+					return {
+						id: it.item.id,
+						title: it.item.title,
+						publishedDate: it.item.publishedDate || it.item.lifecycle.lastPublishDateTime
+					};
+				});
+				obj[feed] = {items: result};
+			return obj;
+			}
+		}, {});
 
-		return Object.assign({}, contentCache[src], {top: top, fastFt: fastFt});
+		return Object.assign({}, contentCache[src], {top: top}, feeds);
 	};
 };
 
