@@ -15,8 +15,9 @@ var app = express({
 			const image = images && images.find(img => {
 				return img.type === type;
 			});
-			return image ? `https://next-geebee.ft.com/image/v1/images/raw/${image.url}?source=next&fit=scale-down&width=710` : null;
-		}
+			return image ? `//next-geebee.ft.com/image/v1/images/raw/${image.url}?source=next&fit=scale-down&width=710` : null;
+		},
+		stripProtocol: (it) => it.replace(/^https?:/, '')
 	}
 });
 
