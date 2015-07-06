@@ -56,6 +56,8 @@ Object.keys(pollConfig)
 				fetchedContent = content;
 				fetchedContent.url = `/stream/sectionsId/${pollConfig[it].sectionsId}`;
 				fetchedContent.items = content.items.map(story => {
+					if(!story.item || !story.item.metadata) return story; // fastFT has different format
+
 					return Object.assign({}, story, {
 						viewGenre: articleGenres(story.item.metadata),
 						primaryTag: articlePrimaryTag(story.item.metadata)
