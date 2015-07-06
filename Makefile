@@ -7,7 +7,7 @@ ELASTIC_SEARCH_HOST := $(shell cat ~/.elastic_search_host 2>/dev/null)
 .PHONY: test build
 
 install:
-	obt install --verbose
+	origami-build-tools install --verbose
 
 verify:
 	nbt verify
