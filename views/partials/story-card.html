@@ -1,4 +1,4 @@
-<article class='story-card {{lowercase item.metadata.genre.0.term.name}}'>
+<article class='story-card article--{{viewGenre}}'>
 
 	{{#if (getImageSrc item.images 'wide-format')}}
 
@@ -12,11 +12,7 @@
 	<div class="story-card__content">
 		<a href="/{{item.id}}">
 			<h2 class="story-card__title">
-				{{#if item.metadata.primaryTheme.term.name}}
-					<span class="story-card__taxon">{{item.metadata.primaryTheme.term.name}}</span>
-				{{else}}
-					<span class="story-card__taxon">{{item.metadata.primarySection.term.name}}</span>
-				{{/if}}
+				<span class="story-card__taxon">{{primaryTag.name}}</span>
 				| {{item.title.title}}
 			</h2>
 		</a>

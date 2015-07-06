@@ -1,5 +1,9 @@
 import {pollContent} from '../services/content-api';
-import {default as pollConfig} from '../config/content.js';
+import pollConfig from '../config/content.js';
+
+import articleGenres from 'ft-next-article-genre';
+import articlePrimaryTag from 'ft-next-article-primary-tag';
+
 
 const empty = { items: [] };
 
@@ -49,14 +53,27 @@ Object.keys(pollConfig)
 			pollConfig[it],
 			(source === 'elastic'),
 			content => {
-				contentCache[source][it] = content;
-				contentCache[source][it].url = `/stream/sectionsId/${pollConfig[it].sectionsId}`;
+				let fetchedContent = content;
+
+				fetchedContent = content;
+				fetchedContent.url = `/stream/sectionsId/${pollConfig[it].sectionsId}`;
+				fetchedContent.items = content.items.map(story => {
+					if(!story.item || !story.item.metadata) return story; // fastFT has different format
+
+					return Object.assign({}, story, {
+						viewGenre: articleGenres(story.item.metadata),
+						primaryTag: articlePrimaryTag(story.item.metadata)
+					});
+				});
+
 				if (pollConfig[it].genres) {
-					contentCache[source][it].items = content.items.filter(story => {
+					fetchedContent.items = content.items.filter(story => {
 						const genre = story.item.metadata.genre[0].term.name.toLowerCase();
-						return ~pollConfig[it].genres.indexOf(genre);
+						return pollConfig[it].genres.indexOf(genre) > -1;
 					});
 				}
+
+				contentCache[source][it] = fetchedContent;
 			},
 			it
 		);
