@@ -1,6 +1,8 @@
 import {pollContent} from '../services/content-api';
 import {default as pollConfig} from '../config/content.js';
 
+import articleGenres from 'ft-next-article-genre';
+
 const empty = { items: [] };
 
 // Content cache for polling
@@ -49,6 +51,9 @@ Object.keys(pollConfig)
 			content => {
 				contentCache[source][it] = content;
 				contentCache[source][it].url = `/stream/sectionsId/${pollConfig[it].sectionsId}`;
+				contentCache[source][it].items = content.items.map(story => {
+					return Object.assign({}, story, { viewGenre: articleGenres(story.item.metadata) });
+				});
 				if (pollConfig[it].genres) {
 					contentCache[source][it].items = content.items.filter(story => {
 						const genre = story.item.metadata.genre[0].term.name.toLowerCase();
