@@ -1,17 +1,10 @@
 'use strict';
 
 import React from 'react';
-import Article from './article';
+import Feed from '../main';
 
-class Feed extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {items: props.items || []};
-	}
-
+class FastFtFeed extends React.Component {
 	render() {
-		const articles = this.state.items.map((it) => <Article article={it} key={it.id} />)
-
 		return (
 			<div>
 				<h1>
@@ -21,10 +14,15 @@ class Feed extends React.Component {
 						<i className="fastft__more-icon more-icon--fastft" />
 					</a>
 				</h1>
-				{articles}
+				<Feed title="fastFt" items={this.props.items} />
 			</div>
 		);
 	}
 }
 
-export default Feed;
+FastFtFeed.propTypes = {
+	items: React.PropTypes.array.isRequired
+};
+
+
+export default FastFtFeed;
