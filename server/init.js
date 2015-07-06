@@ -11,13 +11,12 @@ var app = express({
 		reactRenderToString: (klass, props) => {
 			return React.renderToString(React.createElement(klass, props));
 		},
-		getImageSrc(images, type) {
+		getImageSrc(images, type, maxWidth) {
 			const image = images && images.find(img => {
 				return img.type === type;
 			});
-			return image ? `//next-geebee.ft.com/image/v1/images/raw/${image.url}?source=next&fit=scale-down&width=710` : null;
-		},
-		stripProtocol: (it) => it.replace(/^https?:/, '')
+			return image ? `//next-geebee.ft.com/image/v1/images/raw/${image.url}?source=next&fit=scale-down&width=${maxWidth}` : null;
+		}
 	}
 });
 
