@@ -86,7 +86,7 @@ const fetchContent = {
 			return ApiClient.content({ uuid: ids, useElasticSearch: useElasticSearch})
 			.then(articles => {
 				return {
-					items: articles
+					items: articles.map(it => ({item: it}))
 				};
 			});
 		});
