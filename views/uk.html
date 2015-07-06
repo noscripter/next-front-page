@@ -10,7 +10,7 @@
 				{{> lead-today items=articles.items }}
 			</section>
 			<aside class="sidebar" data-nh-grid-colspan="S4 M4">
-				<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString Feed fastFt }}}</section>
+				<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString FastFtFeed fastFt }}}</section>
 			</aside>
 		</div>
 
@@ -25,10 +25,23 @@
 		<div class="fixed-width-container">
 			<section class="main-content">
 				{{> opinion items=opinion.items url=opinion.url title="Opinion" }}
-				<div class="bordered-spacer"></div>
+			<div class="bordered-spacer"></div>
 				{{> column items=weekend.items url=weekend.url title="Weekend" }}
 				{{> column items=markets.items url=markets.url title="Markets" }}
 				{{> column items=tech.items url=tech.url title="Technology" }}
 			</section>
+			<aside class="sidebar" data-nh-grid-colspan="S4 M4">
+				<section class="feed feed--popular" data-fastft-articles="{{json fastFt.items}}">
+					<div>
+						<h1>
+							<div class="pod-heading">
+								<h1>Popular</h1>
+								<a href="{{url}}"><i class="module-more-icon more-icon"></i></a>
+							</div>
+						</h1>
+						{{{ reactRenderToString Feed popular }}}
+					</div>
+				</section>
+			</aside>
 		</div>
 </div>

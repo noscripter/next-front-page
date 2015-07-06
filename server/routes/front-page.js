@@ -1,5 +1,6 @@
 import content from '../lib/content';
-import Feed from '../../components/fastft/feed';
+import FastFtFeed from '../../components/feed/fastFt/main';
+import Feed from '../../components/feed/main';
 
 module.exports = function(req, res) {
 	const useElasticSearch = res.locals.flags.elasticSearchItemGet.isSwitchedOn;
@@ -7,6 +8,7 @@ module.exports = function(req, res) {
 
 	res.render('uk', {
 		layout: 'wrapper',
+		FastFtFeed: FastFtFeed,
 		Feed: Feed,
 		articles: contentData.top,
 		fastFt: contentData.fastFt,
@@ -14,6 +16,7 @@ module.exports = function(req, res) {
 		tech: contentData.technology,
 		markets: contentData.markets,
 		weekend: contentData.lifestyle,
+		popular: contentData.popular,
 		editors: {
 			items: [
 				contentData.bigRead.items[0],
