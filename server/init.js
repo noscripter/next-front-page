@@ -1,3 +1,4 @@
+import {equal as assertEqual} from 'assert'
 import express from 'ft-next-express';
 import React from 'react';
 
@@ -12,6 +13,8 @@ var app = express({
 			return React.renderToString(React.createElement(klass, props));
 		},
 		getImageSrc(images, type, maxWidth) {
+			assertEqual(typeof maxWidth, 'number', 'getImageSrc: maxWidth must be a number');
+
 			const image = images && images.find(img => {
 				return img.type === type;
 			});
