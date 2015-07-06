@@ -53,7 +53,7 @@ build:
 	nbt build --dev
 
 build-production:
-	nbt build
+	NODE_ENV=production nbt build
 
 watch:
 	nbt build --dev --watch
