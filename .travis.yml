@@ -2,12 +2,7 @@ sudo: false
 script:
 - make install && make test && make provision
 - make tidy
-cache:
-  directories:
-    - node_modules
 language: node_js
-env:
-  - NODE_ENV=production
 node_js:
 - '0.12.2'
 after_success:
