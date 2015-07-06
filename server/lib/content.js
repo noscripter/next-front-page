@@ -18,6 +18,7 @@ var contentCache = {
 		management: empty,
 		frontPageSkyline: empty,
 		personInNews: empty,
+		popular: empty,
 		lex: empty
 	},
 	capi1: {
@@ -33,6 +34,7 @@ var contentCache = {
 		management: empty,
 		frontPageSkyline: empty,
 		personInNews: empty,
+		popular: empty,
 		lex: empty
 	}
 };
