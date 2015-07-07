@@ -48,12 +48,13 @@ body {
 	@include nhGridGenerate();
 	@include nhHeaderTabs();
 
+	// Top tabs (News, fastFT)
+
 	.nh-header-tabs__tablist {
 		display: none;
 	}
 
 	@include nhGridRespondTo($until: S) {
-		// top tabs
 		@include nhHeaderTabsActive();
 
 		.nh-header-tabs__tablist {
@@ -65,7 +66,7 @@ body {
 			display: block;
 		}
 
-		.sidebar--fastft.nh-header-tabs__panel {
+		.sidebar--fastft {
 			display: none;
 		}
 
@@ -76,16 +77,16 @@ body {
 
 		// selected states
 
-		#news-tab:target ~ .main-content-container .sidebar {
+		#news-tab:target ~ .fixed-width-container .sidebar--fastft {
 			display: none;
 		}
 
-		#fastft-tab:target ~ .main-content-container {
+		#fastft-tab:target ~ .fixed-width-container {
 			.main-content {
 				display: none;
 			}
 
-			.sidebar {
+			.sidebar--fastft {
 				display: block;
 			}
 		}
@@ -93,14 +94,8 @@ body {
 		#fastft-tab:target ~ .nh-header-tabs__panel {
 			display: none;
 		}
-
-		#fastft-tab:target ~ .main-content-container {
-			display: block;
-		}
 	}
 }
-
-// Top tabs
 
 .fixed-width-container {
 	@each $layout in $nh-container-widths {
