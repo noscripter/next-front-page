@@ -1,5 +1,5 @@
-<a href="/{{item.id}}" class='story-card article--{{viewGenre}}' tabindex=0>
-	<article >
+<article class='story-card article--{{viewGenre}}'>
+	<a href="/{{item.id}}" class="story-card--link" tabindex=0>
 	{{#if (getImageSrc item.images 'wide-format' 710)}}
 				<img
 				class='story-card__image'
@@ -22,6 +22,6 @@
 					{{#dateformat "dddd, d mmmm, yyyy"}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}
 			</time>
 			{{>next-myft-ui/templates/save-for-later contentId=item.id}}
-		<div>
-	</article>
-</a>
+		</div>
+	</a>
+</article>

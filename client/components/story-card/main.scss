@@ -22,11 +22,13 @@
 	}
 	background-color: oColorsGetPaletteColor('warm-base');
 	float: left;
-	display: block;
+	display: flex;
 	overflow: hidden;
 	padding-bottom: $story-card--footer-height;
 	position: relative;
 }
+
+.story-card--link { align-items: stretch; }
 
 .story-card__title {
 	@include nTypeCharlie(3);
