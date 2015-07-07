@@ -9,7 +9,7 @@
 			<section class="main-content">
 				{{> lead-today items=articles.items }}
 			</section>
-			<aside class="sidebar" data-nh-grid-colspan="S4 M4">
+			<aside class="sidebar sidebar--fastft" data-nh-grid-colspan="S4 M4">
 				<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString FastFtFeed fastFt }}}</section>
 			</aside>
 		</div>
@@ -30,7 +30,7 @@
 				{{> column items=markets.items url=markets.url title="Markets" }}
 				{{> column items=tech.items url=tech.url title="Technology" }}
 			</section>
-			<aside class="sidebar" data-nh-grid-colspan="S4 M4">
+			<aside class="sidebar sidebar--feed" data-nh-grid-colspan="12 S4 M4">
 				<section class="feed feed--popular" data-fastft-articles="{{json fastFt.items}}">
 					<div>
 						<h1>

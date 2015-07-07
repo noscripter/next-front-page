@@ -132,13 +132,14 @@ body {
 	@include nhGridRespondTo($from: S) { margin-bottom: 20px; }
 }
 
-body .sidebar {
-	display: none;
+.sidebar {
+	&.sidebar--fastft {
+		display: none;
 
-	@include nhGridRespondTo($from: S) {
-		display: block;
+		@include nhGridRespondTo($from: S) {
+			display: block;
+		}
 	}
-
 }
 
 #fastft {
