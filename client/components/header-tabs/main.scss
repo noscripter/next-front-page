@@ -52,7 +52,8 @@
 
 			&:active span,
 			&:hover span,
-			&:focus span {
+			&:focus span,
+			&.selected span {
 				padding: 0.5em;
 				margin: 0 auto -3px 0;
 				border: 5px solid oColorsGetPaletteColor(fastft-brand);
