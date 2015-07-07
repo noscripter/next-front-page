@@ -191,14 +191,12 @@ body {
 }
 
 #fastft {
-	h1 {
-		@include nhFastFtTitle;
-	}
+	h1 {@include nhFastFtTitle; }
+	article { @include nhFeedItem(fastft-brand); }
 }
+
 .feed {
-	article {
-		@include nhFeedItem;
-	}
+	article { @include nhFeedItem(link-2); }
 }
 
 .bordered-spacer {
