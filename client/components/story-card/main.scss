@@ -11,15 +11,14 @@
 .article--lifestyle { @include nhStoryGenreColors(oColorsGetPaletteColor('section-purple')); }
 .article--analysis { @include nhStoryGenreColors(oColorsGetPaletteColor('section-green')); }
 
-
-.story-card {
-	&:hover, &:focus {
+.story-card--link {
+	&:hover,
+	&:focus, {
 		background-color: oColorsGetPaletteColor('warm-2');
-		.story-card__title,
-		.story-card__summary {
-			border-bottom: 1px #bbb dotted;
-		}
+		.story-card__title { text-decoration: underline; }
 	}
+}
+
 .story-card {
 	background-color: oColorsGetPaletteColor('warm-base');
 	float: left;
@@ -36,6 +35,11 @@
 }
 
 .story-card--link { align-items: stretch; }
+
+.story-card__heading {
+	display: inline-block;
+	margin-bottom: 7px;
+}
 
 .story-card__title {
 	@include nTypeCharlie(3);
