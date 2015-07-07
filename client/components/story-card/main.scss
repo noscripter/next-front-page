@@ -13,6 +13,13 @@
 
 
 .story-card {
+	&:hover, &:focus {
+		background-color: oColorsGetPaletteColor('warm-2');
+		.story-card__title,
+		.story-card__summary {
+			border-bottom: 1px #bbb dotted;
+		}
+	}
 	background-color: oColorsGetPaletteColor('warm-base');
 	float: left;
 	display: block;
@@ -22,7 +29,6 @@
 }
 
 .story-card__title {
-	@include linkHover;
 	@include nTypeCharlie(3);
 	display: inline;
 	font-style: normal;
