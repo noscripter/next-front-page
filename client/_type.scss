@@ -39,6 +39,11 @@
 		line-height: 40px;
 		float: right;
 		margin-right: 10px;
-		display: inline-block
+		display: inline-block;
+		color: oColorsGetPaletteColor('link-1');
+
+		&:hover {
+			color: oColorsGetPaletteColor('link-2');
+		}
 	}
 }
