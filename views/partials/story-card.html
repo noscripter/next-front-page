@@ -1,4 +1,4 @@
-<article class='story-card article--{{viewGenre}}' data-trackable="story" tabindex="0" aria-labelledby="{{item.id}}-title" role="article">
+<article class='story-card article--{{genre}}' data-trackable="story" tabindex="0" aria-labelledby="{{item.id}}-title" role="article">
 	{{#if (getImage item.images 'wide-format' 710)}}
 		<a href="/{{item.id}}" class="story-card--link" data-trackable="image" role="presentation" aria-hidden="true">
 			{{#with (getImage item.images 'wide-format' 710)}}
@@ -13,8 +13,8 @@
 			<div class="story-card__taxon" aria-label="Topic: {{primaryTag.name}}">{{primaryTag.name}}</div>
 		</a>
 			<a href="/{{item.id}}" class="story-card--link" data-trackable="main-link">
-				<h1 id="{{item.id}}-title" class="story-card__title" data-trackable="title">{{item.title.title}}</h1>
-				<h2 class="story-card__summary" data-trackable="summary">{{{item.summary.excerpt}}}</h2>
+				<h1 id="{{item.id}}-title" class="story-card__title" data-trackable="title">{{title}}</h1>
+				<h2 class="story-card__summary" data-trackable="summary">{{{summary}}}</h2>
 			</a>
 	</div>
 	{{#if related}}
