@@ -6,27 +6,40 @@
 	.story-card__taxon, .carousel-card__taxon { color: $color; }
 }
 
-.news { @include nhStoryGenreColors(map-get($o-colors-palette, 'news')); }
-.comment { @include nhStoryGenreColors(map-get($o-colors-palette, 'opinion')); }
-.lifestyle,
-.review { @include nhStoryGenreColors(map-get($o-colors-palette, 'lifestyle')); }
-.analysis { @include nhStoryGenreColors(map-get($o-colors-palette, 'analysis')); }
-.features { @include nhStoryGenreColors(map-get($o-colors-palette, 'features')); }
+.article--default { @include nhStoryGenreColors(oColorsGetPaletteColor('claret')); }
+.article--comment { @include nhStoryGenreColors(oColorsGetPaletteColor('section-blue')); }
+.article--lifestyle { @include nhStoryGenreColors(oColorsGetPaletteColor('section-purple')); }
+.article--analysis { @include nhStoryGenreColors(oColorsGetPaletteColor('section-green')); }
 
 
 .story-card {
+	&:hover, &:focus {
+		background-color: oColorsGetPaletteColor('warm-2');
+		.story-card__title,
+		.story-card__summary {
+			border-bottom: 1px #bbb dotted;
+		}
+	}
 	background-color: oColorsGetPaletteColor('warm-base');
 	float: left;
-	display: block;
+	display: flex;
 	overflow: hidden;
 	padding-bottom: $story-card--footer-height;
 	position: relative;
 }
 
+.story-card--link { align-items: stretch; }
+
 .story-card__title {
 	@include nTypeCharlie(3);
+	display: inline;
 	font-style: normal;
 	line-height: 1.2em;
+	&::after {
+		content: '';
+		clear: both;
+		display: block;
+	}
 }
 .story-card__image { width: 100%; }
 .story-card__taxon {
@@ -85,8 +98,7 @@
 
 	.story-card__image {
 		@include nhGridColumn(6, 9);
-		margin-top: 0;
-		margin-left: 0;
+		margin: 0;
 		height: initial;
 		display: block;
 	}
@@ -122,7 +134,7 @@
 }
 
 @mixin nhTallCard {
-	padding-bottom: 62px;
+	padding-bottom: 42px;
 	font-size: 20px;
 
 	.story-card__image {

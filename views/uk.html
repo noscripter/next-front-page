@@ -1,10 +1,16 @@
 <div class="nh-grid-container">
 		<div class="fixed-width-container">
+			<h1 class="fastft--header">
+				<a href="/fastft">
+					<span class="fastft__logo__fast">fast</span><span class="fastft__logo__ft">FT</span>
+					<i class="fastft__more-icon more-icon"></i>
+				</a>
+			</h1>
 			<section class="main-content">
 				{{> lead-today items=articles.items }}
 			</section>
-			<aside class="sidebar" data-nh-grid-colspan="S4 M4">
-				<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString Feed fastFt }}}</section>
+			<aside class="sidebar sidebar--fastft" data-nh-grid-colspan="S4 M4">
+				<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString FastFtFeed fastFt }}}</section>
 			</aside>
 		</div>
 
@@ -18,11 +24,24 @@
 
 		<div class="fixed-width-container">
 			<section class="main-content">
-				{{> opinion items=opinion.items title="Opinion" }}
-				<div class="bordered-spacer"></div>
-				{{> column items=weekend.items title="Weekend" }}
-				{{> column items=markets.items title="Markets" }}
-				{{> column items=tech.items title="Technology" }}
+				{{> opinion items=opinion.items url=opinion.url title="Opinion" }}
+			<div class="bordered-spacer"></div>
+				{{> column items=weekend.items url=weekend.url title="Weekend" }}
+				{{> column items=markets.items url=markets.url title="Markets" }}
+				{{> column items=tech.items url=tech.url title="Technology" }}
 			</section>
+			<aside class="sidebar sidebar--feed" data-nh-grid-colspan="12 S4 M4">
+				<section class="feed feed--popular" data-fastft-articles="{{json fastFt.items}}">
+					<div>
+						<h1>
+							<div class="pod-heading pod-heading--feed">
+								<h1>Popular</h1>
+								<a href="{{url}}"><i class="module-more-icon more-icon"></i></a>
+							</div>
+						</h1>
+						{{{ reactRenderToString Feed popular }}}
+					</div>
+				</section>
+			</aside>
 		</div>
 </div>

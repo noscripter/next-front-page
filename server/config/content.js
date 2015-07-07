@@ -21,12 +21,14 @@ const sources = {
 	},
 	opinion: {
 		type: 'page',
+		sectionsId: "MTE2-U2VjdGlvbnM=",
 		uuid: 'ec66fcc8-cd25-11de-a748-00144feabdc0',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
 	},
 	markets: {
 		type: 'page',
+		sectionsId: "NzE=-U2VjdGlvbnM=",
 		genres: ['analysis', 'comment'],
 		uuid: '011debcc-cd26-11de-a748-00144feabdc0',
 		elasticSearchSupported: true,
@@ -34,6 +36,7 @@ const sources = {
 	},
 	technology: {
 		type: 'page',
+		sectionsId: "NTM=-U2VjdGlvbnM=",
 		genres: ['analysis', 'comment'],
 		uuid: 'e900741c-f7e8-11df-8d91-00144feab49a',
 		elasticSearchSupported: true,
@@ -41,6 +44,7 @@ const sources = {
 	},
 	lifestyle: {
 		type: 'page',
+		sectionsId: "MTQ4-U2VjdGlvbnM=",
 		uuid: 'cec106aa-cd25-11de-a748-00144feabdc0',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
@@ -84,6 +88,12 @@ const sources = {
 	frontPageSkyline: {
 		type: 'page',
 		uuid: '4c499f12-4e94-11de-8d4c-00144feabdc0',
+		elasticSearchSupported: true,
+		interval: 60 * 1000
+	},
+	popular: {
+		type: 'get',
+		uuid: 'http://mostpopular.sp.ft-static.com/v1/mostPopular?source=nextArticle',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
 	}

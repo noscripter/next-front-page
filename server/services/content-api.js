@@ -1,10 +1,35 @@
 import ApiClient from 'next-ft-api-client';
+import fetch from 'isomorphic-fetch';
 
 function uuid(thingUri) {
 	return thingUri.replace('http://api.ft.com/thing/', '');
 }
 
 const fetchContent = {
+	get(url, useElasticSearch) {
+		return fetch(url)
+		.then((response) => response.json())
+		.then((data) => {
+			var ids = data.mostRead.pages.map(function (page) {
+					var index = page.url.lastIndexOf("/");
+					var id = page.url.substr(index + 1).replace('.html', '');
+					return id;
+			}).slice(0, 10);
+
+			return ids;
+		})
+		.then((ids) => {
+			return ApiClient.contentLegacy({
+				uuid: ids,
+				useElasticSearch: useElasticSearch
+			}).then(articles => {
+				return {
+					items: articles
+				};
+			});
+		});
+	},
+
 	list(listId, useElasticSearch) {
 		return ApiClient.lists({ uuid: listId })
 		.then(list => {
@@ -61,7 +86,7 @@ const fetchContent = {
 			return ApiClient.content({ uuid: ids, useElasticSearch: useElasticSearch})
 			.then(articles => {
 				return {
-					items: articles
+					items: articles.map(it => ({item: it}))
 				};
 			});
 		});
@@ -76,10 +101,10 @@ function logFetched(list, useElasticSearch, name) {
 }
 
 function pollContent(opt, useElasticSearch, updateContent, name) {
-	const fetch = fetchContent[opt.type];
+	const fetcher = fetchContent[opt.type];
 
 	const poller = (/*data*/) => {
-		fetch(opt.uuid, useElasticSearch)
+		fetcher(opt.uuid, useElasticSearch)
 		.then(list => logFetched(list, useElasticSearch, name))
 		.then(updateContent)
 		.catch(err => {

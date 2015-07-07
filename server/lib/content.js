@@ -1,5 +1,9 @@
 import {pollContent} from '../services/content-api';
-import {default as pollConfig} from '../config/content.js';
+import pollConfig from '../config/content.js';
+
+import articleGenres from 'ft-next-article-genre';
+import articlePrimaryTag from 'ft-next-article-primary-tag';
+
 
 const empty = { items: [] };
 
@@ -18,6 +22,7 @@ var contentCache = {
 		management: empty,
 		frontPageSkyline: empty,
 		personInNews: empty,
+		popular: empty,
 		lex: empty
 	},
 	capi1: {
@@ -33,6 +38,7 @@ var contentCache = {
 		management: empty,
 		frontPageSkyline: empty,
 		personInNews: empty,
+		popular: empty,
 		lex: empty
 	}
 };
@@ -47,13 +53,27 @@ Object.keys(pollConfig)
 			pollConfig[it],
 			(source === 'elastic'),
 			content => {
-				contentCache[source][it] = content;
+				let fetchedContent = content;
+
+				fetchedContent = content;
+				fetchedContent.url = `/stream/sectionsId/${pollConfig[it].sectionsId}`;
+				fetchedContent.items = content.items.map(story => {
+					if(!story.item || !story.item.metadata) return story; // fastFT has different format
+
+					return Object.assign({}, story, {
+						viewGenre: articleGenres(story.item.metadata),
+						primaryTag: articlePrimaryTag(story.item.metadata)
+					});
+				});
+
 				if (pollConfig[it].genres) {
-					contentCache[source][it].items = content.items.filter(story => {
+					fetchedContent.items = content.items.filter(story => {
 						const genre = story.item.metadata.genre[0].term.name.toLowerCase();
-						return ~pollConfig[it].genres.indexOf(genre);
+						return pollConfig[it].genres.indexOf(genre) > -1;
 					});
 				}
+
+				contentCache[source][it] = fetchedContent;
 			},
 			it
 		);
@@ -74,15 +94,24 @@ const cachedContent = (topStoriesRegion) => {
 			top.items = top.items.slice(0, 10);
 		}
 
-		// strip fastFt down to bare minimum
-		const fastFt = contentCache[src].fastFt;
-		if(fastFt.items && fastFt.items.map) {
-			fastFt.items = fastFt.items.map(it => {
-				return {id: it.id, title: it.title, publishedDate: it.publishedDate};
-			});
-		}
+		// strip feeds down to bare minimum
+		const feeds = ['fastFt', 'popular']
+		.reduce((obj, feed) => {
+			let feedContent = contentCache[src][feed];
+			if(feedContent.items && feedContent.items.map) {
+				let result = feedContent.items.map(it => {
+					return {
+						id: it.item.id,
+						title: it.item.title,
+						publishedDate: it.item.publishedDate || it.item.lifecycle.lastPublishDateTime
+					};
+				});
+				obj[feed] = {items: result};
+			return obj;
+			}
+		}, {});
 
-		return Object.assign({}, contentCache[src], {top: top, fastFt: fastFt});
+		return Object.assign({}, contentCache[src], {top: top}, feeds);
 	};
 };
 

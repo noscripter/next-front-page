@@ -4,7 +4,8 @@
     "next-express": "^10.0.0",
     "next-sass-setup": "^6.0.0",
     "sass-mq": "~3.1.2",
-    "o-date": "~1.1.1"
+    "o-date": "~1.1.1",
+    "next-myft-ui": "~2.8.2"
   },
   "resolutions": {
     "o-fonts": "^2.0.0",

@@ -10,15 +10,18 @@ class Feed extends React.Component {
 	}
 
 	render() {
-		const articles = this.state.items.map((it) => <Article article={it} key={it.id} />)
+		const articles = this.state.items.map((it) => <Article article={it} key={it.id} />);
 
 		return (
-			<div>
-				<h1>fastFT</h1>
+			<div className="feed">
 				{articles}
 			</div>
 		);
 	}
 }
+
+Feed.propTypes = {
+	items: React.PropTypes.array.isRequired
+};
 
 export default Feed;

@@ -1,24 +1,30 @@
 @import "next-type/main";
 @import "o-colors/main";
 
-@mixin nhFastFtItem {
-	padding: 14px 0;
-	border: 1px #dddddd solid;
+@mixin nhFeedItem {
+	border: 1px oColorsGetPaletteColor(blue-2) solid;
 	border-width: 0 0 1px 0;
 
-	&:hover, &:focus {
+	a {
+		padding: 14px 0;
+		display: block;
+	}
+
+	&:hover,
+	&:focus {
 		border-width: 1px 0 1px;
 		margin-top: -1px;
 		border-color: oColorsGetPaletteColor(fastft-brand);
 
-		h2 a {
+		h2 {
 			color: oColorsGetPaletteColor(fastft-brand);
 		}
 	}
 
 	&:first-of-type {
 		border-width: 1px 0 1px;
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			margin-top: 0px;
 		}
 	}
@@ -30,24 +36,19 @@
 		line-height: 1.2;
 
 		a {
-			// FIXME lifted from next-sass-setup, once updated to allow
-			// nh-grid, use the existing 'nLinksHeadline' mixin
-			color: oColorsGetPaletteColor(cold-2);
-			text-decoration: none;
-
-			&:hover, &:focus {
-				color: oColorsGetPaletteColor(fastft-brand);
-				border-bottom-width: 1px;
-				border-bottom-style: dotted;
-			}
+			@include nLinksHeadline();
+			border-color: oColorsGetPaletteColor(fastft-brand);
 		}
 	}
 
 	p { display: none; }
 
+	i { margin: 2px 6px 0 0; }
+
 	time {
 		@include nTypeAlpha(5);
+		color: oColorsGetPaletteColor(timestamp);
 		text-transform: uppercase;
-		height: 42px; // TODO Footer height variable
+		height: 42px;
 	}
 }
