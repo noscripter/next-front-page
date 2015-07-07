@@ -70,11 +70,6 @@ body {
 			display: none;
 		}
 
-		// main-content-container should always be shown
-		.main-content-container {
-			display: block;
-		}
-
 		// selected states
 
 		#news-tab:target ~ .fixed-width-container .sidebar--fastft {
