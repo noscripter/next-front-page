@@ -2,7 +2,7 @@
 
 import oDate from 'o-date';
 import setup from 'next-js-setup';
-import fastFT from '../components/feed/fastft/init';
+import fastFT from '../components/fastft/main';
 import headerFooter from 'n-header-footer';
 
 setup.bootstrap((result) => {
