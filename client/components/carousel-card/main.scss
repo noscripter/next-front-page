@@ -2,10 +2,15 @@
 
 .carousel-card {
 	width: 100%;
-	text-align: center;
+	text-align: left;
 
 	@include nhGridRespondTo(XS) {
+		@include nhGridColspan(6, 12);
+	}
+
+	@include nhGridRespondTo(S) {
 		@include nhGridColspan(4, 12);
+		text-align: center;
 	}
 
 	@include nhGridRespondTo(M) {
@@ -28,12 +33,25 @@
 
 }
 
-.carousel-card__image {
-	display: none;
-	width: 100%;
-	margin-bottom: 10px;
+.carousel-card__content {
+	@include nhGridColspan(4, 6);
+	float: left;
 
 	@include nhGridRespondTo(S) {
+		width: 100%;
+	}
+
+}
+
+.carousel-card__image {
+	@include nhGridColspan(2, 6);
+	margin-bottom: 10px;
+	margin-right: 10px;
+	float: left;
+
+
+	@include nhGridRespondTo(S) {
+		width: 100%;
 		display: inline;
 	}
 
