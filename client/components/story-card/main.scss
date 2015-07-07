@@ -11,15 +11,15 @@
 .article--lifestyle { @include nhStoryGenreColors(oColorsGetPaletteColor('section-purple')); }
 .article--analysis { @include nhStoryGenreColors(oColorsGetPaletteColor('section-green')); }
 
-.story-card--link {
+.story-card {
 	&:hover,
-	&:focus, {
+	&:focus,
+	.story-card--link:hover,
+	.story-card--link:focus {
 		background-color: oColorsGetPaletteColor('warm-2');
 		.story-card__title { text-decoration: underline; }
 	}
-}
 
-.story-card {
 	background-color: oColorsGetPaletteColor('warm-base');
 	float: left;
 	display: flex;
