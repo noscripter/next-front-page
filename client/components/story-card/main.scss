@@ -84,17 +84,11 @@
 }
 
 @mixin nhLargeCard() {
-
-	.story-card__summary {
-	}
-
 	@include nhGridRespondTo($from: M) {
 		.story-card__summary {
 			display: initial;
 		}
 	}
-
-
 
 	.story-card__image {
 		@include nhGridColumn(6, 9);
@@ -110,6 +104,10 @@
 		@include nhGridRespondTo($until: XS) {
 			width: 100%;
 		}
+
+		@include nhGridRespondTo($from:S, $until: M) {
+			width: 100%;
+		}
 	}
 }
 
@@ -118,15 +116,12 @@
 		display: none;
 	}
 
-
 	.story-card__summary { display: initial; }
 }
 
 @mixin nhSmallCard {
 	.story-card__image { display: none; }
 	.story-card__summary { display: none; }
-
-
 }
 
 @mixin nhTallCard {
