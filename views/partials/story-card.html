@@ -7,10 +7,10 @@
 				/>
 		{{/if}}
 		<div class="story-card__content">
-				<h2 class="story-card__title">
-					<span class="story-card__taxon">{{primaryTag.name}}</span>
-					| {{item.title.title}}
-				</h2>
+			<div class="story-card--heading">
+				<span class="story-card__taxon">{{primaryTag.name}}</span>|
+				<h2 class="story-card__title">{{item.title.title}}</h2>
+			</div>
 			<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
 		</div>
 		<div class='story-card__footer'>

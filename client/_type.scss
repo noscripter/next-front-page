@@ -6,7 +6,7 @@
 
 @mixin linkHover {
 	&:hover, &:active {
-		border-bottom: 1px #bbb dotted;
+		text-decoration: underline;
 	}
 }
 
@@ -31,6 +31,7 @@
 	@include podHeading;
 	border: none;
 	text-align: center;
+	margin-bottom: 10px;
 }
 
 .pod-heading--link {
@@ -39,6 +40,11 @@
 		line-height: 40px;
 		float: right;
 		margin-right: 10px;
-		display: inline-block
+		display: inline-block;
+		color: oColorsGetPaletteColor('link-1');
+
+		&:hover {
+			color: oColorsGetPaletteColor('link-2');
+		}
 	}
 }

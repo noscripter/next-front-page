@@ -3,6 +3,21 @@
 
 @import "../grid/main";
 
+@mixin nhFlexipod($layout-spec, $total-cols: $nh-grid-columns) {
+	.article-group {
+		@include nhGridRow($total-cols);
+		clear: both;
+		overflow: hidden;
+
+		.story-card {
+			@include nhGridColumn(null, $total-cols);
+			@include nhGridMargins($total-cols);
+		}
+	}
+
+	@include nhFlexipodLayout($layout-spec, $total-cols);
+}
+
 @mixin nhFlexipodLayout($layout-spec, $total-cols: $nh-grid-columns) {
 	@if type-of($layout-spec) == list {
 		@for $int from 1 through length($layout-spec) {
@@ -22,7 +37,6 @@
 			.story-card {
 				@include nhStoryCard($type);
 				width: nhGridColspan($width, $total-cols);
-
 			}
 		}
 
@@ -43,22 +57,4 @@
 
 		}
 	}
-}
-
-
-@mixin nhFlexipodStory($layout-spec, $total-cols: $nh-grid-columns) {
-	@include nhFlexipodLayout($layout-spec, $total-cols);
-
-	.article-group {
-		width: 100%;
-		clear: both;
-		overflow: hidden;
-
-		.story-card {
-			@include nhGridMargins($total-cols);
-			margin-top: 0px;
-			margin-bottom: 10px;
-		}
-	}
-
 }

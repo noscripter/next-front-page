@@ -1,8 +1,8 @@
 @import "next-type/main";
 @import "o-colors/main";
 
-@mixin nhFeedItem {
-	border: 1px oColorsGetPaletteColor(blue-2) solid;
+@mixin nhFeedItem($hover-color) {
+	border: 1px oColorsGetPaletteColor(warm-2) solid;
 	border-width: 0 0 1px 0;
 
 	a {
@@ -14,10 +14,10 @@
 	&:focus {
 		border-width: 1px 0 1px;
 		margin-top: -1px;
-		border-color: oColorsGetPaletteColor(fastft-brand);
+		border-color: oColorsGetPaletteColor($hover-color);
 
 		h2 {
-			color: oColorsGetPaletteColor(fastft-brand);
+			color: oColorsGetPaletteColor($hover-color);
 		}
 	}
 
@@ -31,13 +31,13 @@
 
 	h2 {
 		@include nTypeCharlie(4);
-		font-size: 19px;
+		font-size: 18px;
 		font-style: normal;
 		line-height: 1.2;
 
 		a {
 			@include nLinksHeadline();
-			border-color: oColorsGetPaletteColor(fastft-brand);
+			border-color: oColorsGetPaletteColor($hover-color);
 		}
 	}
 

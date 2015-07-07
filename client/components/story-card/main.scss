@@ -11,45 +11,53 @@
 .article--lifestyle { @include nhStoryGenreColors(oColorsGetPaletteColor('section-purple')); }
 .article--analysis { @include nhStoryGenreColors(oColorsGetPaletteColor('section-green')); }
 
-
 .story-card {
-	&:hover, &:focus {
+	&:hover,
+	&:focus,
+	.story-card--link:hover,
+	.story-card--link:focus {
 		background-color: oColorsGetPaletteColor('warm-2');
-		.story-card__title,
-		.story-card__summary {
-			border-bottom: 1px #bbb dotted;
-		}
+		.story-card__title { text-decoration: underline; }
 	}
+
 	background-color: oColorsGetPaletteColor('warm-base');
 	float: left;
 	display: flex;
 	overflow: hidden;
 	padding-bottom: $story-card--footer-height;
 	position: relative;
+	font-size: 18px;
+
+	@include nhGridRespondTo(M) {
+		font-size: 20px;
+	}
+
 }
 
 .story-card--link { align-items: stretch; }
 
+.story-card__heading {
+	display: inline-block;
+	margin-bottom: 7px;
+}
+
 .story-card__title {
 	@include nTypeCharlie(3);
-	display: inline;
+	font-size: 1em;
 	font-style: normal;
-	line-height: 1.2em;
-	&::after {
-		content: '';
-		clear: both;
-		display: block;
-	}
+	display: inline;
 }
 .story-card__image { width: 100%; }
 .story-card__taxon {
 	@include nTypeBeta(4);
-	font-size: 18px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	margin-right: 5px;
 }
-.story-card__summary { @include nTypeDelta(3); }
+.story-card__summary {
+	@include nTypeDelta(3);
+	font-size: 18px;
+}
 .story-card__content {
 	padding: 10px;
 	overflow: hidden;
@@ -76,25 +84,11 @@
 }
 
 @mixin nhLargeCard() {
-	font-size: 20px;
-
-	.story-card__title { font-size: 1.1em; }
-	.story-card__summary {
-		font-size: 1em;
-		line-height: 1.2em;
-	}
-
 	@include nhGridRespondTo($from: M) {
-		.story-card__title { font-size: 0.6em; }
 		.story-card__summary {
-			font-size: 0.54em;
-			line-height: 0.7em;
 			display: initial;
 		}
-		font-size: 40px;
 	}
-
-
 
 	.story-card__image {
 		@include nhGridColumn(6, 9);
@@ -110,6 +104,10 @@
 		@include nhGridRespondTo($until: XS) {
 			width: 100%;
 		}
+
+		@include nhGridRespondTo($from:S, $until: M) {
+			width: 100%;
+		}
 	}
 }
 
@@ -118,24 +116,16 @@
 		display: none;
 	}
 
-	// .story-card__taxon { font-size: 20px; }
-	.story-card__title { font-size: 20px; }
-	.story-card__summary { font-size: 18px; }
-
 	.story-card__summary { display: initial; }
 }
 
 @mixin nhSmallCard {
 	.story-card__image { display: none; }
 	.story-card__summary { display: none; }
-
-	.story-card__title { font-size: 0.9em; }
-
 }
 
 @mixin nhTallCard {
 	padding-bottom: 42px;
-	font-size: 20px;
 
 	.story-card__image {
 		width: 100%;
@@ -145,21 +135,12 @@
 
 	.story-card__summary { display: initial; }
 
-	.story-card__title { font-size: 1.2em; }
-	// .story-card__taxon { font-size: 1em; }
 	.story-card__summary {
-		font-size: 1.1em;
-		line-height: 1.2em;
 	}
 
 }
 
 @mixin nhWideCard() {
-	font-size: 24px;
-	@include nhGridRespondTo($from: M) {
-		.story-card__title { font-size: 1em; }
-		// .story-card__taxon { font-size: 0.8em; }
-	}
 	.story-card__image {
 		@include nhGridColumn(4, 9);
 		height: 100%;
@@ -168,10 +149,8 @@
 		margin: 0;
 	}
 
-	// .story-card__title { font-size: 1em; }
 	.story-card__summary { display: none; }
 	.story-card__content { margin: 0; }
-	.story-card__title { font-size: 1em; }
 }
 
 @mixin nhWideImagelessCard {

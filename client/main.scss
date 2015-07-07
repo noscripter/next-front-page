@@ -10,10 +10,12 @@
 @import "components/grid/main";
 @import "components/story-card/main";
 @import "components/carousel-card/main";
+@import "components/header-tabs/main";
+
 @import "icons";
 
 @import "components/feed/main";
-@import "components/feed/fastft/main";
+@import "components/fastft/main";
 
 @import "components/flexipod/main";
 
@@ -39,11 +41,55 @@ a {
 		color: inherit;
 }
 
-
 body {
-	@include nhGridGenerate();
 	padding: 0;
 	margin: 0;
+
+	@include nhGridGenerate();
+	@include nhHeaderTabs();
+
+	// Top tabs (News, fastFT)
+
+	.nh-header-tabs__tablist {
+		display: none;
+	}
+
+	@include nhGridRespondTo($until: S) {
+		@include nhHeaderTabsActive();
+
+		.nh-header-tabs__tablist {
+			display: block;
+		}
+
+		// initial state
+		.nh-header-tabs__panel {
+			display: block;
+		}
+
+		.sidebar--fastft {
+			display: none;
+		}
+
+		// selected states
+
+		#news-tab:target ~ .fixed-width-container .sidebar--fastft {
+			display: none;
+		}
+
+		#fastft-tab:target ~ .fixed-width-container {
+			.main-content {
+				display: none;
+			}
+
+			.sidebar--fastft {
+				display: block;
+			}
+		}
+
+		#fastft-tab:target ~ .nh-header-tabs__panel {
+			display: none;
+		}
+	}
 }
 
 .fixed-width-container {
@@ -52,8 +98,10 @@ body {
 			width: nth($layout, 2);
 		}
 	}
-	oveflow: hidden;
+	@include nhGridContainer;
 	margin: 0 auto;
+
+	@include nhGridRespondTo($from: S) { padding: 0 };
 }
 
 .fastft--header {
@@ -72,60 +120,60 @@ body {
 
 	.flexipod--lead-today {
 		// TODO think about sinking the breakpoints into nhFlexipod
-		@include nhFlexipodStory(map-get($layout-lead-today, default));
+		@include nhFlexipod(map-get($layout-lead-today, default));
 
 		@include nhGridRespondTo(XS) {
-			@include nhFlexipodStory(map-get($layout-lead-today, XS));
+			@include nhFlexipod(map-get($layout-lead-today, XS));
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipodStory(map-get($layout-lead-today, S));
+			@include nhFlexipod(map-get($layout-lead-today, S), 9);
 		}
 
 		@include nhGridRespondTo(M) {
-			@include nhFlexipodStory(map-get($layout-lead-today, M), 9);
+			@include nhFlexipod(map-get($layout-lead-today, M), 9);
 		}
 	}
 
 	.flexipod--opinion {
-		// TODO think about sinking the breakpoints into nhFlexipodStory
-		@include nhFlexipodStory(map-get($layout-opinion, default));
+		// TODO think about sinking the breakpoints into nhFlexipod
+		@include nhFlexipod(map-get($layout-opinion, default));
 
 		@include nhGridRespondTo(XS) {
-			@include nhFlexipodStory(map-get($layout-opinion, XS));
+			@include nhFlexipod(map-get($layout-opinion, XS));
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipodStory(map-get($layout-opinion, S));
+			@include nhFlexipod(map-get($layout-opinion, S), 9);
 		}
 
 		@include nhGridRespondTo(M) {
-			@include nhFlexipodStory(map-get($layout-opinion, M), 12);
+			@include nhFlexipod(map-get($layout-opinion, M), 9);
 		}
 	}
 
-	.flexipod--column {
-		// TODO think about sinking the breakpoints into nhFlexipodStory
-		@include nhFlexipodStory(map-get($layout-column, default));
+	.flexipod--topic {
+		// TODO think about sinking the breakpoints into nhFlexipod
+		@include nhFlexipod(map-get($layout-topic, default));
 
 		@include nhGridRespondTo(XS) {
-			@include nhFlexipodStory(map-get($layout-column, XS));
+			@include nhFlexipod(map-get($layout-topic, XS));
 		}
 
 		@include nhGridRespondTo(S) {
-			@include nhFlexipodStory(map-get($layout-column, S));
+			@include nhFlexipod(map-get($layout-topic, S), 9);
 		}
 
 		@include nhGridRespondTo(M) {
-			@include nhFlexipodStory(map-get($layout-column, M));
+			@include nhFlexipod(map-get($layout-topic, M), 9);
 		}
-
 	}
 
-	// .flexipod--editors {
-	// 	// TODO think about sinking the breakpoints into nhFlexipod
-	// 	@include nhFlexipodCarousel(map-get($layout-editors, default));
-	// }
+	.flexipod--editors {
+		.article-group {
+			@include nhGridRow(12);
+		}
+	}
 }
 
 .next-header {
@@ -143,14 +191,12 @@ body {
 }
 
 #fastft {
-	h1 {
-		@include nhFastFtTitle;
-	}
+	h1 {@include nhFastFtTitle; }
+	article { @include nhFeedItem(fastft-brand); }
 }
+
 .feed {
-	article {
-		@include nhFeedItem;
-	}
+	article { @include nhFeedItem(link-2); }
 }
 
 .bordered-spacer {

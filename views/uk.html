@@ -1,46 +1,45 @@
-<div class="nh-grid-container">
-		<div class="fixed-width-container">
-			<h1 class="fastft--header">
-				<a href="/fastft">
-					<span class="fastft__logo__fast">fast</span><span class="fastft__logo__ft">FT</span>
-					<i class="fastft__more-icon more-icon"></i>
-				</a>
-			</h1>
-			<section class="main-content">
-				{{> lead-today items=articles.items }}
+{{> header-tabs}}
+<a id="news-tab" class="nh-header-tabs__marker" >News</a>
+<a id="fastft-tab" class="nh-header-tabs__marker" >fastFT</a>
+<div class="fixed-width-container">
+	<div class="nh-grid-row">
+		<section class="main-content nh-header-tabs__panel" id="lead-pod" role="tabpanel">
+			{{> lead-today items=articles.items }}
+		</section>
+		<aside class="sidebar sidebar--fastft nh-header-tabs__panel" role="tabpanel" data-nh-grid-colspan="12 S4 M4">
+			<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString FastFtFeed fastFt }}}</section>
+		</aside>
+	</div>
+</div>
+<div class="nh-grid-container bordered-row nh-header-tabs__panel" id="editors-picks" role="tabpanel">
+	<div class="fixed-width-container">
+		<div class="nh-grid-row">
+			<section class="main-content" data-nh-grid-colspan="12">
+				{{> editors items=editors.items title="Editor's Picks"}}
 			</section>
-			<aside class="sidebar sidebar--fastft" data-nh-grid-colspan="S4 M4">
-				<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString FastFtFeed fastFt }}}</section>
-			</aside>
 		</div>
-
-		<div class="bordered-row nh-grid-row">
-			<div class="fixed-width-container">
-				<section class="main-content" data-nh-grid-colspan="12">
-					{{> editors items=editors.items title="Editor's Picks"}}
-				</section>
-			</div>
-		</div>
-
-		<div class="fixed-width-container">
-			<section class="main-content">
-				{{> opinion items=opinion.items url=opinion.url title="Opinion" }}
+	</div>
+</div>
+<div class="fixed-width-container nh-header-tabs__panel" role="tabpanel">
+	<div class="nh-grid-row">
+		<section class="main-content">
+			{{> opinion items=opinion.items url=opinion.url title="Opinion" }}
 			<div class="bordered-spacer"></div>
-				{{> column items=weekend.items url=weekend.url title="Weekend" }}
-				{{> column items=markets.items url=markets.url title="Markets" }}
-				{{> column items=tech.items url=tech.url title="Technology" }}
+			{{> topic items=weekend.items url=weekend.url title="Life & Arts" }}
+			{{> topic items=markets.items url=markets.url title="Markets" }}
+			{{> topic items=tech.items url=tech.url title="Technology" }}
+		</section>
+		<aside class="sidebar sidebar--feed" data-nh-grid-colspan="12 S4 M4">
+			<section class="feed feed--popular" data-fastft-articles="{{json fastFt.items}}">
+				<div>
+					<h1>
+						<div class="pod-heading pod-heading--feed">
+							<h1>Popular</h1>
+						</div>
+					</h1>
+					{{{ reactRenderToString Feed popular }}}
+				</div>
 			</section>
-			<aside class="sidebar sidebar--feed" data-nh-grid-colspan="12 S4 M4">
-				<section class="feed feed--popular" data-fastft-articles="{{json fastFt.items}}">
-					<div>
-						<h1>
-							<div class="pod-heading pod-heading--feed">
-								<h1>Popular</h1>
-							</div>
-						</h1>
-						{{{ reactRenderToString Feed popular }}}
-					</div>
-				</section>
-			</aside>
-		</div>
+		</aside>
+	</div>
 </div>
