@@ -1,0 +1,63 @@
+
+@mixin nhHeaderTabs {
+	.nh-header-tabs__marker {
+		display: none;
+	}
+}
+
+@mixin nhHeaderTabsActive {
+	// behaviour
+
+	.nh-header-tabs__panel {
+		display: none;
+	}
+
+	.nh-header-tabs__marker:target ~ .nh-header-tabs__panel {
+		display: block;
+	}
+
+	// toggles style
+
+	.nh-header-tabs__tablist {
+		padding: 0 0 0.5em 0;
+
+		nav {
+			margin: 0 auto;
+			background-color: #fff;
+			overflow: visible;
+
+			&:before, &:after {
+				content: " ";
+				display: table;
+			}
+
+			&:after {
+				clear: both;
+			}
+		}
+
+		a {
+			@include nhGridColumn(1/2);
+
+			text-align: center;
+			cursor: pointer;
+			overflow-y: visible;
+			margin: 0;
+
+			span {
+				padding: 0.5em;
+				margin: 0 auto 2px 0;
+				display: inline-block;
+			}
+
+			&:active span,
+			&:hover span,
+			&:focus span {
+				padding: 0.5em;
+				margin: 0 auto -3px 0;
+				border: 5px solid oColorsGetPaletteColor(fastft-brand);
+				border-width: 0 0 5px 0;
+			}
+		}
+	}
+}

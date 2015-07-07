@@ -10,6 +10,8 @@
 @import "components/grid/main";
 @import "components/story-card/main";
 @import "components/carousel-card/main";
+@import "components/header-tabs/main";
+
 @import "icons";
 
 @import "components/feed/main";
@@ -39,12 +41,66 @@ a {
 		color: inherit;
 }
 
-
 body {
-	@include nhGridGenerate();
 	padding: 0;
 	margin: 0;
+
+	@include nhGridGenerate();
+	@include nhHeaderTabs();
+
+	.nh-header-tabs__tablist {
+		display: none;
+	}
+
+	@include nhGridRespondTo($until: S) {
+		// top tabs
+		@include nhHeaderTabsActive();
+
+		.nh-header-tabs__tablist {
+			display: block;
+		}
+
+		// initial state
+		.nh-header-tabs__panel {
+			display: block;
+		}
+
+		.sidebar--fastft.nh-header-tabs__panel {
+			display: none;
+		}
+
+		// main-content-container should always be shown
+		.main-content-container {
+			display: block;
+		}
+
+		// selected states
+
+		#news-tab:target ~ .main-content-container .sidebar {
+			display: none;
+		}
+
+		#fastft-tab:target ~ .main-content-container {
+			.main-content {
+				display: none;
+			}
+
+			.sidebar {
+				display: block;
+			}
+		}
+
+		#fastft-tab:target ~ .nh-header-tabs__panel {
+			display: none;
+		}
+
+		#fastft-tab:target ~ .main-content-container {
+			display: block;
+		}
+	}
 }
+
+// Top tabs
 
 .fixed-width-container {
 	@each $layout in $nh-container-widths {
@@ -52,7 +108,7 @@ body {
 			width: nth($layout, 2);
 		}
 	}
-	oveflow: hidden;
+	overflow: hidden;
 	margin: 0 auto;
 }
 
