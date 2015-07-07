@@ -2,17 +2,11 @@
 
 .carousel-card {
 	width: 100%;
-	text-align: center;
+	text-align: left;
 
-	@include nhGridRespondTo(XS) {
-		@include nhGridColspan(4, 12);
-	}
+	@include nhGridColumn((default: 12, XS: 6, S: 4, M: 2));
+	@include nhGridRespondTo(S) { text-align: center; }
 
-	@include nhGridRespondTo(M) {
-		@include nhGridColspan(2, 12);
-	}
-
-	@include nhGridMargins(12);
 	margin-top: 0px;
 	margin-bottom: 20px;
 	float: left;
@@ -34,12 +28,19 @@
 	}
 }
 
+.carousel-card__content {
+	@include nhGridColumn((default: 8, S: 12));
+}
+
 .carousel-card__image {
-	display: none;
-	width: 100%;
+	@include nhGridColumn(4);
 	margin-bottom: 10px;
+	padding-right: 3px;
+	float: left;
+
 
 	@include nhGridRespondTo(S) {
+		width: 100%;
 		display: inline;
 	}
 
