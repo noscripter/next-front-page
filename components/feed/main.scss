@@ -10,7 +10,8 @@
 		display: block;
 	}
 
-	&:hover, &:focus {
+	&:hover,
+	&:focus {
 		border-width: 1px 0 1px;
 		margin-top: -1px;
 		border-color: oColorsGetPaletteColor(fastft-brand);
@@ -22,7 +23,8 @@
 
 	&:first-of-type {
 		border-width: 1px 0 1px;
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			margin-top: 0px;
 		}
 	}
@@ -41,9 +43,7 @@
 
 	p { display: none; }
 
-	i {
-		margin: 2px 6px 0 0;
-	}
+	i { margin: 2px 6px 0 0; }
 
 	time {
 		@include nTypeAlpha(5);

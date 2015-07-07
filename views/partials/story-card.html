@@ -1,31 +1,27 @@
 <article class='story-card article--{{viewGenre}}'>
-
+	<a href="/{{item.id}}" class="story-card--link" tabindex=0>
 	{{#if (getImageSrc item.images 'wide-format' 710)}}
-
-		<a href="/{{item.id}}">
-			<img
-			class='story-card__image'
-			src="{{getImageSrc item.images 'wide-format' 710}}"
-			/>
-		<a>
-	{{/if}}
-	<div class="story-card__content">
-		<a href="/{{item.id}}">
-			<h2 class="story-card__title">
-				<span class="story-card__taxon">{{primaryTag.name}}</span>
-				| {{item.title.title}}
-			</h2>
-		</a>
-		<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
-	</div>
-	<div class='story-card__footer'>
-		<div class="time-icon"></div>
-		<time
-			data-o-component="o-date"
-			class="o-date"
-			datetime="{{#dateformat}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}">
-				{{#dateformat "dddd, d mmmm, yyyy"}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}
-		</time>
-		{{>next-myft-ui/templates/save-for-later contentId=item.id}}
-	<div>
+				<img
+				class='story-card__image'
+				src="{{getImageSrc item.images 'wide-format' 710}}"
+				/>
+		{{/if}}
+		<div class="story-card__content">
+				<h2 class="story-card__title">
+					<span class="story-card__taxon">{{primaryTag.name}}</span>
+					| {{item.title.title}}
+				</h2>
+			<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
+		</div>
+		<div class='story-card__footer'>
+			<div class="time-icon"></div>
+			<time
+				data-o-component="o-date"
+				class="o-date"
+				datetime="{{#dateformat}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}">
+					{{#dateformat "dddd, d mmmm, yyyy"}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}
+			</time>
+			{{>next-myft-ui/templates/save-for-later contentId=item.id}}
+		</div>
+	</a>
 </article>
