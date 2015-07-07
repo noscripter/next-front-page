@@ -24,4 +24,6 @@ Feed.propTypes = {
 	items: React.PropTypes.array.isRequired
 };
 
-export default Feed;
+export default {
+	Feed
+};

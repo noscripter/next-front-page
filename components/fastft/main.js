@@ -1,6 +1,6 @@
 import 'isomorphic-fetch';
 import React from 'react';
-import FastFtFeed from "./main";
+import FastFtFeed from "./fastftfeed";
 
 const init = (el, opts) => {
 	el = el || document.body;
@@ -27,5 +27,6 @@ const init = (el, opts) => {
 };
 
 export default {
-	init: init
+	init: init,
+	FastFtFeed: FastFtFeed
 };

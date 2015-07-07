@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import Feed from '../main';
+import {Feed} from '../feed/main';
 
 class FastFtFeed extends React.Component {
 	render() {

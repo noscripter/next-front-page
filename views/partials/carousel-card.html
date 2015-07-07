@@ -1,12 +1,11 @@
 <article class='carousel-card article--{{viewGenre}}'>
-	{{#if item.images.0.url}}
-		<a href="/{{item.id}}"><img class='carousel-card__image' src="{{getImageSrc item.images 'wide-format' 320}}" /><a>
-	{{/if}}
-	<div class="carousel-card__content">
-		<a href="/{{item.id}}">
+	<a href="/{{item.id}}" class="carousel-card--link" tabindex="0">
+		{{#if item.images.0.url}}
+		<img class='carousel-card__image' src="{{getImageSrc item.images 'wide-format' 320}}" />
+		{{/if}}
+		<div class="carousel-card__content">
 			<h3 class="story-card__taxon">{{primaryTag.name}}</h3>
 			<h2 class="story-card__title">{{item.title.title}}</h2>
-		</a>
-		<!-- <h3 class="carousel-card__summary">{{{item.summary.excerpt}}}</h3> -->
-	</div>
+		</div>
+	</a>
 </article>
