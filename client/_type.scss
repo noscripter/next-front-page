@@ -35,16 +35,26 @@
 }
 
 .pod-heading--link {
+	display: block;
+	padding-right: 10px;
+
 	span {
-		@include linkHover;
 		line-height: 40px;
 		float: right;
 		margin-right: 10px;
 		display: inline-block;
 		color: oColorsGetPaletteColor('link-1');
+	}
 
-		&:hover {
+	&:hover, &:active {
+		span {
+			text-decoration: underline;
 			color: oColorsGetPaletteColor('link-2');
+		}
+
+	  .more-icon,
+		button[data-alternate-text="More"] {
+			@include nextIcon(go-to-circle, oColorsGetPaletteColor(link-2), 30px);
 		}
 	}
 }
