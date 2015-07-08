@@ -7,13 +7,13 @@
 	.article-group {
 		@include nhGridRow($total-cols);
 		clear: both;
-		overflow: hidden;
 
 		.story-card {
 			@include nhGridColumn(null, $total-cols);
 		}
 	}
 
+	@include nhGridContainer;
 	@include nhFlexipodLayout($layout-spec, $total-cols);
 }
 
@@ -32,7 +32,15 @@
 		$type: nth($card-spec, 2);
 
 		.article-group:nth-child(#{$int}) {
-			@if $width < 1 { display: flex; } @else { display: block; }
+			@if $width < 1 {
+				display: flex;
+				@-moz-document url-prefix() {
+					margin-bottom: 0;
+				}
+			} @else {
+				display: block;
+			}
+
 			.story-card {
 				@include nhStoryCard($type);
 				width: nhGridColspan($width, $total-cols);
@@ -51,7 +59,14 @@
 					width: nhGridColspan($width, $total-cols);
 				}
 
-				@if $width < 1 { display: flex; } @else { display: block; }
+				@if $width < 1 {
+					display: flex;
+					@-moz-document url-prefix() {
+						margin-bottom: 0;
+					}
+				} @else {
+					display: block;
+				}
 			}
 
 		}
