@@ -12,6 +12,8 @@ export default (region) => {
 
 		content.fetch(region, useElasticSearch)
 		.then(contentData => {
+			console.log(contentData.top.items);
+
 			res.render('uk', {
 				layout: 'wrapper',
 				FastFtFeed: FastFtFeed,

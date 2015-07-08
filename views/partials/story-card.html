@@ -1,6 +1,6 @@
-<article class='story-card article--{{genre}}' data-trackable="story" tabindex="0" aria-labelledby="{{item.id}}-title" role="article">
+<article class='story-card article--{{genre}}' data-trackable="story" tabindex="0" aria-labelledby="{{id}}-title" role="article">
 	{{#if (getImage item.images 'wide-format' 710)}}
-		<a href="/{{item.id}}" class="story-card--link" data-trackable="image" role="presentation" aria-hidden="true">
+		<a href="/{{id}}" class="story-card--link" data-trackable="image" role="presentation" aria-hidden="true">
 			{{#with (getImage item.images 'wide-format' 710)}}
 				<img class='story-card__image'
 				src="{{src}}" alt=""
@@ -12,8 +12,8 @@
 		<a href="/stream/{{primaryTag.taxonomy}}Id/{{primaryTag.id}}" data-trackable="primary-tag" class="story-card--link">
 			<div class="story-card__taxon" aria-label="Topic: {{primaryTag.name}}">{{primaryTag.name}}</div>
 		</a>
-			<a href="/{{item.id}}" class="story-card--link" data-trackable="main-link">
-				<h1 id="{{item.id}}-title" class="story-card__title" data-trackable="title">{{title}}</h1>
+			<a href="/{{id}}" class="story-card--link" data-trackable="main-link">
+				<h1 id="{{id}}-title" class="story-card__title" data-trackable="title">{{title}}</h1>
 				<h2 class="story-card__summary" data-trackable="summary">{{{summary}}}</h2>
 			</a>
 	</div>
@@ -35,8 +35,8 @@
 		<time
 			data-o-component="o-date"
 			class="o-date"
-			datetime="{{#dateformat}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}">
-				{{#dateformat "dddd, d mmmm, yyyy"}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}
+			datetime="{{#dateformat}}{{lastPublished}}{{/dateformat}}">
+				{{#dateformat "dddd, d mmmm, yyyy"}}{{lastPublished}}{{/dateformat}}
 		</time>
 		{{>next-myft-ui/templates/save-for-later contentId=item.id}}
 	</div>

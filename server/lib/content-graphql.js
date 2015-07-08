@@ -9,9 +9,16 @@ query TopQuery {
 	top(region: UK) {
 		id
 		items {
+			id
 			title
 			genre
+			summary
 			primaryTag
+			primaryImage {
+				src
+				alt
+			}
+			lastPublished
 		}
 	}
 }`;
