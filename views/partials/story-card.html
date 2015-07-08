@@ -19,7 +19,9 @@
 				<div class="story-card__related">
 					{{#slice item.package limit=3}}
 						<div class="story-card__related-link">
-							<span class="story-card__taxon">{{packaging.kicker}}</span>|
+							{{#if packaging.kicker}}
+								<span class="story-card__taxon">{{packaging.kicker}}</span>|
+							{{/if}}
 							<a href="/{{id}}">{{packaging.spHeadline}}</a>
 						</div>
 					{{/slice}}
