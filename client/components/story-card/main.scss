@@ -12,11 +12,6 @@
 .article--analysis { @include nhStoryGenreColors(oColorsGetPaletteColor('section-green')); }
 
 .story-card {
-	&:hover,
-	&:focus {
-		background-color: oColorsGetPaletteColor('warm-2');
-	}
-
 	background-color: oColorsGetPaletteColor('warm-base');
 	float: left;
 	display: flex;
@@ -52,7 +47,6 @@
 	@include nTypeCharlie(3);
 	font-size: 1em;
 	font-style: normal;
-	display: inline;
 }
 
 .story-card__related-link {
@@ -67,10 +61,12 @@
 
 .story-card__image { width: 100%; }
 .story-card__taxon {
+	@include linkHover;
 	@include nTypeBeta(4);
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	margin-right: 5px;
+	margin-bottom: 5px;
 }
 .story-card__summary {
 	@include nTypeDelta(3);

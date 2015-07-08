@@ -7,11 +7,13 @@
 				/>
 		{{/if}}
 		<div class="story-card__content">
-			<div class="story-card--heading">
-				<span class="story-card__taxon">{{primaryTag.name}}</span>|
-				<h2 class="story-card__title">{{item.title.title}}</h2>
-			</div>
-			<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
+			<a href="/stream/sectionsId/{{item.metadata.primarySection.term.id}}" class="story-card--link" tabindex="0" >
+				<div class="story-card__taxon">{{primaryTag.name}}</div>
+			</a>
+				<a href="/{{item.id}}" class="story-card--link" tabindex="0" >
+					<h2 class="story-card__title">{{item.title.title}}</h2>
+					<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
+				</a>
 		</div>
 			{{#if related}}
 				<div class="story-card__related">
