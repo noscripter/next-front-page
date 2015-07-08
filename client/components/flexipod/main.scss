@@ -11,7 +11,6 @@
 
 		.story-card {
 			@include nhGridColumn(null, $total-cols);
-			@include nhGridMargins($total-cols);
 		}
 	}
 

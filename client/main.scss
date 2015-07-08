@@ -106,7 +106,7 @@ body {
 
 .fastft--header {
 	@include nhFastFtTitle;
-	@include nhGridMargins;
+	@include nhRowMargins;
 
 	background-color: oColorsGetPaletteColor(warm-base);
 	padding: 5px 0.25em 0 0.2em;
