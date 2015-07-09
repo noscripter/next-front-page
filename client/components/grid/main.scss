@@ -22,17 +22,31 @@
 	float: left;
 	min-height: 1px;
 
-	@include nhGridMargins($total-cols);
+	@include nhColumnMargins($total-cols);
 
 	@if $span {
 		@include nhGridColspan($span, $total-cols);
 	}
 }
 
-@mixin nhGridMargins($total-cols: $nh-grid-columns) {
+@mixin nhColumnMargins($total-cols: $nh-grid-columns) {
 	$subgrid-ratio: $nh-grid-columns / $total-cols;
 
-	margin: percentage($subgrid-ratio * $nh-grid-gutter / 2);
+	margin-top: 0;
+	margin-right: percentage($subgrid-ratio * $nh-grid-gutter / 2);
+	margin-bottom: percentage($subgrid-ratio * $nh-grid-gutter);
+	margin-left: percentage($subgrid-ratio * $nh-grid-gutter / 2);
+}
+
+@mixin nhRowMargins($total-cols: $nh-grid-columns) {
+	$subgrid-ratio: $nh-grid-columns / $total-cols;
+
+	margin-top: 0;
+	margin-right: percentage($subgrid-ratio * -$nh-grid-gutter / 2);
+	margin-bottom: percentage($subgrid-ratio * -$nh-grid-gutter);
+	margin-left: percentage($subgrid-ratio * -$nh-grid-gutter / 2);
+
+	padding-bottom: percentage($subgrid-ratio * $nh-grid-gutter);
 }
 
 /// % width of an item in the grid
@@ -95,18 +109,12 @@
 	}
 }
 
+
 @mixin nhGridRow($total-cols: $nh-grid-columns) {
 	// negative margin to swallow the outer column's margins
 	$subgrid-ratio: $nh-grid-columns / $total-cols;
 
-	margin-left: percentage($subgrid-ratio * -$nh-grid-gutter / 2);
-	margin-right: percentage($subgrid-ratio * -$nh-grid-gutter / 2);
-
-	&:after {
-		content: "";
-		display: table;
-		clear: both;
-	}
+	@include nhRowMargins($total-cols);
 }
 
 @mixin nhGridContainer() {
@@ -116,11 +124,7 @@
 	padding-left: percentage($nh-grid-gutter / 2);
 	padding-right: percentage($nh-grid-gutter / 2);
 
-	&:after {
-		content: "";
-		display: table;
-		clear: both;
-	}
+	overflow: hidden;
 }
 
 // TODO pushes, pulls and skips
