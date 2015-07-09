@@ -5,17 +5,18 @@ import {Feed} from '../../components/feed/main';
 /**
 *	Fetches the first item that doesn't match the supplied id.
 */
-function fetchFirst(id, items) {
-	return items.find(item => {
-		return item.item.id !== id;
-	});
+function rejectId(id, contentData) {
+	return Object.assign({},
+		contentData,
+		{ items: contentData.items.filter(item => item.item.id !== id) }
+	);
 }
 
 module.exports = function(req, res) {
 	const useElasticSearch = res.locals.flags.elasticSearchItemGet.isSwitchedOn;
 	const contentData = content.uk(useElasticSearch);
 
-	let leadArticle = contentData.top.items[0];
+	let leadArticleId = contentData.top.items[0] && contentData.top.items[0].item.id;
 
 	res.render('uk', {
 		layout: 'wrapper',
@@ -23,19 +24,19 @@ module.exports = function(req, res) {
 		Feed: Feed,
 		articles: contentData.top,
 		fastFt: contentData.fastFt,
-		opinion: contentData.opinion,
-		tech: contentData.technology,
-		markets: contentData.markets,
-		weekend: contentData.lifestyle,
+		opinion: rejectId(leadArticleId, contentData.opinion),
+		tech: rejectId(leadArticleId, contentData.technology),
+		markets: rejectId(leadArticleId, contentData.markets),
+		weekend: rejectId(leadArticleId, contentData.lifestyle),
 		popular: contentData.popular,
 		editors: {
 			items: [
-				fetchFirst(leadArticle.item.id, contentData.bigRead.items),
-				fetchFirst(leadArticle.item.id, contentData.lunch.items),
-				fetchFirst(leadArticle.item.id, contentData.management.items),
-				fetchFirst(leadArticle.item.id, contentData.frontPageSkyline.items),
-				fetchFirst(leadArticle.item.id, contentData.personInNews.items),
-				fetchFirst(leadArticle.item.id, contentData.lex.items)
+				rejectId(leadArticleId, contentData.bigRead).items[0],
+				rejectId(leadArticleId, contentData.lunch).items[0],
+				rejectId(leadArticleId, contentData.management).items[0],
+				rejectId(leadArticleId, contentData.frontPageSkyline).items[0],
+				rejectId(leadArticleId, contentData.personInNews).items[0],
+				rejectId(leadArticleId, contentData.lex).items[0]
 			]
 		}
 	});
