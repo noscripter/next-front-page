@@ -10,7 +10,7 @@ export default (region) => {
 			'Cache-Control': 'max-age=40, public, stale-if-error=86400' // 40 seconds; 24 hours
 		});
 
-		content.fetch(region, useElasticSearch)
+		content.fetch(region, true)
 		.then(contentData => {
 			console.log(contentData.top.items);
 

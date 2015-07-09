@@ -17,7 +17,7 @@
 				<h2 class="story-card__summary" data-trackable="summary">{{{summary}}}</h2>
 			</a>
 	</div>
-	{{#if related}}
+	{{#if relatedLinks}}
 		<div class="story-card__related" data-trackable="related-links" tabindex="0" role="group" aria-label="Related links">
 			{{#slice item.package limit=3}}
 				<article class="story-card__related-link" aria-labelledby="{{id}}-title" tabindex="0" role="article">

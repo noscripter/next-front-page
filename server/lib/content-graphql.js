@@ -33,15 +33,14 @@ query SchemaQuery {
 }`
 
 const fetch = (topStoriesRegion, useElasticSearch) => {
-		// const src = (useElasticSearch ? 'elastic' : 'capi1');
+	// const src = (useElasticSearch ? 'elastic' : 'capi1');
 
-		return graphql(schema, query)
-		.then(it => {
-			if(it.data) { return it.data; }
+	return graphql(schema, query)
+	.then(it => {
+		if(it.data) { return it.data; }
 
-			throw it.errors.map(it => it.message).join("\n");
-		});
-	};
+		throw it.errors.map(it => it.message).join("\n");
+	});
 };
 
 const fetchSchema = () => {
@@ -52,5 +51,5 @@ const fetchSchema = () => {
 // FIXME change to polling when querying works
 export default {
 	schema: fetchSchema,
-	fetch: fetch('uk'),
+	fetch: fetch,
 };

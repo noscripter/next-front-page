@@ -111,7 +111,6 @@ const Content = new GraphQLObjectType({
 		primaryImage: {
 			type: Image,
 			resolve: (content) => {
-				console.log("Image:", content.item.images);
 				let imageMap = content.item.images.reduce((map, it) => {
 					return Object.assign({[it.type]: it}, map);
 				}, {});
