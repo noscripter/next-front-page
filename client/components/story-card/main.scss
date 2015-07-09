@@ -46,6 +46,8 @@
 .story-card__related-link {
 	@include nTypeCharlie(3);
 	font-size: 1em;
+	line-height: 1.2;
+	margin-bottom: 10px;
 	font-style: normal;
 }
 
@@ -70,6 +72,8 @@
 }
 .story-card__summary {
 	@include nTypeDelta(3);
+	line-height: 1.2;
+
 	font-size: 18px;
 }
 .story-card__content {
