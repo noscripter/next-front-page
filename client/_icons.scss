@@ -4,8 +4,7 @@
 }
 
 .save-icon,
-button[data-alternate-text="saved"],
-button[data-alternate-text="Saved"] {
+.n-myft-ui__button[data-alternate-text="saved"] {
 	@include nextIcon(bookmark-circle, oColorsGetPaletteColor(link-1), 30px);
 	vertical-align: middle;
 
@@ -15,8 +14,7 @@ button[data-alternate-text="Saved"] {
 }
 
 .save-selected-icon,
-button[data-alternate-text="save"],
-button[data-alternate-text="Save"] {
+.n-myft-ui__button[data-alternate-text="save"], {
 	@include nextIcon(bookmark-circle-saved, oColorsGetPaletteColor(link-1), 30px);
 	vertical-align: middle;
 
