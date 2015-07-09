@@ -1,7 +1,12 @@
 <article class='carousel-card article--{{viewGenre}}'>
-    {{#if item.images.0.url}}
+    {{#if (getImage item.images 'wide-format' 320)}}
       <a href="/{{item.id}}" class="carousel-card--link">
-        <img class='carousel-card__image' src="{{getImageSrc item.images 'wide-format' 320}}" />
+        {{#with (getImage item.images 'wide-format' 320)}}
+          <img class='carousel-card__image'
+            src="{{src}}"
+            alt="{{alt}}"
+          />
+        {{/with}}
       </a>
     {{/if}}
     <div class="carousel-card__content">

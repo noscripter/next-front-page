@@ -51,3 +51,13 @@
 	}
 
 }
+
+.flexipod--editors .carousel-card {
+	@include nhGridRespondTo($from: XS, $until: S) {
+		&:nth-child(2n+1) { clear: both; }
+	}
+
+	@include nhGridRespondTo($from: S, $until: M) {
+		&:nth-child(3n+1) { clear: both; }
+	}
+}

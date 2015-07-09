@@ -1,41 +1,43 @@
 <article class='story-card article--{{viewGenre}}'>
-	<a href="/{{item.id}}" class="story-card--link" tabindex=0>
-	{{#if (getImageSrc item.images 'wide-format' 710)}}
-				<img
-				class='story-card__image'
-				src="{{getImageSrc item.images 'wide-format' 710}}"
+	{{#if (getImage item.images 'wide-format' 710)}}
+		<a href="/{{item.id}}" class="story-card--link" tabindex=0>
+			{{#with (getImage item.images 'wide-format' 710)}}
+				<img class='story-card__image'
+				src="{{src}}"
+				alt="{{alt}}"
 				/>
-		{{/if}}
-		<div class="story-card__content">
-			<a href="/stream/sectionsId/{{item.metadata.primarySection.term.id}}" class="story-card--link" tabindex="0" >
-				<div class="story-card__taxon">{{primaryTag.name}}</div>
+			{{/with}}
+		</a>
+	{{/if}}
+	<div class="story-card__content">
+		<a href="/stream/sectionsId/{{item.metadata.primarySection.term.id}}" class="story-card--link" tabindex="0" >
+			<div class="story-card__taxon">{{primaryTag.name}}</div>
+		</a>
+			<a href="/{{item.id}}" class="story-card--link" tabindex="0" >
+				<h2 class="story-card__title">{{item.title.title}}</h2>
+				<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
 			</a>
-				<a href="/{{item.id}}" class="story-card--link" tabindex="0" >
-					<h2 class="story-card__title">{{item.title.title}}</h2>
-					<h3 class="story-card__summary">{{{item.summary.excerpt}}}</h3>
-				</a>
-		</div>
-			{{#if related}}
-				<div class="story-card__related">
-					{{#slice item.package limit=3}}
-						<div class="story-card__related-link">
-							{{#if packaging.kicker}}
-								<span class="story-card__taxon">{{packaging.kicker}}</span>|
-							{{/if}}
-							<a href="/{{id}}">{{packaging.spHeadline}}</a>
-						</div>
-					{{/slice}}
-				</div>
-			{{/if}}
-		<div class='story-card__footer'>
-			<div class="time-icon"></div>
-			<time
-				data-o-component="o-date"
-				class="o-date"
-				datetime="{{#dateformat}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}">
-					{{#dateformat "dddd, d mmmm, yyyy"}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}
-			</time>
-			{{>next-myft-ui/templates/save-for-later contentId=item.id}}
-		</div>
-	</a>
+	</div>
+		{{#if related}}
+			<div class="story-card__related">
+				{{#slice item.package limit=3}}
+					<div class="story-card__related-link">
+						{{#if packaging.kicker}}
+							<span class="story-card__taxon">{{packaging.kicker}}</span>|
+						{{/if}}
+						<a href="/{{id}}">{{packaging.spHeadline}}</a>
+					</div>
+				{{/slice}}
+			</div>
+		{{/if}}
+	<div class='story-card__footer'>
+		<div class="time-icon"></div>
+		<time
+			data-o-component="o-date"
+			class="o-date"
+			datetime="{{#dateformat}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}">
+				{{#dateformat "dddd, d mmmm, yyyy"}}{{item.lifecycle.lastPublishDateTime}}{{/dateformat}}
+		</time>
+		{{>next-myft-ui/templates/save-for-later contentId=item.id}}
+	</div>
 </article>
