@@ -18,6 +18,10 @@ module.exports = function(req, res) {
 
 	let leadArticleId = contentData.top.items[0] && contentData.top.items[0].item.id;
 
+	res.set({
+		'Cache-Control': 'max-age=40, public, stale-if-error=86400' // 40 seconds; 24 hours
+	});
+
 	res.render('uk', {
 		layout: 'wrapper',
 		FastFtFeed: FastFtFeed,
