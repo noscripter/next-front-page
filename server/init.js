@@ -1,4 +1,4 @@
-import {equal as assertEqual} from 'assert'
+import {equal as assertEqual} from 'assert';
 import express from 'ft-next-express';
 import React from 'react';
 
@@ -12,13 +12,13 @@ var app = express({
 		reactRenderToString: (klass, props) => {
 			return React.renderToString(React.createElement(klass, props));
 		},
-		getImageSrc(images, type, maxWidth) {
+		getImage(images, type, maxWidth) {
 			assertEqual(typeof maxWidth, 'number', 'getImageSrc: maxWidth must be a number');
-
-			const image = images && images.find(img => {
-				return img.type === type;
-			});
-			return image ? `//next-geebee.ft.com/image/v1/images/raw/${image.url}?source=next&fit=scale-down&width=${maxWidth}` : null;
+			const image = images && images.find(img => img.type === type);
+			return image ? Object.assign(
+				{ src: `//next-geebee.ft.com/image/v1/images/raw/${image.url}?source=next&fit=scale-down&width=${maxWidth}` },
+				image
+			) : null;
 		}
 	}
 });
