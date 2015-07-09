@@ -16,7 +16,7 @@ class Article extends React.Component {
 
 		return (
 			<article>
-				<a href={linkHref(id)} tabIndex="0">
+				<a href={linkHref(id)} tabIndex="0" data-trackable="feed-link">
 					<h2>{title}</h2>
 					<span>
 						<i className="time-icon" />
