@@ -1,5 +1,5 @@
 .time-icon {
-	@include nextIcon(time, oColorsGetPaletteColor(timestamp), 14px);
+	@include nextIcon(timestamp, oColorsGetPaletteColor(timestamp), 14px);
 	vertical-align: middle;
 }
 
@@ -17,11 +17,11 @@ button[data-alternate-text="Saved"] {
 .save-selected-icon,
 button[data-alternate-text="save"],
 button[data-alternate-text="Save"] {
-	@include nextIcon(bookmark-circle-active, oColorsGetPaletteColor(link-1), 30px);
+	@include nextIcon(bookmark-circle-saved, oColorsGetPaletteColor(link-1), 30px);
 	vertical-align: middle;
 
 	&:hover {
-		@include nextIcon(bookmark-circle-active, oColorsGetPaletteColor(link-2), 30px);
+		@include nextIcon(bookmark-circle-saved, oColorsGetPaletteColor(link-2), 30px);
 	}
 }
 
