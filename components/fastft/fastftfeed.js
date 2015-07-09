@@ -8,7 +8,7 @@ class FastFtFeed extends React.Component {
 		return (
 			<div>
 				<h1>
-					<a href="/fastft">
+					<a href="/fastft" data-trackable="go-to-link">
 						<span className="fastft__logo__fast">fast</span>
 						<span className="fastft__logo__ft">FT</span>
 						<i className="fastft__more-icon more-icon--fastft" />

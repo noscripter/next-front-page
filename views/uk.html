@@ -10,7 +10,7 @@
 		<section class="main-content nh-header-tabs__panel" id="lead-pod" role="tabpanel">
 			{{> lead-today items=articles.items }}
 		</section>
-		<aside class="sidebar sidebar--fastft nh-header-tabs__panel" role="tabpanel" data-nh-grid-colspan="12 S4 M4">
+		<aside class="sidebar sidebar--fastft nh-header-tabs__panel" data-trackable="fastft" role="tabpanel" data-nh-grid-colspan="12 S4 M4">
 			<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString FastFtFeed fastFt }}}</section>
 		</aside>
 	</div>
@@ -36,7 +36,7 @@
 			{{> topic items=tech.items url=tech.url title="Technology" }}
 		</section>
 		<aside class="sidebar sidebar--feed" data-nh-grid-colspan="12 S4 M4">
-			<section class="feed feed--popular" data-fastft-articles="{{json fastFt.items}}">
+			<section class="feed feed--popular" data-trackable="popular" data-fastft-articles="{{json fastFt.items}}">
 				<div>
 					<h1>
 						<div class="pod-heading pod-heading--feed">
