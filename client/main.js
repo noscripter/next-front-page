@@ -15,7 +15,6 @@ setup.bootstrap((result) => {
 	fastFT.init(feedContainer);
 
 	const tabs = document.getElementById("header-tabs");
-	console.log(tabs);
 	headerTabs.init(tabs, "#news-tab");
 
 	oDate.init();
