@@ -7,10 +7,11 @@
 <a id="fastft-tab" class="nh-header-tabs__marker" >fastFT</a>
 <div class="fixed-width-container">
 	<div class="nh-grid-row">
-		<section class="main-content nh-header-tabs__panel" id="lead-pod" role="tabpanel">
+		<section class="main-content nh-header-tabs__panel" id="site-content" role="tabpanel main" tabindex="0" aria-labeled-by="lead-pod-title">
+			<h1 class="u-visually-hidden" id="lead-pod-title">Top stories</h1>
 			{{> lead-today items=articles.items }}
 		</section>
-		<aside class="sidebar sidebar--fastft nh-header-tabs__panel" data-trackable="fastft" role="tabpanel" data-nh-grid-colspan="12 S4 M4">
+		<aside class="sidebar sidebar--fastft nh-header-tabs__panel" data-trackable="fastft" role="tabpanel" data-nh-grid-colspan="12 S4 M4" tabindex="0">
 			<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString FastFtFeed fastFt }}}</section>
 		</aside>
 	</div>

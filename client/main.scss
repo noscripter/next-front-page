@@ -45,6 +45,15 @@ img {
 	border: none;
 }
 
+.u-visually-hidden:focus,
+.u-visually-hidden:active, {
+	position: static;
+	overflow: visible;
+	clip: auto;
+	height: auto;
+	width: auto;
+}
+
 body {
 	padding: 0;
 	margin: 0;

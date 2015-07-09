@@ -1,25 +1,24 @@
 <article class='story-card article--{{viewGenre}}' data-trackable="story">
 	{{#if (getImage item.images 'wide-format' 710)}}
-		<a href="/{{item.id}}" class="story-card--link" data-trackable="image" tabindex=0>
+		<a href="/{{item.id}}" class="story-card--link" data-trackable="image" tabindex="-1" role="presentation" aria-hidden="true">
 			{{#with (getImage item.images 'wide-format' 710)}}
 				<img class='story-card__image'
-				src="{{src}}"
-				alt="{{alt}}"
+				src="{{src}}" alt=""
 				/>
 			{{/with}}
 		</a>
 	{{/if}}
 	<div class="story-card__content">
-		<a href="/stream/{{primaryTag.taxonomy}}Id/{{primaryTag.id}}" data-trackable="primary-tag" class="story-card--link" tabindex="0" >
-			<div class="story-card__taxon">{{primaryTag.name}}</div>
+		<a href="/stream/{{primaryTag.taxonomy}}Id/{{item.metadata.primarySection.term.id}}" data-trackable="primary-tag" class="story-card--link" tabindex="0" >
+			<div class="story-card__taxon" aria-label="Topic: {{primaryTag.name}}">{{primaryTag.name}}</div>
 		</a>
-			<a href="/{{item.id}}" class="story-card--link" data-trackable="main-link" tabindex="0" >
+			<a href="/{{item.id}}" class="story-card--link" data-trackable="main-link" tabindex="0">
 				<h2 class="story-card__title" data-trackable="title">{{item.title.title}}</h2>
 				<h3 class="story-card__summary" data-trackable="summary">{{{item.summary.excerpt}}}</h3>
 			</a>
 	</div>
 		{{#if related}}
-			<div class="story-card__related" data-trackable="related-links">
+			<div class="story-card__related" data-trackable="related-links" tabindex="0" aria-label="Related links">
 				{{#slice item.package limit=3}}
 					<div class="story-card__related-link">
 						{{#if packaging.kicker}}
@@ -31,7 +30,8 @@
 			</div>
 		{{/if}}
 	<div class='story-card__footer'>
-		<div class="time-icon"></div>
+		<i class="time-icon"></i>
+		<span class="u-visually-hidden">Published</span>
 		<time
 			data-o-component="o-date"
 			class="o-date"
