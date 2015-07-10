@@ -111,7 +111,7 @@
 	.story-card__image {
 		@include nhGridColumn(6, 9);
 		margin: 0;
-		height: initial;
+		height: auto;
 		display: block;
 	}
 
@@ -147,7 +147,7 @@
 
 	.story-card__image {
 		width: 100%;
-		height: initial;
+		height: auto;
 		display: block;
 	}
 
