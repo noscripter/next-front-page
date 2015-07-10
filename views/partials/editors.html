@@ -1,10 +1,5 @@
-<div class="flexipod flexipod--editors" data-trackable="editors-picks">
-	<h1 class='carousel-heading'>{{title}}</h1>
-	<div>
-		<div class="article-group" tabindex="0" aria-label="{{title}}">
-			{{#each items}}
-				{{> carousel-card }}
-			{{/each}}
-		</div>
-	</div>
-</div>
+<section class="article-group" data-trackable="editors-picks" id="editors-picks" aria-labelledby="{{id}}-title" role="region" tabindex="0">
+	{{#each items}}
+		{{> carousel-card }}
+	{{/each}}
+</section>

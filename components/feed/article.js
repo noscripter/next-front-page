@@ -15,12 +15,12 @@ class Article extends React.Component {
 		const {id, title, publishedDate} = this.props.article;
 
 		return (
-			<article>
+			<article role="article" aria-labelledby={`${id}-title`}>
 				<a href={linkHref(id)} tabIndex="0" data-trackable="feed-link">
-					<h2>{title}</h2>
+					<h2 id={`${id}-title`}>{title}</h2>
 					<span>
 						<i className="time-icon" aria-label="Published" />
-						<time data-o-component="o-date" className="o-date" dateTime={publishedDate}>
+						<time data-o-component="o-date" className="o-date" dateTime={publishedDate} aria-live="off">
 							{format(publishedDate, dateFormat)}
 						</time>
 					</span>

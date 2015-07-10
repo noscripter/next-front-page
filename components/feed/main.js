@@ -13,7 +13,7 @@ class Feed extends React.Component {
 		const articles = this.state.items.map((it) => <Article article={it} key={it.id} />);
 
 		return (
-			<div className="feed">
+			<div className="feed" tabIndex="0" role="region" aria-labelledby={this.props.labelId}>
 				{articles}
 			</div>
 		);
@@ -21,7 +21,8 @@ class Feed extends React.Component {
 }
 
 Feed.propTypes = {
-	items: React.PropTypes.array.isRequired
+	items: React.PropTypes.array.isRequired,
+	labelId: React.PropTypes.string
 };
 
 export default {
