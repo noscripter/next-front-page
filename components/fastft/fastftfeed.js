@@ -6,7 +6,7 @@ import {Feed} from '../feed/main';
 class FastFtFeed extends React.Component {
 	render() {
 		return (
-			<div aria-live="assertive">
+			<div aria-live="assertive" aria-relevant="additions">
 				<h1 id="fastft-title" role="presentation">
 					<a href="/fastft" aria-label="Go to fastFT" data-trackable="go-to-link">
 						<span className="fastft__logo__fast">fast</span>
