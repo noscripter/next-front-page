@@ -1,12 +1,12 @@
-<div class="flexipod flexipod--topic" data-trackable="topic-{{lowercase title}}">
-	<div class="pod-heading">
-		<h1>{{title}}</h1>
+<div class="flexipod flexipod--topic" data-trackable="topic-{{id}}" aria-labelledby="{{id}}-title" tabindex="0" role="region">
+	<div class="pod-heading" role="presentation">
+		<h1 id="{{id}}-title" aria-hidden="true">{{title}}</h1>
 		<a class="pod-heading--link" href="{{url}}" data-trackable="go-to-link">
 			<i class="module-more-icon more-icon"></i>
 			<span>Go to {{title}}</span>
 		</a>
 	</div>
-	<div>
+	<div role="presentation">
 		<div class="article-group">
 			{{#slice items limit=2}}
 				{{> story-card }}

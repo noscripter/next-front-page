@@ -10,7 +10,7 @@ var app = express({
 	helpers: {
 		lowercase: (it) => it && it.toLowerCase(),
 		reactRenderToString: (klass, props) => {
-			return React.renderToString(React.createElement(klass, props));
+			return React.renderToString(React.createElement(klass, props.hash));
 		},
 		getImage(images, type, maxWidth) {
 			assertEqual(typeof maxWidth, 'number', 'getImageSrc: maxWidth must be a number');
