@@ -8,8 +8,9 @@
     "next-myft-ui": "^3.0.0"
   },
   "resolutions": {
+    "next-myft-ui": "^3.0.0",
+    "o-buttons": "v3",
     "o-fonts": "^2.0.0",
-    "o-ft-icons": "^2.3.4",
-    "next-myft-ui": "^3.0.0"
+    "o-ft-icons": "^2.3.4"
   }
 }
