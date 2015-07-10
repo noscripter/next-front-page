@@ -17,18 +17,18 @@
 				<h2 class="story-card__summary" data-trackable="summary">{{{item.summary.excerpt}}}</h2>
 			</a>
 	</div>
-		{{#if related}}
-			<div class="story-card__related" data-trackable="related-links" tabindex="0" aria-label="Related links">
-				{{#slice item.package limit=3}}
-					<div class="story-card__related-link">
-						{{#if packaging.kicker}}
-							<span class="story-card__taxon">{{packaging.kicker}}</span>|
-						{{/if}}
-						<a href="/{{id}}" data-trackable="title">{{packaging.spHeadline}}</a>
-					</div>
-				{{/slice}}
-			</div>
-		{{/if}}
+	{{#if related}}
+		<div class="story-card__related" data-trackable="related-links" tabindex="0" role="group" aria-label="Related links">
+			{{#slice item.package limit=3}}
+				<article class="story-card__related-link" aria-labelledby="{{id}}-title" tabindex="0" role="article">
+					{{#if packaging.kicker}}
+						<span class="story-card__taxon" aria-label="Topic: {{packaging.kicker}}">{{packaging.kicker}}</span><span aria-hidden="true">|</span>
+					{{/if}}
+					<a href="/{{id}}" data-trackable="title" role="heading"><span id="{{id}}-title">{{packaging.spHeadline}}</span></a>
+				</article>
+			{{/slice}}
+		</div>
+	{{/if}}
 	<div class='story-card__footer'>
 		<i class="time-icon"></i>
 		<span class="u-visually-hidden">Published</span>
