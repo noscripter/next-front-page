@@ -12,6 +12,8 @@ export default (region) => {
 
 		content.fetch(region, true)
 		.then(contentData => {
+			console.log(contentData.top.leads[0])
+
 			res.render('uk', {
 				layout: 'wrapper',
 				FastFtFeed: FastFtFeed,

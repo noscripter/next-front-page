@@ -9,7 +9,7 @@
 	<div class="nh-grid-row">
 		<div class="main-content nh-header-tabs__panel">
 			<h1 class="u-visually-hidden" id="lead-pod-title">Top stories</h1>
-			{{> lead-today items=articles.items }}
+			{{> lead-today leads=articles.leads items=articles.items }}
 		</div>
 		<aside class="sidebar sidebar--fastft nh-header-tabs__panel" data-trackable="fastft" data-nh-grid-colspan="12 S4 M4" role="presentation">
 			<section id="fastft" data-fastft-articles="{{json fastFT.items}}">{{{ reactRenderToString FastFtFeed items=fastFT.items }}}</section>

@@ -1,16 +1,16 @@
 <section class="flexipod flexipod--lead-today" id="site-content" data-trackable="lead-today" role="region" tabindex="0" aria-labelledby="lead-pod-title">
 	<div class="article-group" role="presentation">
-		{{#slice items limit=1}}
+		{{#slice leads limit=1}}
 			{{> story-card related=true }}
 		{{/slice}}
 	</div>
 	<div class="article-group" role="presentation">
-		{{#slice items limit=3 offset=1}}
+		{{#slice items limit=3}}
 			{{> story-card }}
 		{{/slice}}
 	</div>
 	<div class="article-group" role="presentation">
-		{{#slice items limit=3 offset=4}}
+		{{#slice items limit=3 offset=3}}
 			{{> story-card }}
 		{{/slice}}
 	</div>

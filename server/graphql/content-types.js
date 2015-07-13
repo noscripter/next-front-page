@@ -71,7 +71,7 @@ const Concept = new GraphQLObjectType({
 			type: GraphQLString,
 			description: 'Stream URL for the concept',
 			resolve: (concept) => {
-				return `/stream/${concept.taxonomy}Id/{{concept.id}}`;
+				return `/stream/${concept.taxonomy}Id/${concept.id}`;
 			}
 		}
 	})
@@ -89,10 +89,19 @@ const Page = new GraphQLObjectType({
 		items: {
 			type: new GraphQLList(Content),
 			description: "Content items of the page",
-			resolve: (page) => {
+			args: {
+				from: {name: 'from', type: GraphQLInt},
+				limit: {name: 'limit', type: GraphQLInt}
+			},
+			resolve: (page, {from, limit}) => {
 				return ApiClient.contentLegacy({
 					uuid: page.items,
 					useElasticSearch: true
+				}).then(items => {
+					items = (from ? items.slice(from) : items);
+					items = (limit ? items.slice(0, limit) : items);
+
+					return items
 				})
 			}
 		}
@@ -134,15 +143,22 @@ const Content = new GraphQLInterfaceType({
 	name: 'Content',
 	description: 'Content item (either v1 or v2)',
 	resolveType: (value) => (value.item ? ContentV1 : ContentV2),
-	fields: {
+	fields: () => ({
 		id: { type: GraphQLID },
 		title: { type: GraphQLString },
 		genre: { type: GraphQLString },
 		summary: { type: GraphQLString },
 		primaryTag: { type: Concept },
 		primaryImage: { type: Image },
-		lastPublished: { type: GraphQLString }
-	}
+		lastPublished: { type: GraphQLString },
+		relatedContent: {
+			type: new GraphQLList(Content),
+			args: {
+				from: { name: 'from', type: GraphQLInt },
+				limit: { name: 'limit', type: GraphQLInt }
+			}
+		}
+	})
 });
 
 const ContentV1 = new GraphQLObjectType({
@@ -190,6 +206,26 @@ const ContentV1 = new GraphQLObjectType({
 			resolve: (content) => {
 				return content.item.lifecycle.lastPublishDateTime;
 			}
+		},
+		relatedContent: {
+			type: new GraphQLList(Content),
+			args: {
+				from: { name: 'from', type: GraphQLInt },
+				limit: { name: 'limit', type: GraphQLInt }
+			},
+			resolve: (content, {from, limit}) => {
+				let ids = content.item.package.map(it => it.id);
+
+				return ApiClient.contentLegacy({
+					uuid: ids,
+					useElasticSearch: true
+				}).then(content => {
+					content = (from ? content.slice(from) : content);
+					content = (limit ? content.slice(0, limit) : content);
+
+					return content;
+				})
+			}
 		}
 	})
 });
@@ -236,10 +272,29 @@ const ContentV2 = new GraphQLObjectType({
 			resolve: (content) => {
 				return content.publishedDate;
 			}
+		},
+		relatedContent: {
+			type: new GraphQLList(Content),
+			args: {
+				from: { name: 'from', type: GraphQLInt },
+				limit: { name: 'limit', type: GraphQLInt }
+			},
+			resolve: (content, {from, limit}) => {
+				let ids = content.item.package.map(it => it.id);
+
+				return ApiClient.content({
+					uuid: ids,
+					useElasticSearch: true
+				}).then(content => {
+					content = (from ? content.slice(from) : content);
+					content = (limit ? content.slice(0, limit) : content);
+
+					return content;
+				})
+			}
 		}
 	})
 });
-
 
 export default {
 	Region,

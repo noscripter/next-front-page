@@ -8,13 +8,42 @@ const query = `
 query TopQuery {
 	top(region: UK) {
 		id
-		items {
+		leads: items(limit: 1) {
 			id
 			title
 			genre
 			summary
 			primaryTag {
 				id
+				url
+				taxonomy
+				name
+			}
+			primaryImage {
+				src(width: 710)
+				alt
+			}
+			lastPublished
+			relatedContent(limit: 3) {
+				id
+				title
+				genre
+				primaryTag {
+					id
+					url
+					taxonomy
+					name
+				}
+			}
+		}
+		items: items(from: 1) {
+			id
+			title
+			genre
+			summary
+			primaryTag {
+				id
+				url
 				taxonomy
 				name
 			}
@@ -50,7 +79,7 @@ const fetch = (topStoriesRegion, useElasticSearch) => {
 	.then(it => {
 		if(it.data) { return it.data; }
 
-		throw it.errors.map(it => it.message).join("\n");
+		throw it.errors;
 	});
 };
 
