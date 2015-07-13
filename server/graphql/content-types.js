@@ -11,6 +11,7 @@ import {
 	GraphQLEnumType,
 	GraphQLScalarType,
 	GraphQLObjectType,
+	GraphQLInterfaceType,
 	GraphQLNonNull
 } from 'graphql';
 
@@ -93,8 +94,28 @@ const Page = new GraphQLObjectType({
 					uuid: page.items,
 					useElasticSearch: true
 				})
-				.then(articles => {
-					return articles;
+			}
+		}
+	})
+});
+
+const ContentByConcept = new GraphQLObjectType({
+	name: "ContentByConcept",
+	description: "Content annotated by a concept",
+	fields: () => ({
+		conceptId: {
+			type: GraphQLID
+		},
+		title: {
+			type: GraphQLString
+		},
+		items: {
+			type: new GraphQLList(Content),
+			description: "Content items",
+			resolve: (result) => {
+				return ApiClient.content({
+					uuid: result.items,
+					useElasticSearch: true
 				})
 			}
 		}
@@ -109,9 +130,25 @@ const ImageTypePriority = [
 	'secondary'
 ];
 
-const Content = new GraphQLObjectType({
-	name: "Content",
+const Content = new GraphQLInterfaceType({
+	name: 'Content',
+	description: 'Content item (either v1 or v2)',
+	resolveType: (value) => (value.item ? ContentV1 : ContentV2),
+	fields: {
+		id: { type: GraphQLID },
+		title: { type: GraphQLString },
+		genre: { type: GraphQLString },
+		summary: { type: GraphQLString },
+		primaryTag: { type: Concept },
+		primaryImage: { type: Image },
+		lastPublished: { type: GraphQLString }
+	}
+});
+
+const ContentV1 = new GraphQLObjectType({
+	name: "ContentV1",
 	description: "Content item",
+  interfaces: [Content],
 	fields: () => ({
 		id: {
 			type: GraphQLID,
@@ -157,7 +194,55 @@ const Content = new GraphQLObjectType({
 	})
 });
 
+const ContentV2 = new GraphQLObjectType({
+	name: "ContentV2",
+	description: "Content item",
+	interfaces: [Content],
+	fields: () => ({
+		id: {
+			type: GraphQLID,
+			resolve: (content) => content.id.replace('http://www.ft.com/thing/', '')
+		},
+		title: {
+			type: GraphQLString,
+		},
+		genre: {
+			type: GraphQLString,
+			resolve: (content) => articleGenres(content.item.metadata)
+		},
+		summary: {
+			type: GraphQLString,
+			resolve: (content) => content.item.summary.excerpt
+		},
+		primaryTag: {
+			type: Concept,
+			resolve: (content) => {
+				return articlePrimaryTag(content.item.metadata)
+			}
+		},
+		primaryImage: {
+			type: Image,
+			resolve: (content) => {
+				let imageMap = content.item.images.reduce((map, it) => {
+					return Object.assign({[it.type]: it}, map);
+				}, {});
+				let type = ImageTypePriority.find(it => !!imageMap[it]);
+
+				return imageMap[type];
+			}
+		},
+		lastPublished: {
+			type: GraphQLString,
+			resolve: (content) => {
+				return content.publishedDate;
+			}
+		}
+	})
+});
+
+
 export default {
 	Region,
-	Page
+	Page,
+	ContentByConcept
 }

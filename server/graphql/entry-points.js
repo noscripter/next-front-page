@@ -7,7 +7,8 @@ import {
 
 import {
 	Region,
-	Page
+	Page,
+	ContentByConcept
 } from './content-types';
 
 import sources from '../config/content'
@@ -21,16 +22,29 @@ const TopStories = {
 		let uuid = sources[`${region}Top`].uuid;
 
 		return ApiClient.pages({ uuid: uuid })
-		.then(it => {
-			return {
-				id: uuid,
-				title: it.title,
-				items: it.slice()
-			}
-		});
+		.then(it => ({
+			id: uuid,
+			title: it.title,
+			items: it.slice()
+		}));
+	}
+};
+
+const FastFT = {
+	type: ContentByConcept,
+	resolve: (root) => {
+		let uuid = sources.fastFt.uuid;
+
+		return ApiClient.contentAnnotatedBy({ uuid: uuid, useElasticSearch: true })
+		.then(ids => ({
+			conceptId: uuid,
+			title: 'fastFT',
+			items: ids.slice()
+		}));
 	}
 }
 
 export default {
-	TopStories
+	TopStories,
+	FastFT
 }

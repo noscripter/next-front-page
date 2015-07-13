@@ -12,7 +12,7 @@ class Article extends React.Component {
 	}
 
 	render() {
-		const {id, title, publishedDate} = this.props.article;
+		const {id, title, lastPublished} = this.props.article;
 
 		return (
 			<article role="article" aria-labelledby={`${id}-title`}>
@@ -20,8 +20,8 @@ class Article extends React.Component {
 					<h2 id={`${id}-title`}>{title}</h2>
 					<span>
 						<i className="time-icon" aria-label="Published" />
-						<time data-o-component="o-date" className="o-date" dateTime={publishedDate} aria-live="off">
-							{format(publishedDate, dateFormat)}
+						<time data-o-component="o-date" className="o-date" dateTime={lastPublished} aria-live="off">
+							{format(lastPublished, dateFormat)}
 						</time>
 					</span>
 				</a>

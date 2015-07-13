@@ -25,6 +25,13 @@ query TopQuery {
 			lastPublished
 		}
 	}
+	fastFT {
+		items {
+			id
+			title
+			lastPublished
+		}
+	}
 }`;
 
 const schemaQuery = `

@@ -1,11 +1,10 @@
-'use strict';
-
-// import content from '../lib/content';
+import content from '../lib/content-graphql';
 
 module.exports = function(req, res) {
 	const useElasticSearch = res.locals.flags.elasticSearchItemGet.isSwitchedOn;
-	// const contentData = content.uk(useElasticSearch);
 
-	// res.json(contentData.fastFt);
-	res.json({});
+	content.fetch('uk', true)
+	.then(data => {
+		res.json(data.fastFT);
+	});
 };
