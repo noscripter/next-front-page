@@ -45,8 +45,33 @@ const Image = new GraphQLObjectType({
 		},
 		alt: {
 			type: GraphQLString,
-			description: "Alternative text",
-			resolve: (it) => it.alt
+			description: "Alternative text"
+		}
+	})
+});
+
+const Concept = new GraphQLObjectType({
+	name: "Concept",
+	description: "Metadata tag describing a person/region/brand/...",
+	fields: () => ({
+		id: {
+			type: GraphQLID,
+			description: 'Concept id'
+		},
+		taxonomy: {
+			type: GraphQLString,
+			description: 'Type of the concept',
+		},
+		name: {
+			type: GraphQLString,
+			description: 'Name of the concept'
+		},
+		url: {
+			type: GraphQLString,
+			description: 'Stream URL for the concept',
+			resolve: (concept) => {
+				return `/stream/${concept.taxonomy}Id/{{concept.id}}`;
+			}
 		}
 	})
 });
@@ -58,10 +83,7 @@ const Page = new GraphQLObjectType({
 	description: "Page of content",
 	fields: () => ({
 		id: {
-			type: GraphQLID,
-			resolve: (page) => {
-				return page.id;
-			}
+			type: GraphQLID
 		},
 		items: {
 			type: new GraphQLList(Content),
@@ -110,9 +132,9 @@ const Content = new GraphQLObjectType({
 			resolve: (content) => content.item.summary.excerpt
 		},
 		primaryTag: {
-			type: GraphQLString,
+			type: Concept,
 			resolve: (content) => {
-				return articlePrimaryTag(content.item.metadata).name
+				return articlePrimaryTag(content.item.metadata)
 			}
 		},
 		primaryImage: {

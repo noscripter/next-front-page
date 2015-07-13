@@ -13,7 +13,11 @@ query TopQuery {
 			title
 			genre
 			summary
-			primaryTag
+			primaryTag {
+				id
+				taxonomy
+				name
+			}
 			primaryImage {
 				src(width: 710)
 				alt
