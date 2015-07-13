@@ -6,10 +6,12 @@ import articlePrimaryTag from 'ft-next-article-primary-tag';
 import {
 	GraphQLID,
 	GraphQLString,
+	GraphQLInt,
 	GraphQLList,
 	GraphQLEnumType,
 	GraphQLScalarType,
-	GraphQLObjectType
+	GraphQLObjectType,
+	GraphQLNonNull
 } from 'graphql';
 
 const Region = new GraphQLEnumType({
@@ -34,7 +36,12 @@ const Image = new GraphQLObjectType({
 		src: {
 			type: GraphQLString,
 			description: "Source URL of the image",
-			resolve: (it) => it.url
+			args: {
+				width: { name: 'width', type: new GraphQLNonNull(GraphQLInt) }
+			},
+			resolve: (it, {width}) => {
+				return `//next-geebee.ft.com/image/v1/images/raw/${it.url}?source=next&fit=scale-down&width=${width}`
+			}
 		},
 		alt: {
 			type: GraphQLString,

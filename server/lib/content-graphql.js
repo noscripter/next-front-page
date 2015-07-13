@@ -15,7 +15,7 @@ query TopQuery {
 			summary
 			primaryTag
 			primaryImage {
-				src
+				src(width: 710)
 				alt
 			}
 			lastPublished

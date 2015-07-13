@@ -1,7 +1,7 @@
 <article class='story-card article--{{genre}}' data-trackable="story" tabindex="0" aria-labelledby="{{id}}-title" role="article">
-	{{#if (getImage item.images 'wide-format' 710)}}
+	{{#if primaryImage}}
 		<a href="/{{id}}" class="story-card--link" data-trackable="image" role="presentation" aria-hidden="true">
-			{{#with (getImage item.images 'wide-format' 710)}}
+			{{#with primaryImage}}
 				<img class='story-card__image'
 				src="{{src}}" alt=""
 				/>

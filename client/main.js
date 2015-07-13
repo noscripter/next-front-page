@@ -12,7 +12,7 @@ setup.bootstrap((result) => {
 	headerFooter.init(flags);
 
 	const feedContainer = document.getElementById("fastft");
-	fastFT.init(feedContainer);
+	// fastFT.init(feedContainer);
 
 	const tabs = document.getElementById("header-tabs");
 	headerTabs.init(tabs, "#news-tab");
