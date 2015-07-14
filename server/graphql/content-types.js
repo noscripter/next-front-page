@@ -43,8 +43,9 @@ const Collection = new GraphQLInterfaceType({
 		items: {
 			type: new GraphQLList(Content),
 			args: {
-				from: {name: 'from', type: GraphQLInt},
-				limit: {name: 'limit', type: GraphQLInt}
+				from: { name: 'from', type: GraphQLInt },
+				limit: { name: 'limit', type: GraphQLInt },
+				genres: { name: 'genres', type: new GraphQLList(GraphQLString) }
 			}
 		}
 	}),
@@ -69,15 +70,20 @@ const Page = new GraphQLObjectType({
 			type: new GraphQLList(Content),
 			description: "Content items of the page",
 			args: {
-				from: {name: 'from', type: GraphQLInt},
-				limit: {name: 'limit', type: GraphQLInt}
+				from: { name: 'from', type: GraphQLInt },
+				limit: { name: 'limit', type: GraphQLInt },
+				genres: { name: 'genres', type: new GraphQLList(GraphQLString) }
 			},
-			resolve: (page, {from, limit}) => {
+			resolve: (page, {from, limit, genres}) => {
 				return ApiClient.contentLegacy({
 					uuid: page.items,
 					useElasticSearch: true
 				})
 				.then(items => {
+					if(genres && genres.length) {
+						items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
+					}
+
 					items = (from ? items.slice(from) : items);
 					items = (limit ? items.slice(0, limit) : items);
 
@@ -104,15 +110,20 @@ const ContentByConcept = new GraphQLObjectType({
 			type: new GraphQLList(Content),
 			description: "Content items",
 			args: {
-				from: {name: 'from', type: GraphQLInt},
-				limit: {name: 'limit', type: GraphQLInt}
+				from: { name: 'from', type: GraphQLInt },
+				limit: { name: 'limit', type: GraphQLInt },
+				genres: {name: 'genres', type: new GraphQLList(GraphQLString) }
 			},
-			resolve: (result, {from, limit}) => {
+			resolve: (result, {from, limit, genres}) => {
 				return ApiClient.content({
 					uuid: result.items,
 					useElasticSearch: true
 				})
 				.then(items => {
+					if(genres && genres.length) {
+						items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
+					}
+
 					items = (from ? items.slice(from) : items);
 					items = (limit ? items.slice(0, limit) : items);
 

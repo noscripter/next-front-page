@@ -19,10 +19,10 @@ export default (region) => {
 				top: contentData.top,
 				fastFT: contentData.fastFT,
 				editors: contentData.editorsPicks,
-				opinion: contentData.opinion
-				// tech: contentData.technology,
-				// markets: contentData.markets,
-				// weekend: contentData.lifestyle,
+				opinion: contentData.opinion,
+				lifestyle: contentData.lifestyle,
+				markets: contentData.markets,
+				technology: contentData.technology
 				// popular: contentData.popular,
 
 			});

@@ -99,6 +99,66 @@ query TopQuery {
 			lastPublished
 		}
 	}
+	lifestyle {
+		url
+		items(limit: 2) {
+			id
+			title
+			genre
+			summary
+			primaryTag {
+				id
+				url
+				taxonomy
+				name
+			}
+			primaryImage {
+				src(width: 710)
+				alt
+			}
+			lastPublished
+		}
+	}
+	markets {
+		url
+		items(limit: 2, genres: ["analysis", "comment"]) {
+			id
+			title
+			genre
+			summary
+			primaryTag {
+				id
+				url
+				taxonomy
+				name
+			}
+			primaryImage {
+				src(width: 710)
+				alt
+			}
+			lastPublished
+		}
+	}
+	technology {
+		url
+		items(limit: 2, genres: ["analysis", "comment"]) {
+			id
+			title
+			genre
+			summary
+			primaryTag {
+				id
+				url
+				taxonomy
+				name
+			}
+			primaryImage {
+				src(width: 710)
+				alt
+			}
+			lastPublished
+		}
+	}
 }`;
 
 const schemaQuery = `

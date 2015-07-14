@@ -99,9 +99,57 @@ const Opinion = {
 	}
 };
 
+const Lifestyle = {
+	type: Collection,
+	resolve: (root) => {
+		let {uuid, sectionsId} = sources.lifestyle
+
+		return ApiClient.pages({ uuid: uuid })
+		.then(it => ({
+			id: uuid,
+			sectionId: sectionsId,
+			title: it.title,
+			items: it.slice()
+		}))
+	}
+};
+
+const Markets = {
+	type: Collection,
+	resolve: (root) => {
+		let {uuid, sectionsId} = sources.markets
+
+		return ApiClient.pages({ uuid: uuid })
+		.then(it => ({
+			id: uuid,
+			sectionId: sectionsId,
+			title: it.title,
+			items: it.slice()
+		}))
+	}
+};
+
+const Technology = {
+	type: Collection,
+	resolve: (root) => {
+		let {uuid, sectionsId} = sources.technology
+
+		return ApiClient.pages({ uuid: uuid })
+		.then(it => ({
+			id: uuid,
+			sectionId: sectionsId,
+			title: it.title,
+			items: it.slice()
+		}))
+	}
+};
+
 export default {
 	TopStories,
 	FastFT,
 	EditorsPicks,
-	Opinion
+	Opinion,
+	Lifestyle,
+	Markets,
+	Technology
 }
