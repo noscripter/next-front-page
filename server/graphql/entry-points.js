@@ -1,6 +1,7 @@
+import {Promise} from 'es6-promise';
+
 import ApiClient from 'next-ft-api-client';
 import fetch from 'isomorphic-fetch';
-import {Promise} from 'es6-promise';
 
 import {
   GraphQLNonNull
@@ -9,9 +10,9 @@ import {
 import {
 	Region,
 	Collection,
-} from './content-types';
+} from './types';
 
-import sources from './config'
+import sources from './config/sources'
 
 const TopStories = {
 	type: Collection,

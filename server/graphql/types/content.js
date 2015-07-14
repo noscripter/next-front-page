@@ -1,140 +1,37 @@
-import ApiClient from 'next-ft-api-client';
-
 import articleGenres from 'ft-next-article-genre';
 import articlePrimaryTag from 'ft-next-article-primary-tag';
 
 import {
 	GraphQLID,
-	GraphQLString,
 	GraphQLInt,
+	GraphQLString,
 	GraphQLList,
-	GraphQLEnumType,
-	GraphQLScalarType,
 	GraphQLObjectType,
 	GraphQLInterfaceType,
 	GraphQLNonNull
 } from 'graphql';
 
-// Basic types
-
-const Region = new GraphQLEnumType({
-	name: "Region",
-	description: "Region with specific content",
-	values: {
-		UK: {
-			value: 'uk',
-			description: "United Kingdom"
-		},
-		US: {
-			value: 'us',
-			description: "United States of America"
-		}
-	}
-});
-
-// Collection types
-
-const Collection = new GraphQLInterfaceType({
-	name: "Collection",
-	description: "Set of items of type Content",
+const Content = new GraphQLInterfaceType({
+	name: 'Content',
+	description: 'Content item (either v1 or v2)',
+	resolveType: (value) => (value.item ? ContentV1 : ContentV2),
 	fields: () => ({
+		id: { type: GraphQLID },
 		title: { type: GraphQLString },
-		url: { type: GraphQLString },
-		items: {
+		genre: { type: GraphQLString },
+		summary: { type: GraphQLString },
+		primaryTag: { type: Concept },
+		primaryImage: { type: Image },
+		lastPublished: { type: GraphQLString },
+		relatedContent: {
 			type: new GraphQLList(Content),
 			args: {
 				from: { name: 'from', type: GraphQLInt },
-				limit: { name: 'limit', type: GraphQLInt },
-				genres: { name: 'genres', type: new GraphQLList(GraphQLString) }
-			}
-		}
-	}),
-	resolveType: (value) => (value.conceptId == null ? Page : ContentByConcept)
-});
-
-const Page = new GraphQLObjectType({
-	name: "Page",
-	description: "Page of content",
-	interfaces: [Collection],
-	fields: () => ({
-		url: {
-			type: GraphQLString,
-			resolve: (it) => {
-				return (it.sectionId ? `/stream/sectionsId/${it.sectionId}` : null)
-			}
-		},
-		title: {
-			type: GraphQLString
-		},
-		items: {
-			type: new GraphQLList(Content),
-			description: "Content items of the page",
-			args: {
-				from: { name: 'from', type: GraphQLInt },
-				limit: { name: 'limit', type: GraphQLInt },
-				genres: { name: 'genres', type: new GraphQLList(GraphQLString) }
-			},
-			resolve: (page, {from, limit, genres}) => {
-				return ApiClient.contentLegacy({
-					uuid: page.items,
-					useElasticSearch: true
-				})
-				.then(items => {
-					if(genres && genres.length) {
-						items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
-					}
-
-					items = (from ? items.slice(from) : items);
-					items = (limit ? items.slice(0, limit) : items);
-
-					return items
-				})
+				limit: { name: 'limit', type: GraphQLInt }
 			}
 		}
 	})
 });
-
-const ContentByConcept = new GraphQLObjectType({
-	name: "ContentByConcept",
-	description: "Content annotated by a concept",
-	interfaces: [Collection],
-	fields: () => ({
-		title: {
-			type: GraphQLString
-		},
-		url: {
-			type: GraphQLString,
-			resolve: () => (null),
-		},
-		items: {
-			type: new GraphQLList(Content),
-			description: "Content items",
-			args: {
-				from: { name: 'from', type: GraphQLInt },
-				limit: { name: 'limit', type: GraphQLInt },
-				genres: {name: 'genres', type: new GraphQLList(GraphQLString) }
-			},
-			resolve: (result, {from, limit, genres}) => {
-				return ApiClient.content({
-					uuid: result.items,
-					useElasticSearch: true
-				})
-				.then(items => {
-					if(genres && genres.length) {
-						items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
-					}
-
-					items = (from ? items.slice(from) : items);
-					items = (limit ? items.slice(0, limit) : items);
-
-					return items
-				})
-			}
-		}
-	})
-});
-
-// Content types
 
 const Concept = new GraphQLObjectType({
 	name: "Concept",
@@ -190,28 +87,6 @@ const ImageTypePriority = [
 	'primary',
 	'secondary'
 ];
-
-const Content = new GraphQLInterfaceType({
-	name: 'Content',
-	description: 'Content item (either v1 or v2)',
-	resolveType: (value) => (value.item ? ContentV1 : ContentV2),
-	fields: () => ({
-		id: { type: GraphQLID },
-		title: { type: GraphQLString },
-		genre: { type: GraphQLString },
-		summary: { type: GraphQLString },
-		primaryTag: { type: Concept },
-		primaryImage: { type: Image },
-		lastPublished: { type: GraphQLString },
-		relatedContent: {
-			type: new GraphQLList(Content),
-			args: {
-				from: { name: 'from', type: GraphQLInt },
-				limit: { name: 'limit', type: GraphQLInt }
-			}
-		}
-	})
-});
 
 const ContentV1 = new GraphQLObjectType({
 	name: "ContentV1",
@@ -349,6 +224,9 @@ const ContentV2 = new GraphQLObjectType({
 });
 
 export default {
-	Region,
-	Collection
+	Content,
+	Concept,
+	Image,
+	ContentV1,
+	ContentV2
 }
