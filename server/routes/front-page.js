@@ -12,15 +12,14 @@ export default (region) => {
 
 		content.fetch(region, true)
 		.then(contentData => {
-			console.log(contentData.top.leads[0])
-
 			res.render('uk', {
 				layout: 'wrapper',
 				FastFtFeed: FastFtFeed,
 				Feed: Feed,
 				articles: contentData.top,
-				fastFT: contentData.fastFT //,
-				// opinion: contentData.opinion,
+				fastFT: contentData.fastFT,
+				opinion: contentData.opinion,
+				editors: contentData.editors
 				// tech: contentData.technology,
 				// markets: contentData.markets,
 				// weekend: contentData.lifestyle,

@@ -69,7 +69,7 @@ const sources = {
 	},
 	lex: {
 		type: 'search',
-		uuid: 'sections:"Lex"',
+		uuid: 'brand:"Lex"',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
 	},
@@ -81,7 +81,7 @@ const sources = {
 	},
 	personInNews: {
 		type: 'search',
-		uuid: 'brand:"person in the news"',
+		uuid: 'brand:"Person in the news"',
 		elasticSearchSupported: true,
 		interval: 60 * 1000
 	},

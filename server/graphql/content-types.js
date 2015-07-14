@@ -15,6 +15,8 @@ import {
 	GraphQLNonNull
 } from 'graphql';
 
+// Basic types
+
 const Region = new GraphQLEnumType({
 	name: "Region",
 	description: "Region with specific content",
@@ -30,26 +32,98 @@ const Region = new GraphQLEnumType({
 	}
 });
 
-const Image = new GraphQLObjectType({
-	name: "Image",
-	description: "An image",
+// Collection types
+
+const Collection = new GraphQLInterfaceType({
+	name: "Collection",
+	description: "Set of items of type Content",
 	fields: () => ({
-		src: {
-			type: GraphQLString,
-			description: "Source URL of the image",
+		title: { type: GraphQLString },
+		url: { type: GraphQLString },
+		items: {
+			type: new GraphQLList(Content),
 			args: {
-				width: { name: 'width', type: new GraphQLNonNull(GraphQLInt) }
-			},
-			resolve: (it, {width}) => {
-				return `//next-geebee.ft.com/image/v1/images/raw/${it.url}?source=next&fit=scale-down&width=${width}`
+				from: {name: 'from', type: GraphQLInt},
+				limit: {name: 'limit', type: GraphQLInt}
+			}
+		}
+	}),
+	resolveType: (value) => (value.conceptId == null ? Page : ContentByConcept)
+});
+
+const Page = new GraphQLObjectType({
+	name: "Page",
+	description: "Page of content",
+	interfaces: [Collection],
+	fields: () => ({
+		url: {
+			type: GraphQLString,
+			resolve: (it) => {
+				return (it.sectionId ? `/stream/sectionsId/${it.sectionId}` : null)
 			}
 		},
-		alt: {
-			type: GraphQLString,
-			description: "Alternative text"
+		title: {
+			type: GraphQLString
+		},
+		items: {
+			type: new GraphQLList(Content),
+			description: "Content items of the page",
+			args: {
+				from: {name: 'from', type: GraphQLInt},
+				limit: {name: 'limit', type: GraphQLInt}
+			},
+			resolve: (page, {from, limit}) => {
+				return ApiClient.contentLegacy({
+					uuid: page.items,
+					useElasticSearch: true
+				})
+				.then(items => {
+					items = (from ? items.slice(from) : items);
+					items = (limit ? items.slice(0, limit) : items);
+
+					return items
+				})
+			}
 		}
 	})
 });
+
+const ContentByConcept = new GraphQLObjectType({
+	name: "ContentByConcept",
+	description: "Content annotated by a concept",
+	interfaces: [Collection],
+	fields: () => ({
+		title: {
+			type: GraphQLString
+		},
+		url: {
+			type: GraphQLString,
+			resolve: () => (null),
+		},
+		items: {
+			type: new GraphQLList(Content),
+			description: "Content items",
+			args: {
+				from: {name: 'from', type: GraphQLInt},
+				limit: {name: 'limit', type: GraphQLInt}
+			},
+			resolve: (result, {from, limit}) => {
+				return ApiClient.content({
+					uuid: result.items,
+					useElasticSearch: true
+				})
+				.then(items => {
+					items = (from ? items.slice(from) : items);
+					items = (limit ? items.slice(0, limit) : items);
+
+					return items
+				})
+			}
+		}
+	})
+});
+
+// Content types
 
 const Concept = new GraphQLObjectType({
 	name: "Concept",
@@ -77,56 +151,23 @@ const Concept = new GraphQLObjectType({
 	})
 });
 
-// Main content types
-
-const Page = new GraphQLObjectType({
-	name: "Page",
-	description: "Page of content",
+const Image = new GraphQLObjectType({
+	name: "Image",
+	description: "An image",
 	fields: () => ({
-		id: {
-			type: GraphQLID
-		},
-		items: {
-			type: new GraphQLList(Content),
-			description: "Content items of the page",
+		src: {
+			type: GraphQLString,
+			description: "Source URL of the image",
 			args: {
-				from: {name: 'from', type: GraphQLInt},
-				limit: {name: 'limit', type: GraphQLInt}
+				width: { name: 'width', type: new GraphQLNonNull(GraphQLInt) }
 			},
-			resolve: (page, {from, limit}) => {
-				return ApiClient.contentLegacy({
-					uuid: page.items,
-					useElasticSearch: true
-				}).then(items => {
-					items = (from ? items.slice(from) : items);
-					items = (limit ? items.slice(0, limit) : items);
-
-					return items
-				})
+			resolve: (it, {width}) => {
+				return `//next-geebee.ft.com/image/v1/images/raw/${it.url}?source=next&fit=scale-down&width=${width}`
 			}
-		}
-	})
-});
-
-const ContentByConcept = new GraphQLObjectType({
-	name: "ContentByConcept",
-	description: "Content annotated by a concept",
-	fields: () => ({
-		conceptId: {
-			type: GraphQLID
 		},
-		title: {
-			type: GraphQLString
-		},
-		items: {
-			type: new GraphQLList(Content),
-			description: "Content items",
-			resolve: (result) => {
-				return ApiClient.content({
-					uuid: result.items,
-					useElasticSearch: true
-				})
-			}
+		alt: {
+			type: GraphQLString,
+			description: "Alternative text"
 		}
 	})
 });
@@ -298,6 +339,5 @@ const ContentV2 = new GraphQLObjectType({
 
 export default {
 	Region,
-	Page,
-	ContentByConcept
+	Collection
 }

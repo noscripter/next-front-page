@@ -6,7 +6,9 @@ import {
 
 import {
 	TopStories,
-	FastFT
+	FastFT,
+	Editors,
+	Opinion
 } from './entry-points';
 
 const queryType = new GraphQLObjectType({
@@ -14,7 +16,9 @@ const queryType = new GraphQLObjectType({
 	description: 'FT content API',
 	fields: () => ({
 		top: TopStories,
-		fastFT: FastFT
+		fastFT: FastFT,
+		editors: Editors,
+		opinion: Opinion
 	})
 });
 

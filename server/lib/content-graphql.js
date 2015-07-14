@@ -7,7 +7,6 @@ import schema from '../graphql/schema';
 const query = `
 query TopQuery {
 	top(region: UK) {
-		id
 		leads: items(limit: 1) {
 			id
 			title
@@ -58,6 +57,45 @@ query TopQuery {
 		items {
 			id
 			title
+			lastPublished
+		}
+	}
+	editors {
+		items {
+			id
+			title
+			genre
+			summary
+			primaryTag {
+				id
+				url
+				taxonomy
+				name
+			}
+			primaryImage {
+				src(width: 320)
+				alt
+			}
+			lastPublished
+		}
+	}
+	opinion {
+		url
+		items {
+			id
+			title
+			genre
+			summary
+			primaryTag {
+				id
+				url
+				taxonomy
+				name
+			}
+			primaryImage {
+				src(width: 710)
+				alt
+			}
 			lastPublished
 		}
 	}
