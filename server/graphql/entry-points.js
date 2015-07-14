@@ -1,8 +1,5 @@
 import {Promise} from 'es6-promise';
 
-import ApiClient from 'next-ft-api-client';
-import fetch from 'isomorphic-fetch';
-
 import {
   GraphQLNonNull
 } from 'graphql';
@@ -12,7 +9,8 @@ import {
 	Collection,
 } from './types';
 
-import sources from './config/sources'
+import sources from './config/sources';
+import backend from './backend';
 
 const TopStories = {
 	type: Collection,
@@ -22,13 +20,7 @@ const TopStories = {
 	resolve: (root, {region}) => {
 		let uuid = sources[`${region}Top`].uuid;
 
-		return ApiClient.pages({ uuid: uuid })
-		.then(it => ({
-			id: uuid,
-			title: it.title,
-			sectionId: null,
-			items: it.slice()
-		}));
+		return backend.page(uuid);
 	}
 };
 
@@ -37,13 +29,7 @@ const FastFT = {
 	resolve: (root) => {
 		let uuid = sources.fastFt.uuid;
 
-		return ApiClient.contentAnnotatedBy({ uuid: uuid, useElasticSearch: true })
-		.then(ids => ({
-			title: 'fastFT',
-			conceptId: uuid,
-			sectionId: null,
-			items: ids.slice()
-		}))
+		return backend.byConcept(uuid, 'fastFT');
 	}
 };
 
@@ -61,14 +47,10 @@ const EditorsPicks = {
 		.map((it) => {
 			switch(it.type) {
 				case 'page':
-					return ApiClient.pages({ uuid: it.uuid })
-					.then(ids => ids[0]);
+					return backend.page(it.uuid)
+					.then(page => page.items[0]);
 				case 'search':
-					return ApiClient.searchLegacy({
-						query: it.uuid,
-						useLegacyContent: true,
-						useElasticSearch: true
-					})
+					return backend.search(it.uuid)
 					.then(ids => ids[0]);
 				default:
 					throw "Unknown type: " + it.type;
@@ -90,13 +72,7 @@ const Opinion = {
 	resolve: (root) => {
 		let {uuid, sectionsId} = sources.opinion
 
-		return ApiClient.pages({ uuid: uuid })
-		.then(it => ({
-			id: uuid,
-			sectionId: sectionsId,
-			title: it.title,
-			items: it.slice()
-		}))
+		return backend.page(uuid, sectionsId);
 	}
 };
 
@@ -105,13 +81,7 @@ const Lifestyle = {
 	resolve: (root) => {
 		let {uuid, sectionsId} = sources.lifestyle
 
-		return ApiClient.pages({ uuid: uuid })
-		.then(it => ({
-			id: uuid,
-			sectionId: sectionsId,
-			title: it.title,
-			items: it.slice()
-		}))
+		return backend.page(uuid, sectionsId);
 	}
 };
 
@@ -120,13 +90,7 @@ const Markets = {
 	resolve: (root) => {
 		let {uuid, sectionsId} = sources.markets
 
-		return ApiClient.pages({ uuid: uuid })
-		.then(it => ({
-			id: uuid,
-			sectionId: sectionsId,
-			title: it.title,
-			items: it.slice()
-		}))
+		return backend.page(uuid, sectionsId);
 	}
 };
 
@@ -135,13 +99,7 @@ const Technology = {
 	resolve: (root) => {
 		let {uuid, sectionsId} = sources.technology
 
-		return ApiClient.pages({ uuid: uuid })
-		.then(it => ({
-			id: uuid,
-			sectionId: sectionsId,
-			title: it.title,
-			items: it.slice()
-		}))
+		return backend.page(uuid, sectionsId);
 	}
 };
 
@@ -150,20 +108,7 @@ const Popular = {
 	resolve: (root) => {
 		let url = sources.popular.uuid;
 
-		return fetch(url)
-		.then((response) => response.json())
-		.then((data) => {
-			return data.mostRead.pages.map(function (page) {
-					var index = page.url.lastIndexOf("/");
-					var id = page.url.substr(index + 1).replace('.html', '');
-					return id;
-			});
-		}).then((ids) => ({
-			id: null,
-			sectionId: null,
-			title: 'Popular',
-			items: ids
-		}))
+		return backend.popular(url, 'Popular');
 	}
 }
 

@@ -1,6 +1,3 @@
-import ApiClient from 'next-ft-api-client';
-import articleGenres from 'ft-next-article-genre';
-
 import {
 	GraphQLString,
 	GraphQLInt,
@@ -8,6 +5,8 @@ import {
 	GraphQLObjectType,
 	GraphQLInterfaceType
 } from 'graphql';
+
+import backend from '../backend';
 
 import {Content} from './content';
 
@@ -52,20 +51,7 @@ const Page = new GraphQLObjectType({
 				genres: { type: new GraphQLList(GraphQLString) }
 			},
 			resolve: (page, {from, limit, genres}) => {
-				return ApiClient.contentLegacy({
-					uuid: page.items,
-					useElasticSearch: true
-				})
-				.then(items => {
-					if(genres && genres.length) {
-						items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
-					}
-
-					items = (from ? items.slice(from) : items);
-					items = (limit ? items.slice(0, limit) : items);
-
-					return items
-				})
+				return backend.contentv1(page.items, {from, limit, genres});
 			}
 		}
 	})
@@ -92,20 +78,7 @@ const ContentByConcept = new GraphQLObjectType({
 				genres: { type: new GraphQLList(GraphQLString) }
 			},
 			resolve: (result, {from, limit, genres}) => {
-				return ApiClient.content({
-					uuid: result.items,
-					useElasticSearch: true
-				})
-				.then(items => {
-					if(genres && genres.length) {
-						items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
-					}
-
-					items = (from ? items.slice(from) : items);
-					items = (limit ? items.slice(0, limit) : items);
-
-					return items
-				})
+				return backend.contentv2(result.items, {from, limit, genres});
 			}
 		}
 	})

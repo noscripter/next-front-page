@@ -11,6 +11,8 @@ import {
 	GraphQLNonNull
 } from 'graphql';
 
+import backend from '../backend';
+
 const Content = new GraphQLInterfaceType({
 	name: 'Content',
 	description: 'Content item (either v1 or v2)',
@@ -143,15 +145,7 @@ const ContentV1 = new GraphQLObjectType({
 			resolve: (content, {from, limit}) => {
 				let ids = content.item.package.map(it => it.id);
 
-				return ApiClient.contentLegacy({
-					uuid: ids,
-					useElasticSearch: true
-				}).then(content => {
-					content = (from ? content.slice(from) : content);
-					content = (limit ? content.slice(0, limit) : content);
-
-					return content;
-				})
+				return backend.contentv1(ids, {from, limit});
 			}
 		}
 	})
@@ -209,15 +203,7 @@ const ContentV2 = new GraphQLObjectType({
 			resolve: (content, {from, limit}) => {
 				let ids = content.item.package.map(it => it.id);
 
-				return ApiClient.content({
-					uuid: ids,
-					useElasticSearch: true
-				}).then(content => {
-					content = (from ? content.slice(from) : content);
-					content = (limit ? content.slice(0, limit) : content);
-
-					return content;
-				})
+				return backend.contentv2(ids, {from, limit});
 			}
 		}
 	})
