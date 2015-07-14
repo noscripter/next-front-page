@@ -1,5 +1,3 @@
-'use strict';
-
 const sources = {
 	ukTop: {
 		type: 'page',

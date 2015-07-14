@@ -1,4 +1,6 @@
-import content from '../lib/content-graphql';
+import graphql from '../lib/graphql';
+import queries from '../config/queries';
+
 import {FastFtFeed} from '../../components/fastft/main';
 import {Feed} from '../../components/feed/main';
 
@@ -10,20 +12,13 @@ export default (region) => {
 			'Cache-Control': 'max-age=40, public, stale-if-error=86400' // 40 seconds; 24 hours
 		});
 
-		content.fetch(region, true)
+		graphql.fetch(queries.frontPage(region), true)
 		.then(contentData => {
 			res.render('uk', {
 				layout: 'wrapper',
 				FastFtFeed: FastFtFeed,
 				Feed: Feed,
-				top: contentData.top,
-				fastFT: contentData.fastFT,
-				editors: contentData.editorsPicks,
-				opinion: contentData.opinion,
-				lifestyle: contentData.lifestyle,
-				markets: contentData.markets,
-				technology: contentData.technology,
-				popular: contentData.popular
+				content: contentData
 			});
 		})
 		.catch(console.log);

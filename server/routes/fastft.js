@@ -1,9 +1,10 @@
-import content from '../lib/content-graphql';
+import graphql from '../lib/graphql';
+import queries from '../config/queries';
 
 module.exports = function(req, res) {
 	const useElasticSearch = res.locals.flags.elasticSearchItemGet.isSwitchedOn;
 
-	content.fetch('uk', true)
+	graphql.fetch(queries.fastFT, true)
 	.then(data => {
 		res.json(data.fastFT);
 	});

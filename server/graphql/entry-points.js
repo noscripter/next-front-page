@@ -11,7 +11,7 @@ import {
 	Collection,
 } from './content-types';
 
-import sources from '../config/content'
+import sources from './config'
 
 const TopStories = {
 	type: Collection,

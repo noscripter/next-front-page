@@ -31,9 +31,9 @@ app.get('/', (req, res) => {
 });
 
 // app routes
-app.get('/front-page', frontPage('uk'));
-app.get('/international', frontPage('us'));
-app.get('/uk', frontPage('uk'));
+app.get('/front-page', frontPage('UK'));
+app.get('/international', frontPage('US'));
+app.get('/uk', frontPage('UK'));
 
 app.get('/home/fastft.json', fastft);
 
