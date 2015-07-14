@@ -60,7 +60,7 @@ query TopQuery {
 			lastPublished
 		}
 	}
-	editors {
+	editorsPicks {
 		items {
 			id
 			title

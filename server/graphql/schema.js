@@ -7,7 +7,7 @@ import {
 import {
 	TopStories,
 	FastFT,
-	Editors,
+	EditorsPicks,
 	Opinion
 } from './entry-points';
 
@@ -17,7 +17,7 @@ const queryType = new GraphQLObjectType({
 	fields: () => ({
 		top: TopStories,
 		fastFT: FastFT,
-		editors: Editors,
+		editorsPicks: EditorsPicks,
 		opinion: Opinion
 	})
 });

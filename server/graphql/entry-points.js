@@ -46,7 +46,7 @@ const FastFT = {
 	}
 };
 
-const Editors = {
+const EditorsPicks = {
 	type: Collection,
 	resolve: (root) => {
 		// HACK this is waiting for editorial to start managing an Editor's picks list
@@ -102,6 +102,6 @@ const Opinion = {
 export default {
 	TopStories,
 	FastFT,
-	Editors,
+	EditorsPicks,
 	Opinion
 }

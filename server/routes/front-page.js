@@ -16,24 +16,15 @@ export default (region) => {
 				layout: 'wrapper',
 				FastFtFeed: FastFtFeed,
 				Feed: Feed,
-				articles: contentData.top,
+				top: contentData.top,
 				fastFT: contentData.fastFT,
-				opinion: contentData.opinion,
-				editors: contentData.editors
+				editors: contentData.editorsPicks,
+				opinion: contentData.opinion
 				// tech: contentData.technology,
 				// markets: contentData.markets,
 				// weekend: contentData.lifestyle,
 				// popular: contentData.popular,
-				// editors: {
-				// 	items: [
-				// 		contentData.bigRead.items[0],
-				// 		contentData.lunch.items[0],
-				// 		contentData.management.items[0],
-				// 		contentData.frontPageSkyline.items[0],
-				// 		contentData.personInNews.items[0],
-				// 		contentData.lex.items[0]
-				// 	]
-				// }
+
 			});
 		})
 		.catch(console.log);
