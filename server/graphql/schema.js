@@ -104,7 +104,7 @@ const queryType = new GraphQLObjectType({
 		popular: {
 			type: Collection,
 			resolve: (root) => {
-				let url = sources.popular.uuid;
+				let url = sources.popular.url;
 
 				return backend.popular(url, 'Popular');
 			}
