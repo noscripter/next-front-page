@@ -159,6 +159,13 @@ query TopQuery {
 			lastPublished
 		}
 	}
+	popular {
+		items(limit: 10) {
+			id
+			title
+			lastPublished
+		}
+	}
 }`;
 
 const schemaQuery = `

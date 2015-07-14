@@ -11,7 +11,8 @@ import {
 	Opinion,
 	Lifestyle,
 	Markets,
-	Technology
+	Technology,
+	Popular
 } from './entry-points';
 
 const queryType = new GraphQLObjectType({
@@ -24,7 +25,8 @@ const queryType = new GraphQLObjectType({
 		opinion: Opinion,
 		lifestyle: Lifestyle,
 		markets: Markets,
-		technology: Technology
+		technology: Technology,
+		popular: Popular
 	})
 });
 

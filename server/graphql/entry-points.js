@@ -144,6 +144,28 @@ const Technology = {
 	}
 };
 
+const Popular = {
+	type: Collection,
+	resolve: (root) => {
+		let url = sources.popular.uuid;
+
+		return fetch(url)
+		.then((response) => response.json())
+		.then((data) => {
+			return data.mostRead.pages.map(function (page) {
+					var index = page.url.lastIndexOf("/");
+					var id = page.url.substr(index + 1).replace('.html', '');
+					return id;
+			});
+		}).then((ids) => ({
+			id: null,
+			sectionId: null,
+			title: 'Popular',
+			items: ids
+		}))
+	}
+}
+
 export default {
 	TopStories,
 	FastFT,
@@ -151,5 +173,6 @@ export default {
 	Opinion,
 	Lifestyle,
 	Markets,
-	Technology
+	Technology,
+	Popular
 }

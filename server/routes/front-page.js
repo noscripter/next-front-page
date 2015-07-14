@@ -22,9 +22,8 @@ export default (region) => {
 				opinion: contentData.opinion,
 				lifestyle: contentData.lifestyle,
 				markets: contentData.markets,
-				technology: contentData.technology
-				// popular: contentData.popular,
-
+				technology: contentData.technology,
+				popular: contentData.popular
 			});
 		})
 		.catch(console.log);
