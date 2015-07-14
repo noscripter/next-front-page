@@ -20,9 +20,9 @@ const Collection = new GraphQLInterfaceType({
 		items: {
 			type: new GraphQLList(Content),
 			args: {
-				from: { name: 'from', type: GraphQLInt },
-				limit: { name: 'limit', type: GraphQLInt },
-				genres: { name: 'genres', type: new GraphQLList(GraphQLString) }
+				from: { type: GraphQLInt },
+				limit: { type: GraphQLInt },
+				genres: { type: new GraphQLList(GraphQLString) }
 			}
 		}
 	}),
@@ -47,9 +47,9 @@ const Page = new GraphQLObjectType({
 			type: new GraphQLList(Content),
 			description: "Content items of the page",
 			args: {
-				from: { name: 'from', type: GraphQLInt },
-				limit: { name: 'limit', type: GraphQLInt },
-				genres: { name: 'genres', type: new GraphQLList(GraphQLString) }
+				from: { type: GraphQLInt },
+				limit: { type: GraphQLInt },
+				genres: { type: new GraphQLList(GraphQLString) }
 			},
 			resolve: (page, {from, limit, genres}) => {
 				return ApiClient.contentLegacy({
@@ -87,9 +87,9 @@ const ContentByConcept = new GraphQLObjectType({
 			type: new GraphQLList(Content),
 			description: "Content items",
 			args: {
-				from: { name: 'from', type: GraphQLInt },
-				limit: { name: 'limit', type: GraphQLInt },
-				genres: {name: 'genres', type: new GraphQLList(GraphQLString) }
+				from: { type: GraphQLInt },
+				limit: { type: GraphQLInt },
+				genres: { type: new GraphQLList(GraphQLString) }
 			},
 			resolve: (result, {from, limit, genres}) => {
 				return ApiClient.content({

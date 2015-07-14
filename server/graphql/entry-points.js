@@ -17,7 +17,7 @@ import sources from './config/sources'
 const TopStories = {
 	type: Collection,
 	args: {
-		region: { name: 'region', type: new GraphQLNonNull(Region) }
+		region: { type: new GraphQLNonNull(Region) }
 	},
 	resolve: (root, {region}) => {
 		let uuid = sources[`${region}Top`].uuid;

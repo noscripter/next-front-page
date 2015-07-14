@@ -26,8 +26,8 @@ const Content = new GraphQLInterfaceType({
 		relatedContent: {
 			type: new GraphQLList(Content),
 			args: {
-				from: { name: 'from', type: GraphQLInt },
-				limit: { name: 'limit', type: GraphQLInt }
+				from: { type: GraphQLInt },
+				limit: { type: GraphQLInt }
 			}
 		}
 	})
@@ -67,7 +67,7 @@ const Image = new GraphQLObjectType({
 			type: GraphQLString,
 			description: "Source URL of the image",
 			args: {
-				width: { name: 'width', type: new GraphQLNonNull(GraphQLInt) }
+				width: { type: new GraphQLNonNull(GraphQLInt) }
 			},
 			resolve: (it, {width}) => {
 				return `//next-geebee.ft.com/image/v1/images/raw/${it.url}?source=next&fit=scale-down&width=${width}`
@@ -137,8 +137,8 @@ const ContentV1 = new GraphQLObjectType({
 		relatedContent: {
 			type: new GraphQLList(Content),
 			args: {
-				from: { name: 'from', type: GraphQLInt },
-				limit: { name: 'limit', type: GraphQLInt }
+				from: { type: GraphQLInt },
+				limit: { type: GraphQLInt }
 			},
 			resolve: (content, {from, limit}) => {
 				let ids = content.item.package.map(it => it.id);
@@ -203,8 +203,8 @@ const ContentV2 = new GraphQLObjectType({
 		relatedContent: {
 			type: new GraphQLList(Content),
 			args: {
-				from: { name: 'from', type: GraphQLInt },
-				limit: { name: 'limit', type: GraphQLInt }
+				from: { type: GraphQLInt },
+				limit: { type: GraphQLInt }
 			},
 			resolve: (content, {from, limit}) => {
 				let ids = content.item.package.map(it => it.id);
