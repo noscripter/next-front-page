@@ -158,6 +158,8 @@ const ContentV1 = (backend) => {
 				},
 				resolve: (content, {from, limit}) => {
 					let ids = content.item.package.map(it => it.id);
+					if(ids.length < 1)
+						return [];
 
 					return backend.contentv1(ids, {from, limit});
 				}
@@ -225,6 +227,8 @@ const ContentV2 = (backend) => {
 				},
 				resolve: (content, {from, limit}) => {
 					let ids = content.item.package.map(it => it.id);
+					if(ids.length < 1)
+						return [];
 
 					return backend.contentv2(ids, {from, limit});
 				}
