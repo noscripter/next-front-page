@@ -16,7 +16,6 @@ class Backend {
 			const now = (new Date().getTime()) / 1000;
 
 			for(let key in this.contentCache) {
-				// FIXME change the 0 to about 5 minutes (after which content is definitely stale)
 				if(this.contentCache[key].expire + staleTtl < now) {
 					delete this.contentCache[key];
 				}
