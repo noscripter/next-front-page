@@ -4,11 +4,14 @@ import {Promise} from 'es6-promise';
 
 import articleGenres from 'ft-next-article-genre';
 
-const endpoints = (elasticSearch) => ({
-	type: (elasticSearch ? 'elasticsearch' : 'capi'),
+class Backend {
+	constructor(elasticSearch) {
+		this.elasticSearch = elasticSearch;
+		this.type = (elasticSearch ? 'elasticsearch' : 'capi');
 
-	// in-memory content storage
-	contentCache: {},
+ 		// in-memory content storage
+		this.contentCache = {};
+	}
 
 	// Caching wrapper. Always returns a promise, when cache expires
 	// returns stale data immediately and fetches fresh one
@@ -37,7 +40,7 @@ const endpoints = (elasticSearch) => ({
 
 		// return stale data or promise of fresh data
 		return (data ? Promise.resolve(data) : eventualData);
-	},
+	}
 
 	page(uuid, sectionsId) {
 		return this.cached(`pages.${uuid}`, 50, () => {
@@ -49,13 +52,13 @@ const endpoints = (elasticSearch) => ({
 				items: it.slice()
 			}));
 		});
-	},
+	}
 
 	byConcept(uuid, title) {
 		return this.cached(`byconcept.${uuid}`, 50, () => {
 			return ApiClient.contentAnnotatedBy({
 				uuid: uuid,
-				useElasticSearch: elasticSearch
+				useElasticSearch: this.elasticSearch
 			})
 			.then(ids => ({
 				title: title,
@@ -64,17 +67,17 @@ const endpoints = (elasticSearch) => ({
 				items: ids.slice()
 			}));
 		})
-	},
+	}
 
 	search(query) {
 		return this.cached(`search.${query}`, 50, () => {
 			return ApiClient.searchLegacy({
 				query: query,
 				useLegacyContent: true,
-				useElasticSearch: elasticSearch
+				useElasticSearch: this.elasticSearch
 			});
 		});
-	},
+	}
 
 	popular(url, title) {
 		return this.cached(`popular.${url}`, 50, () => {
@@ -93,32 +96,13 @@ const endpoints = (elasticSearch) => ({
 				items: ids
 			}));
 		});
-	},
+	}
 
 	contentv1(uuids, {from, limit, genres}) {
 		return this.cached(`contentv1.${uuids.join('_')}`, 50, () => {
 			return ApiClient.contentLegacy({
 				uuid: uuids,
-				useElasticSearch: elasticSearch
-			})
-		})
-		.then(items => {
-			if(genres && genres.length) {
-				items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
-			}
-
-			items = (from ? items.slice(from) : items);
-			items = (limit ? items.slice(0, limit) : items);
-
-			return items;
-		})
-	},
-
-	contentv2(uuids, {from, limit, genres}) {
-		return this.cached(`contentv2.${uuids.join('_')}`, 50, () => {
-			return ApiClient.content({
-				uuid: uuids,
-				useElasticSearch: elasticSearch
+				useElasticSearch: this.elasticSearch
 			})
 		})
 		.then(items => {
@@ -132,9 +116,28 @@ const endpoints = (elasticSearch) => ({
 			return items;
 		})
 	}
-});
 
-const esBackend = endpoints(true);
-const capiBackend = endpoints(false);
+	contentv2(uuids, {from, limit, genres}) {
+		return this.cached(`contentv2.${uuids.join('_')}`, 50, () => {
+			return ApiClient.content({
+				uuid: uuids,
+				useElasticSearch: this.elasticSearch
+			})
+		})
+		.then(items => {
+			if(genres && genres.length) {
+				items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
+			}
+
+			items = (from ? items.slice(from) : items);
+			items = (limit ? items.slice(0, limit) : items);
+
+			return items;
+		})
+	}
+}
+
+const esBackend = new Backend(true);
+const capiBackend = new Backend(false);
 
 export default (elasticSearch) => (elasticSearch ? esBackend : capiBackend)
