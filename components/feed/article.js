@@ -3,7 +3,7 @@ import React from 'react';
 
 const dateFormat = "h:mm a";
 
-const linkHref = (id) => '/' + id.split('/').slice(-1)[0];
+const linkHref = (id) => (id ? '/' + id.split('/').slice(-1)[0] : '');
 
 class Article extends React.Component {
 	componentDidMount() {
