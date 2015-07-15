@@ -1,18 +1,22 @@
 import {graphql} from 'graphql';
 import schema from '../graphql/schema';
 
-const fetch = (query, useElasticSearch) => {
-	// const src = (useElasticSearch ? 'elastic' : 'capi1');
+const fetch = (elastic) => {
+	let sch = schema(elastic);
 
-	return graphql(schema, query)
-	.then(it => {
-		if(it.data) { return it.data; }
+	return (query) => {
+		return graphql(sch, query)
+		.then(it => {
+			if(it.data) { return it.data; }
 
-		throw it.errors;
-	});
+			throw it.errors;
+		});
+	}
 };
 
-// FIXME change to polling when querying works
-export default {
-	fetch: fetch,
-};
+const fetchEs = fetch(true);
+const fetchCapi = fetch(false);
+
+export default (elastic) => ({
+	fetch: (elastic ? fetchEs : fetchCapi)
+});
