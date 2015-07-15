@@ -49,7 +49,7 @@ class Backend {
 			}
 
 			return it;
-		}.bind(this));
+		});
 
 		// return stale data or promise of fresh data
 		return (data ? Promise.resolve(data) : eventualData);
