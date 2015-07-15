@@ -1,12 +1,15 @@
 import graphql from '../lib/graphql';
-import queries from '../config/queries';
 
 module.exports = function(req, res) {
 	const useElasticSearch = res.locals.flags.elasticSearchItemGet.isSwitchedOn;
+	const query = req.body;
 
-	graphql(useElasticSearch).fetch(queries.fastFT)
+	graphql(useElasticSearch).fetch(query)
 	.then(data => {
-		res.json(data.fastFT);
+		res.json(data);
 	})
-	.catch(console.log);
+	.catch(errors => {
+		res.status(400);
+		res.json(errors);
+	});
 };

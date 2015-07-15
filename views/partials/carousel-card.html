@@ -1,7 +1,7 @@
-<article class='carousel-card article--{{viewGenre}}' tabindex="0" aria-labelledby="{{item.id}}-title" role="article">
-  {{#if (getImage item.images 'wide-format' 320)}}
-    <a href="/{{item.id}}" class="carousel-card--link" role="presentation" aria-hidden="true">
-      {{#with (getImage item.images 'wide-format' 320)}}
+<article class='carousel-card article--{{genre}}' tabindex="0" aria-labelledby="{{id}}-title" role="article">
+  {{#if primaryImage}}
+    <a href="/{{id}}" class="carousel-card--link" role="presentation" aria-hidden="true">
+      {{#with primaryImage}}
         <img class='carousel-card__image'
           src="{{src}}"
           alt=""
@@ -10,11 +10,11 @@
     </a>
   {{/if}}
   <div class="carousel-card__content">
-    <a href="/stream/{{primaryTag.taxonomy}}Id/{{primaryTag.id}}" class="story-card--link" tabindex="0" aria-label="Topic: {{primaryTag.name}}">
+    <a href="{{primaryTag.url}}" class="story-card--link" tabindex="0" aria-label="Topic: {{primaryTag.name}}">
       <h2 class="story-card__taxon">{{primaryTag.name}}</h2>
     </a>
-  	<a href="/{{item.id}}" class="carousel-card--link" tabindex="0" aria-label="{{item.title.title}}">
-			<h1 id="{{item.id}}-title" class="story-card__title">{{item.title.title}}</h1>
+  	<a href="/{{id}}" class="carousel-card--link" tabindex="0" aria-label="{{title}}">
+			<h1 id="{{id}}-title" class="story-card__title">{{title}}</h1>
     </a>
 	</div>
 </article>

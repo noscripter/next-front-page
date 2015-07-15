@@ -9,10 +9,10 @@
 	<div class="nh-grid-row">
 		<div class="main-content nh-header-tabs__panel">
 			<h1 class="u-visually-hidden" id="lead-pod-title">Top stories</h1>
-			{{> lead-today items=articles.items }}
+			{{> lead-today leads=content.top.leads items=content.top.items }}
 		</div>
 		<aside class="sidebar sidebar--fastft nh-header-tabs__panel" data-trackable="fastft" data-nh-grid-colspan="12 S4 M4" role="presentation">
-			<section id="fastft" data-fastft-articles="{{json fastFt.items}}">{{{ reactRenderToString FastFtFeed fastFt }}}</section>
+			<section id="fastft" data-fastft-articles="{{json content.fastFT.items}}">{{{ reactRenderToString FastFtFeed items=content.fastFT.items }}}</section>
 		</aside>
 	</div>
 </div>
@@ -22,7 +22,7 @@
 			<div class="main-content" data-nh-grid-colspan="12">
 				<div class="flexipod flexipod--editors" data-trackable="editors-picks" id="editors-picks">
 					<h1 class='carousel-heading' id="editors-picks-title" aria-hidden="true">Editor's Picks</h1>
-					{{> editors items=editors.items id="editors-picks"}}
+					{{> editors items=content.editorsPicks.items id="editors-picks"}}
 				</div>
 			</div>
 		</div>
@@ -31,13 +31,13 @@
 <div class="fixed-width-container nh-header-tabs__panel">
 	<div class="nh-grid-row">
 		<div class="main-content">
-			{{> opinion items=opinion.items url=opinion.url title="Opinion" id="opinion" }}
+			{{> opinion items=content.opinion.items url=content.opinion.url title="Opinion" id="opinion" }}
 			<div class="bordered-spacer"></div>
-			{{> topic items=weekend.items url=weekend.url title="Life & Arts" id="life-arts" }}
+			{{> topic items=content.lifestyle.items url=content.lifestyle.url title="Life & Arts" id="life-arts" }}
 			<div class="bordered-spacer"></div>
-			{{> topic items=markets.items url=markets.url title="Markets" id="markets" }}
+			{{> topic items=content.markets.items url=content.markets.url title="Markets" id="markets" }}
 			<div class="bordered-spacer"></div>
-			{{> topic items=tech.items url=tech.url title="Technology" id="technology" }}
+			{{> topic items=content.technology.items url=content.technology.url title="Technology" id="technology" }}
 		</div>
 		<aside class="sidebar sidebar--feed" role="presentation" data-nh-grid-colspan="12 S4 M4">
 			<section class="feed feed--popular" data-trackable="popular">
@@ -45,7 +45,7 @@
 					<div class="pod-heading pod-heading--feed">
 						<h1 id="popular-title" aria-hidden="true">Popular</h1>
 					</div>
-					{{{ reactRenderToString Feed items=popular.items labelId="popular-title" }}}
+					{{{ reactRenderToString Feed items=content.popular.items labelId="popular-title" }}}
 				</div>
 			</section>
 		</aside>
