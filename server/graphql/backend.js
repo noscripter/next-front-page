@@ -56,8 +56,8 @@ class Backend {
 		return (data ? Promise.resolve(data) : eventualData);
 	}
 
-	page(uuid, sectionsId) {
-		return this.cached(`pages.${uuid}`, 50, () => {
+	page(uuid, sectionsId, ttl = 50) {
+		return this.cached(`pages.${uuid}`, ttl, () => {
 			return ApiClient.pages({ uuid: uuid })
 			.then(it => ({
 				id: uuid,
@@ -68,8 +68,8 @@ class Backend {
 		});
 	}
 
-	byConcept(uuid, title) {
-		return this.cached(`byconcept.${uuid}`, 50, () => {
+	byConcept(uuid, title, ttl = 50) {
+		return this.cached(`byconcept.${uuid}`, ttl, () => {
 			return ApiClient.contentAnnotatedBy({
 				uuid: uuid,
 				useElasticSearch: this.elasticSearch
@@ -83,8 +83,8 @@ class Backend {
 		})
 	}
 
-	search(query) {
-		return this.cached(`search.${query}`, 50, () => {
+	search(query, ttl = 50) {
+		return this.cached(`search.${query}`, ttl, () => {
 			return ApiClient.searchLegacy({
 				query: query,
 				useLegacyContent: true,
@@ -93,8 +93,8 @@ class Backend {
 		});
 	}
 
-	popular(url, title) {
-		return this.cached(`popular.${url}`, 50, () => {
+	popular(url, title, ttl = 50) {
+		return this.cached(`popular.${url}`, ttl, () => {
 			return fetch(url)
 			.then((response) => response.json())
 			.then((data) => {

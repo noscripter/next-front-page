@@ -34,7 +34,7 @@ const queryType = (backend) => {
 				resolve: (root) => {
 					let uuid = sources.fastFt.uuid;
 
-					return backend.byConcept(uuid, 'fastFT');
+					return backend.byConcept(uuid, 'fastFT', 25);
 				}
 			},
 			editorsPicks: {
