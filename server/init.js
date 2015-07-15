@@ -1,10 +1,12 @@
 import {equal as assertEqual} from 'assert';
 import express from 'ft-next-express';
 import React from 'react';
+import bodyParser from 'body-parser';
 
 // routes
 import frontPage from './routes/front-page';
 import fastft from './routes/fastft';
+import query from './routes/query';
 
 var app = express({
 	helpers: {
@@ -23,6 +25,8 @@ var app = express({
 	}
 });
 
+app.use(bodyParser.text());
+
 app.get('/__gtg', (req, res) => {
 	res.status(200).end();
 });
@@ -36,6 +40,7 @@ app.get('/international', frontPage('US'));
 app.get('/uk', frontPage('UK'));
 
 app.get('/home/fastft.json', fastft);
+app.post('/front-page/query.json', query);
 
 var port = process.env.PORT || 3001;
 
