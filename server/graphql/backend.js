@@ -5,12 +5,26 @@ import {Promise} from 'es6-promise';
 import articleGenres from 'ft-next-article-genre';
 
 class Backend {
-	constructor(elasticSearch) {
+	constructor(elasticSearch, staleTtl) {
 		this.elasticSearch = elasticSearch;
 		this.type = (elasticSearch ? 'elasticsearch' : 'capi');
 
- 		// in-memory content storage
+ 		// in-memory content cache
 		this.contentCache = {};
+
+		const sweeper = () => {
+			const now = (new Date().getTime()) / 1000;
+
+			for(let key in this.contentCache) {
+				// FIXME change the 0 to about 5 minutes (after which content is definitely stale)
+				if(this.contentCache[key].expire + staleTtl < now) {
+					delete this.contentCache[key];
+				}
+			}
+		}
+
+		// keep clearing the cache every minute
+		setInterval(sweeper, 60*1000);
 	}
 
 	// Caching wrapper. Always returns a promise, when cache expires
@@ -137,7 +151,8 @@ class Backend {
 	}
 }
 
-const esBackend = new Backend(true);
-const capiBackend = new Backend(false);
+// expire old content after 10 minutes
+const esBackend = new Backend(true, 10 * 60);
+const capiBackend = new Backend(false, 10 * 60);
 
 export default (elasticSearch) => (elasticSearch ? esBackend : capiBackend)
