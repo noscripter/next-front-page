@@ -1,13 +1,13 @@
 import {graphql} from 'graphql';
+
 import schema from '../graphql/schema';
+import backend from '../graphql/backend';
 
-const fetch = (elastic) => {
-	let sch = schema(elastic);
-
+const fetch = (backend) => {
 	return (query) => {
 		const then = new Date().getTime();
 
-		return graphql(sch, query)
+		return graphql(schema, query, {backend: backend})
 		.then(it => {
 			const now = new Date().getTime();
 
@@ -19,8 +19,8 @@ const fetch = (elastic) => {
 	}
 };
 
-const fetchEs = fetch(true);
-const fetchCapi = fetch(false);
+const fetchEs = fetch(backend(true));
+const fetchCapi = fetch(backend(false));
 
 export default (elastic) => ({
 	fetch: (elastic ? fetchEs : fetchCapi)
