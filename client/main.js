@@ -5,6 +5,7 @@ import setup from 'next-js-setup';
 import fastFT from '../components/fastft/main';
 import headerFooter from 'n-header-footer';
 import headerTabs from './components/header-tabs/main';
+import myFTTray from 'n-myft-tray';
 
 setup.bootstrap((result) => {
 	var flags = result.flags;
@@ -18,4 +19,9 @@ setup.bootstrap((result) => {
 	headerTabs.init(tabs, "#news-tab");
 
 	oDate.init();
+
+	if(flags.get('myFTTray')) {
+		myFTTray.init();
+	}
+
 });
