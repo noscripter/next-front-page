@@ -1,5 +1,6 @@
 import articleGenres from 'ft-next-article-genre';
 import articlePrimaryTag from 'ft-next-article-primary-tag';
+import fetch from 'isomorphic-fetch';
 
 import {
 	GraphQLID,
@@ -14,7 +15,15 @@ import {
 const Content = new GraphQLInterfaceType({
 	name: 'Content',
 	description: 'A piece of FT content',
-	resolveType: (value) => (value.item ? ContentV1 : ContentV2),
+	resolveType: (value) => {
+		if (value.item && !!value.item.location.uri.match(/liveblog/i)) {
+			return LiveBlog;
+		} else if (value.item) {
+			return ContentV1;
+		} else {
+			return ContentV2;
+		}
+	},
 	fields: () => ({
 		id: { type: GraphQLID },
 		title: { type: GraphQLString },
@@ -141,11 +150,96 @@ const ContentV1 = new GraphQLObjectType({
 				limit: { type: GraphQLInt }
 			},
 			resolve: (content, {from, limit}, {backend}) => {
-				let ids = content.item.package.map(it => it.id);
-				if(ids.length < 1)
-					return [];
+				let ids = content.item.package.map(it => it.id);
+				if(ids.length < 1) { return []; }
 
 				return backend.contentv1(ids, {from, limit});
+			}
+		}
+	}
+});
+
+
+const LiveBlog = new GraphQLObjectType({
+	name: "LiveBlog",
+	description: "Live blog item",
+	interfaces: [Content],
+	fields: {
+		id: {
+			type: GraphQLID,
+			resolve: (content) => content.item.id
+		},
+		title: {
+			type: GraphQLString,
+			resolve: (content) => {
+				return content.item.title.title;
+			}
+		},
+		genre: {
+			type: GraphQLString,
+			resolve: (content) => articleGenres(content.item.metadata)
+		},
+		summary: {
+			type: GraphQLString,
+			resolve: (content) => content.item.summary.excerpt
+		},
+		primaryTag: {
+			type: Concept,
+			resolve: (content) => {
+				return articlePrimaryTag(content.item.metadata);
+			}
+		},
+		primaryImage: {
+			type: Image,
+			resolve: (content) => {
+				let imageMap = content.item.images.reduce((map, it) => {
+					return Object.assign({[it.type]: it}, map);
+				}, {});
+				let type = ImageTypePriority.find(it => !!imageMap[it]);
+
+				return imageMap[type];
+			}
+		},
+		lastPublished: {
+			type: GraphQLString,
+			resolve: (content) => {
+				return content.item.lifecycle.lastPublishDateTime;
+			}
+		},
+		relatedContent: {
+			type: new GraphQLList(Content),
+			args: {
+				from: { type: GraphQLInt },
+				limit: { type: GraphQLInt }
+			},
+			resolve: (content, {from, limit}, {backend}) => {
+				let ids = content.item.package.map(it => it.id);
+				if(ids.length < 1) { return []; }
+
+				return backend.contentv1(ids, {from, limit});
+			}
+		},
+		updates: {
+			type: new GraphQLList(
+				new GraphQLObjectType({
+					name: "Event",
+					description: "Event for live blogs",
+					fields: () => ({
+						event: { type: GraphQLString },
+						author: {
+							type: GraphQLString,
+							resolve: (content) => {
+								return content.data && content.data.authordisplayname;
+							}
+						}
+					})
+				})
+			),
+			resolve: (content) => {
+				const uri = content.item.location.uri;
+				console.log(`${uri}?action=catchup&format=json`);
+				return fetch(`${uri}?action=catchup&format=json`)
+					.then(res => res.json());
 			}
 		}
 	}
