@@ -11,39 +11,27 @@ import {
 	GraphQLNonNull
 } from 'graphql';
 
-const contentCache = {};
-const Content = (backend) => {
-	if(contentCache[backend.type]) return contentCache[backend.type];
-
-	contentCache[backend.type] = new GraphQLInterfaceType({
-		name: 'Content',
-		description: 'A piece of FT content',
-		resolveType: (value) => {
-			const v1 = ContentV1(backend);
-			const v2 = ContentV2(backend);
-
-			return (value.item ? v1 : v2);
-		},
-		fields: () => ({
-			id: { type: GraphQLID },
-			title: { type: GraphQLString },
-			genre: { type: GraphQLString },
-			summary: { type: GraphQLString },
-			primaryTag: { type: Concept },
-			primaryImage: { type: Image },
-			lastPublished: { type: GraphQLString },
-			relatedContent: {
-				type: new GraphQLList(Content(backend)),
-				args: {
-					from: { type: GraphQLInt },
-					limit: { type: GraphQLInt }
-				}
+const Content = new GraphQLInterfaceType({
+	name: 'Content',
+	description: 'A piece of FT content',
+	resolveType: (value) => (value.item ? ContentV1 : ContentV2),
+	fields: () => ({
+		id: { type: GraphQLID },
+		title: { type: GraphQLString },
+		genre: { type: GraphQLString },
+		summary: { type: GraphQLString },
+		primaryTag: { type: Concept },
+		primaryImage: { type: Image },
+		lastPublished: { type: GraphQLString },
+		relatedContent: {
+			type: new GraphQLList(Content),
+			args: {
+				from: { type: GraphQLInt },
+				limit: { type: GraphQLInt }
 			}
-		})
-	});
-
-	return contentCache[backend.type];
-}
+		}
+	})
+});
 
 const Concept = new GraphQLObjectType({
 	name: "Concept",
@@ -100,144 +88,130 @@ const ImageTypePriority = [
 	'secondary'
 ];
 
-const contentv1Cache = {};
-const ContentV1 = (backend) => {
-	if(contentv1Cache[backend.type]) return contentv1Cache[backend.type];
+const ContentV1 = new GraphQLObjectType({
+	name: "ContentV1",
+	description: "Content item",
+  interfaces: [Content],
+	fields: {
+		id: {
+			type: GraphQLID,
+			resolve: (content) => content.item.id
+		},
+		title: {
+			type: GraphQLString,
+			resolve: (content) => {
+				return content.item.title.title;
+			}
+		},
+		genre: {
+			type: GraphQLString,
+			resolve: (content) => articleGenres(content.item.metadata)
+		},
+		summary: {
+			type: GraphQLString,
+			resolve: (content) => content.item.summary.excerpt
+		},
+		primaryTag: {
+			type: Concept,
+			resolve: (content) => {
+				return articlePrimaryTag(content.item.metadata)
+			}
+		},
+		primaryImage: {
+			type: Image,
+			resolve: (content) => {
+				let imageMap = content.item.images.reduce((map, it) => {
+					return Object.assign({[it.type]: it}, map);
+				}, {});
+				let type = ImageTypePriority.find(it => !!imageMap[it]);
 
-	contentv1Cache[backend.type] = new GraphQLObjectType({
-		name: "ContentV1",
-		description: "Content item",
-	  interfaces: [Content(backend)],
-		fields: {
-			id: {
-				type: GraphQLID,
-				resolve: (content) => content.item.id
+				return imageMap[type];
+			}
+		},
+		lastPublished: {
+			type: GraphQLString,
+			resolve: (content) => {
+				return content.item.lifecycle.lastPublishDateTime;
+			}
+		},
+		relatedContent: {
+			type: new GraphQLList(Content),
+			args: {
+				from: { type: GraphQLInt },
+				limit: { type: GraphQLInt }
 			},
-			title: {
-				type: GraphQLString,
-				resolve: (content) => {
-					return content.item.title.title;
-				}
-			},
-			genre: {
-				type: GraphQLString,
-				resolve: (content) => articleGenres(content.item.metadata)
-			},
-			summary: {
-				type: GraphQLString,
-				resolve: (content) => content.item.summary.excerpt
-			},
-			primaryTag: {
-				type: Concept,
-				resolve: (content) => {
-					return articlePrimaryTag(content.item.metadata)
-				}
-			},
-			primaryImage: {
-				type: Image,
-				resolve: (content) => {
-					let imageMap = content.item.images.reduce((map, it) => {
-						return Object.assign({[it.type]: it}, map);
-					}, {});
-					let type = ImageTypePriority.find(it => !!imageMap[it]);
+			resolve: (content, {from, limit}, {backend}) => {
+				let ids = content.item.package.map(it => it.id);
+				if(ids.length < 1)
+					return [];
 
-					return imageMap[type];
-				}
-			},
-			lastPublished: {
-				type: GraphQLString,
-				resolve: (content) => {
-					return content.item.lifecycle.lastPublishDateTime;
-				}
-			},
-			relatedContent: {
-				type: new GraphQLList(Content(backend)),
-				args: {
-					from: { type: GraphQLInt },
-					limit: { type: GraphQLInt }
-				},
-				resolve: (content, {from, limit}) => {
-					let ids = content.item.package.map(it => it.id);
-					if(ids.length < 1)
-						return [];
-
-					return backend.contentv1(ids, {from, limit});
-				}
+				return backend.contentv1(ids, {from, limit});
 			}
 		}
-	});
+	}
+});
 
-	return contentv1Cache[backend.type];
-}
-
-const contentv2Cache = {};
-const ContentV2 = (backend) => {
-	if(contentv2Cache[backend.type]) return contentv2Cache[backend.type];
-
-	contentv2Cache[backend.type] = new GraphQLObjectType({
-		name: "ContentV2",
-		description: "Content item",
-		interfaces: [Content(backend)],
-		fields: () => ({
-			id: {
-				type: GraphQLID,
-				resolve: (content) => {
-					return content.id.replace('http://www.ft.com/thing/', '');
-				}
-			},
-			title: {
-				type: GraphQLString,
-			},
-			genre: {
-				type: GraphQLString,
-				resolve: (content) => articleGenres(content.item.metadata)
-			},
-			summary: {
-				type: GraphQLString,
-				resolve: (content) => content.item.summary.excerpt
-			},
-			primaryTag: {
-				type: Concept,
-				resolve: (content) => {
-					return articlePrimaryTag(content.item.metadata)
-				}
-			},
-			primaryImage: {
-				type: Image,
-				resolve: (content) => {
-					let imageMap = content.item.images.reduce((map, it) => {
-						return Object.assign({[it.type]: it}, map);
-					}, {});
-					let type = ImageTypePriority.find(it => !!imageMap[it]);
-
-					return imageMap[type];
-				}
-			},
-			lastPublished: {
-				type: GraphQLString,
-				resolve: (content) => {
-					return content.publishedDate;
-				}
-			},
-			relatedContent: {
-				type: new GraphQLList(Content(backend)),
-				args: {
-					from: { type: GraphQLInt },
-					limit: { type: GraphQLInt }
-				},
-				resolve: (content, {from, limit}) => {
-					let ids = content.item.package.map(it => it.id);
-					if(ids.length < 1)
-						return [];
-
-					return backend.contentv2(ids, {from, limit});
-				}
+const ContentV2 = new GraphQLObjectType({
+	name: "ContentV2",
+	description: "Content item",
+	interfaces: [Content],
+	fields: () => ({
+		id: {
+			type: GraphQLID,
+			resolve: (content) => {
+				return content.id.replace('http://www.ft.com/thing/', '');
 			}
-		})
-	});
+		},
+		title: {
+			type: GraphQLString,
+		},
+		genre: {
+			type: GraphQLString,
+			resolve: (content) => articleGenres(content.item.metadata)
+		},
+		summary: {
+			type: GraphQLString,
+			resolve: (content) => content.item.summary.excerpt
+		},
+		primaryTag: {
+			type: Concept,
+			resolve: (content) => {
+				return articlePrimaryTag(content.item.metadata)
+			}
+		},
+		primaryImage: {
+			type: Image,
+			resolve: (content) => {
+				let imageMap = content.item.images.reduce((map, it) => {
+					return Object.assign({[it.type]: it}, map);
+				}, {});
+				let type = ImageTypePriority.find(it => !!imageMap[it]);
 
-	return contentv2Cache[backend.type];
-}
+				return imageMap[type];
+			}
+		},
+		lastPublished: {
+			type: GraphQLString,
+			resolve: (content) => {
+				return content.publishedDate;
+			}
+		},
+		relatedContent: {
+			type: new GraphQLList(Content),
+			args: {
+				from: { type: GraphQLInt },
+				limit: { type: GraphQLInt }
+			},
+			resolve: (content, {from, limit}, {backend}) => {
+				let ids = content.item.package.map(it => it.id);
+				if(ids.length < 1)
+					return [];
+
+				return backend.contentv2(ids, {from, limit});
+			}
+		}
+	})
+});
 
 export default {
 	Content,
