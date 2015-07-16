@@ -43,7 +43,7 @@ const Concept = new GraphQLObjectType({
 		},
 		taxonomy: {
 			type: GraphQLString,
-			description: 'Type of the concept',
+			description: 'Type of the concept'
 		},
 		name: {
 			type: GraphQLString,
@@ -70,7 +70,7 @@ const Image = new GraphQLObjectType({
 				width: { type: new GraphQLNonNull(GraphQLInt) }
 			},
 			resolve: (it, {width}) => {
-				return `//next-geebee.ft.com/image/v1/images/raw/${it.url}?source=next&fit=scale-down&width=${width}`
+				return `//next-geebee.ft.com/image/v1/images/raw/${it.url}?source=next&fit=scale-down&width=${width}`;
 			}
 		},
 		alt: {
@@ -91,7 +91,7 @@ const ImageTypePriority = [
 const ContentV1 = new GraphQLObjectType({
 	name: "ContentV1",
 	description: "Content item",
-  interfaces: [Content],
+	interfaces: [Content],
 	fields: {
 		id: {
 			type: GraphQLID,
@@ -163,7 +163,7 @@ const ContentV2 = new GraphQLObjectType({
 			}
 		},
 		title: {
-			type: GraphQLString,
+			type: GraphQLString
 		},
 		genre: {
 			type: GraphQLString,
@@ -203,9 +203,8 @@ const ContentV2 = new GraphQLObjectType({
 				limit: { type: GraphQLInt }
 			},
 			resolve: (content, {from, limit}, {backend}) => {
-				let ids = content.item.package.map(it => it.id);
-				if(ids.length < 1)
-					return [];
+				let ids = content.item.package.map(it => it.id);
+				if(ids.length < 1) { return []; }
 
 				return backend.contentv2(ids, {from, limit});
 			}

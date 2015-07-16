@@ -40,10 +40,10 @@ class Backend {
 		// fetch fresh data
 		const eventualData = fetcher(data, expire)
 		.then((it) => {
-			let expiry = now + ttl;
+			let expireTime = now + ttl;
 
 			this.contentCache[key] = {
-				expire: expiry,
+				expire: expireTime,
 				data: it
 			};
 

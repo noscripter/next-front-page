@@ -110,7 +110,7 @@ query FrontPage {
 			... Basic
 		}
 	}
-}`
+}`;
 };
 
 // fastFT query

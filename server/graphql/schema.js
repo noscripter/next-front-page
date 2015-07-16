@@ -3,7 +3,8 @@ import {Promise} from 'es6-promise';
 import {
   GraphQLSchema,
   GraphQLObjectType,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLString
 } from 'graphql';
 
 import {Region} from './types/basic';
