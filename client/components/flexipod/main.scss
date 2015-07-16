@@ -61,6 +61,7 @@
 
 				@if $width < 1 {
 					display: flex;
+					// HACK target Firefox
 					@-moz-document url-prefix() {
 						margin-bottom: 0;
 					}

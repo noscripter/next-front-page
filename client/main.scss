@@ -21,6 +21,13 @@
 
 @import "flexipod-layouts";
 
+$container-widths: (
+	XS: 100%,
+	S: 730px,
+	M: 970px,
+	L: 1210px
+);
+
 html {
 	@include oColorsFor(page);
 	@include nTypeAlpha(3);
@@ -106,15 +113,21 @@ body {
 }
 
 .fixed-width-container {
-	@each $layout in $nh-container-widths {
+	padding-left: percentage($nh-grid-gutter / 2);
+	padding-right: percentage($nh-grid-gutter / 2);
+
+	@each $layout in $container-widths {
 		@include nhGridRespondTo(nth($layout, 1)) {
-			width: nth($layout, 2);
+			$width: nth($layout, 2);
+
+			@if $width != 100% {
+				width: $width;
+			}
 		}
 	}
+
 	@include nhGridContainer;
 	margin: 0 auto;
-
-	@include nhGridRespondTo($from: S) { padding: 0 };
 }
 
 .fastft--header {
@@ -222,7 +235,8 @@ body {
 	clear: both;
 	position: relative;
 	background-color: oColorsGetPaletteColor('warm-carousel');
-	padding: 10px 10px 20px;
+	padding: 10px 0;
+	margin-bottom: 20px;
 	&::before, &::after {
 		@include dots;
 		position: absolute;
