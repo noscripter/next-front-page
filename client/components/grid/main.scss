@@ -29,24 +29,43 @@
 	}
 }
 
+@mixin nhGridRow($total-cols: $nh-grid-columns) {
+	// negative margin to swallow the outer column's margins
+	$subgrid-ratio: $nh-grid-columns / $total-cols;
+
+	@include nhRowMargins($total-cols);
+}
+
+@mixin nhGridContainer() {
+	box-sizing: border-box;
+	margin-right: auto;
+	margin-left: auto;
+
+	overflow: hidden;
+}
+
 @mixin nhColumnMargins($total-cols: $nh-grid-columns) {
 	$subgrid-ratio: $nh-grid-columns / $total-cols;
 
+	// assymetry to prevent margins from collapsing
 	margin-top: 0;
-	margin-right: percentage($subgrid-ratio * $nh-grid-gutter / 2);
 	margin-bottom: percentage($subgrid-ratio * $nh-grid-gutter);
+
+	margin-right: percentage($subgrid-ratio * $nh-grid-gutter / 2);
 	margin-left: percentage($subgrid-ratio * $nh-grid-gutter / 2);
 }
 
 @mixin nhRowMargins($total-cols: $nh-grid-columns) {
 	$subgrid-ratio: $nh-grid-columns / $total-cols;
 
-	margin-top: 0;
 	margin-right: percentage($subgrid-ratio * -$nh-grid-gutter / 2);
-	margin-bottom: percentage($subgrid-ratio * -$nh-grid-gutter);
 	margin-left: percentage($subgrid-ratio * -$nh-grid-gutter / 2);
 
+	margin-top: 0;
 	padding-bottom: percentage($subgrid-ratio * $nh-grid-gutter);
+
+	// swallow column bottom margin
+	margin-bottom: percentage($subgrid-ratio * -$nh-grid-gutter);
 }
 
 /// % width of an item in the grid
@@ -107,24 +126,6 @@
 			}
 		}
 	}
-}
-
-
-@mixin nhGridRow($total-cols: $nh-grid-columns) {
-	// negative margin to swallow the outer column's margins
-	$subgrid-ratio: $nh-grid-columns / $total-cols;
-
-	@include nhRowMargins($total-cols);
-}
-
-@mixin nhGridContainer() {
-	box-sizing: border-box;
-	margin-right: auto;
-	margin-left: auto;
-	padding-left: percentage($nh-grid-gutter / 2);
-	padding-right: percentage($nh-grid-gutter / 2);
-
-	overflow: hidden;
 }
 
 // TODO pushes, pulls and skips
