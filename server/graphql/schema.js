@@ -105,7 +105,17 @@ const queryType = new GraphQLObjectType({
 
 				return backend.popular(url, 'Popular');
 			}
-		}
+		},
+    search: {
+      type: Collection,
+      args: {
+				query: { type: new GraphQLNonNull(GraphQLString) }
+			},
+      resolve: (_, {query}, {backend}) => {
+        return backend.search(query)
+          .then(ids => ({ items: ids }));
+      }
+    }
 	}
 });
 
