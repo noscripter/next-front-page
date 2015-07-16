@@ -14,6 +14,11 @@
 		</a>
 			<a href="/{{id}}" class="story-card__link" data-trackable="main-link">
 				<h1 id="{{id}}-title" class="story-card__title" data-trackable="title">{{title}}</h1>
+				{{#if updates}}
+					{{#slice updates limit=1}}
+						{{{html}}}
+					{{/slice}}
+				{{else}}
 				{{#if showSummary}}
 					<h2 class="story-card__summary" data-trackable="summary">{{{summary}}}</h2>
 				{{/if}}

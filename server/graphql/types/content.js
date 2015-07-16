@@ -231,15 +231,45 @@ const LiveBlog = new GraphQLObjectType({
 							resolve: (content) => {
 								return content.data && content.data.authordisplayname;
 							}
+						},
+						date: {
+							type: GraphQLString,
+							resolve: (content) => {
+								return content.data && new Date(content.data.datemodified * 1000).toISOString();
+							}
+						},
+						text: {
+							type: GraphQLString,
+							resolve: (content) => {
+								return content.data && content.data.text;
+							}
+						},
+						html: {
+							type: GraphQLString,
+							resolve: (content) => {
+								return content.data && content.data.html;
+							}
 						}
 					})
 				})
 			),
 			resolve: (content) => {
 				const uri = content.item.location.uri;
-				console.log(`${uri}?action=catchup&format=json`);
+				const then = new Date();
 				return fetch(`${uri}?action=catchup&format=json`)
-					.then(res => res.json());
+					.then(res => res.json())
+					.then(json => {
+						const now = new Date();
+						console.log("Fetching live blog took %d ms", now - then);
+						let eventsMap = json.reduce((map, event) => {
+							if (event.data.mid && !map[event.data.mid]) {
+								map[event.data.mid] = event;
+							}
+							return map;
+						}, {});
+
+						return Object.keys(eventsMap).map(id => eventsMap[id]);
+					});
 			}
 		}
 	}
