@@ -20,7 +20,9 @@ const init = (el, opts) => {
 		.then((fastft) => {
 			return feedInstance.setState({items: fastft.items});
 		})
-		.catch(console.log);
+		.catch((error) => {
+			console.log(error);
+		});
 	};
 
 	setInterval(poller, 20000);
