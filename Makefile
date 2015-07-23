@@ -56,5 +56,4 @@ deploy:
 clean-deploy: clean install build-production deploy
 
 smoke:
-	@echo "FIXME need saucelabs username and key"
-	# export TEST_URL=${TEST_URL}; nbt nightwatch tests/browser/tests/* # FIXME need saucelabs username and key
+	export TEST_URL=${TEST_URL}; nbt nightwatch tests/browser/tests/*
