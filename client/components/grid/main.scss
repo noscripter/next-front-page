@@ -30,9 +30,6 @@
 }
 
 @mixin nhGridRow($total-cols: $nh-grid-columns) {
-	// negative margin to swallow the outer column's margins
-	$subgrid-ratio: $nh-grid-columns / $total-cols;
-
 	@include nhRowMargins($total-cols);
 }
 

@@ -1,3 +1,20 @@
+$o-grid-column: 100 / 1440;
+$o-grid-gutter: 20 / 1440;
+
+$o-grid-layouts: (
+	XS: 330px,
+	S: 480px,
+	M: 720px,
+	L: 960px,
+	XL: 1200px
+//	XXL: 1440px
+);
+
+$o-grid-min-width: 280px;
+$o-grid-start-snappy-mode-at: XL;
+
+// Shut up next-sass-setup
+$_next-ui-setup-first-pass: false;
 @import "next-sass-setup/main";
 
 @import "colors";
@@ -23,9 +40,11 @@
 
 $container-widths: (
 	XS: 100%,
-	S: 730px,
-	M: 970px,
-	L: 1210px
+	S: 100%,
+	M: 100%,
+	L: 100%,
+	XL: 100%
+//	XXL: 1440px
 );
 
 html {
@@ -65,7 +84,7 @@ body {
 	padding: 0;
 	margin: 0;
 
-	@include nhGridGenerate();
+	@include oGridGenerate();
 	@include nhHeaderTabs();
 
 	// Top tabs (News, fastFT)
@@ -74,7 +93,7 @@ body {
 		display: none;
 	}
 
-	@include nhGridRespondTo($until: S) {
+	@include oGridRespondTo($until: L) {
 		@include nhHeaderTabsActive();
 
 		.nh-header-tabs__tablist {
@@ -113,11 +132,11 @@ body {
 }
 
 .fixed-width-container {
-	padding-left: percentage($nh-grid-gutter / 2);
-	padding-right: percentage($nh-grid-gutter / 2);
+	padding-left: percentage($o-grid-gutter / 2);
+	padding-right: percentage($o-grid-gutter / 2);
 
 	@each $layout in $container-widths {
-		@include nhGridRespondTo(nth($layout, 1)) {
+		@include oGridRespondTo(nth($layout, 1)) {
 			$width: nth($layout, 2);
 
 			@if $width != 100% {
@@ -126,38 +145,30 @@ body {
 		}
 	}
 
-	@include nhGridContainer;
 	margin: 0 auto;
 }
 
-.fastft--header {
-	@include nhFastFtTitle;
-	@include nhRowMargins;
-
-	background-color: oColorsGetPaletteColor(warm-base);
-	padding: 5px 0.25em 0 0.2em;
-	border-bottom: 1px solid oColorsGetPaletteColor(fastft-brand);
-
-	@include nhGridRespondTo($from: S) { display: none };
-}
-
 .main-content {
-	@include nhGridColumn($span: (default: 12, M: 9, S: 8));
+	@include oGridColumn($span: (default: 12, L: 9));
 
 	.flexipod--lead-today {
 		// TODO think about sinking the breakpoints into nhFlexipod
 		@include nhFlexipod(map-get($layout-lead-today, default));
 
-		@include nhGridRespondTo(XS) {
+		@include oGridRespondTo(XS) {
 			@include nhFlexipod(map-get($layout-lead-today, XS));
 		}
 
-		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-lead-today, S), 9);
+		@include oGridRespondTo(S) {
+			@include nhFlexipod(map-get($layout-lead-today, S));
 		}
 
-		@include nhGridRespondTo(M) {
-			@include nhFlexipod(map-get($layout-lead-today, M), 9);
+		@include oGridRespondTo(M) {
+			@include nhFlexipod(map-get($layout-lead-today, M));
+		}
+
+		@include oGridRespondTo(L) {
+			@include nhFlexipod(map-get($layout-lead-today, L), 9);
 		}
 	}
 
@@ -165,15 +176,11 @@ body {
 		// TODO think about sinking the breakpoints into nhFlexipod
 		@include nhFlexipod(map-get($layout-opinion, default));
 
-		@include nhGridRespondTo(XS) {
-			@include nhFlexipod(map-get($layout-opinion, XS));
+		@include oGridRespondTo(S) {
+			@include nhFlexipod(map-get($layout-opinion, S));
 		}
 
-		@include nhGridRespondTo(S) {
-			@include nhFlexipod(map-get($layout-opinion, S), 9);
-		}
-
-		@include nhGridRespondTo(M) {
+		@include oGridRespondTo(M) {
 			@include nhFlexipod(map-get($layout-opinion, M), 9);
 		}
 	}
@@ -182,35 +189,31 @@ body {
 		// TODO think about sinking the breakpoints into nhFlexipod
 		@include nhFlexipod(map-get($layout-topic, default));
 
-		@include nhGridRespondTo(XS) {
-			@include nhFlexipod(map-get($layout-topic, XS));
+		@include oGridRespondTo(S) {
+			@include nhFlexipod(map-get($layout-topic, S));
 		}
 
-		@include nhGridRespondTo(S) {
+		@include oGridRespondTo(M) {
 			@include nhFlexipod(map-get($layout-topic, S), 9);
-		}
-
-		@include nhGridRespondTo(M) {
-			@include nhFlexipod(map-get($layout-topic, M), 9);
 		}
 	}
 
 	.flexipod--editors {
 		.article-group {
-			@include nhGridRow(12);
+			@include oGridRow(12);
 		}
 	}
 }
 
 .next-header {
-	@include nhGridRespondTo($from: S) { margin-bottom: 20px; }
+	@include oGridRespondTo($from: L) { margin-bottom: 20px; }
 }
 
 .sidebar {
 	&.sidebar--fastft {
 		display: none;
 
-		@include nhGridRespondTo($from: S) {
+		@include oGridRespondTo($from: L) {
 			display: block;
 		}
 	}

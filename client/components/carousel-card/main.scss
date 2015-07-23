@@ -4,8 +4,8 @@
 	width: 100%;
 	text-align: left;
 
-	@include nhGridColumn((default: 12, XS: 6, S: 4, M: 2));
-	@include nhGridRespondTo(S) { text-align: center; }
+	@include oGridColumn((default: 12, XS: 6, S: 4, L: 2));
+	@include oGridRespondTo(S) { text-align: center; }
 
 	margin-top: 0px;
 	margin-bottom: 20px;
@@ -35,17 +35,17 @@
 }
 
 .carousel-card__content {
-	@include nhGridColumn((default: 8, S: 12));
+	@include oGridColumn((default: 8, XS: 12));
 }
 
 .carousel-card__image {
-	@include nhGridColumn(4);
+	@include oGridColumn(4);
 	margin-bottom: 10px;
 	padding-right: 3px;
 	float: left;
 
 
-	@include nhGridRespondTo(S) {
+	@include oGridRespondTo(XS) {
 		width: 100%;
 		display: inline;
 	}
@@ -53,11 +53,11 @@
 }
 
 .flexipod--editors .carousel-card {
-	@include nhGridRespondTo($from: XS, $until: S) {
+	@include oGridRespondTo($from: XS, $until: S) {
 		&:nth-child(2n+1) { clear: both; }
 	}
 
-	@include nhGridRespondTo($from: S, $until: M) {
+	@include oGridRespondTo($from: S, $until: L) {
 		&:nth-child(3n+1) { clear: both; }
 	}
 }
