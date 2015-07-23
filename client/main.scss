@@ -132,9 +132,6 @@ body {
 }
 
 .fixed-width-container {
-	padding-left: percentage($o-grid-gutter / 2);
-	padding-right: percentage($o-grid-gutter / 2);
-
 	@each $layout in $container-widths {
 		@include oGridRespondTo(nth($layout, 1)) {
 			$width: nth($layout, 2);
@@ -176,6 +173,10 @@ body {
 		// TODO think about sinking the breakpoints into nhFlexipod
 		@include nhFlexipod(map-get($layout-opinion, default));
 
+		@include oGridRespondTo(XS) {
+			@include nhFlexipod(map-get($layout-opinion, XS));
+		}
+
 		@include oGridRespondTo(S) {
 			@include nhFlexipod(map-get($layout-opinion, S));
 		}
@@ -200,7 +201,8 @@ body {
 
 	.flexipod--editors {
 		.article-group {
-			@include oGridRow(12);
+			@include oGridRow;
+			@include oGridRowReset;
 		}
 	}
 }
@@ -239,7 +241,7 @@ body {
 	position: relative;
 	background-color: oColorsGetPaletteColor('warm-carousel');
 	padding: 10px 0;
-	margin-bottom: 20px;
+	margin: 20px 0;
 	&::before, &::after {
 		@include dots;
 		position: absolute;

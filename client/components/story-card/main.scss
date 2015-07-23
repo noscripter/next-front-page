@@ -158,7 +158,7 @@
 
 @mixin nhWideCard() {
 	.story-card__image {
-		@include oGridColumn(4, 9);
+		@include oGridColumn(3, 9);
 		height: 100%;
 		display: block;
 		float: left;

@@ -6,6 +6,8 @@
 @mixin nhFlexipod($layout-spec, $total-cols: $o-grid-columns) {
 	.article-group {
 		@include oGridRow($total-cols);
+		@include oGridRowReset($total-cols);
+
 		clear: both;
 
 		.article {

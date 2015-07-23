@@ -32,9 +32,9 @@ $layout-lead-today: (
 
 $layout-opinion: (
 	default: (
-		((12, 'wide'), (12, 'small')),
+		((12, 'tall'), (12, 'small')),
 		(12, 'small'),
-		((12, 'small'), (12, 'wide'))
+		((12, 'small'), (12, 'tall'))
 		),
 	XS: (
 		((12, 'wide'), (12, 'small')),
@@ -50,7 +50,7 @@ $layout-opinion: (
 
 $layout-topic: (
 	default: append((), (
-		((12, 'wide'), (12, 'small'))
+		((12, 'tall'), (12, 'small'))
 	)),
 	S: append((), (
 		((2/3, 'wide'), (1/3, 'small'))
