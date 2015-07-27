@@ -28,6 +28,8 @@
 }
 
 @mixin nhFlexipodCard($int, $card-spec, $total-cols: $o-grid-columns) {
+	$subgrid-ratio: $total-cols / $o-grid-columns;
+
 	@if type-of(nth($card-spec, 1)) == number {
 		$width: nth($card-spec, 1);
 		$type: nth($card-spec, 2);
@@ -35,16 +37,34 @@
 		.article-group:nth-child(#{$int}) {
 			@if $width < 1 {
 				display: flex;
+				align-items: stretch;
 			} @else {
 				display: block;
+			}
+
+			// compensate for Gecko's to-the-letter interpretation of the standard
+			// when computing fractional vertical paddings in a flexbox
+			@-moz-document url-prefix() {
+				padding: percentage($o-grid-gutter / 2) 0;
 			}
 
 			.article {
 				width: oGridColspan($width, $total-cols);
 				@if $width < 1 {
 					display: flex;
-				} @else {
-					display: block;
+
+					// and again
+					@-moz-document url-prefix() {
+						padding-top: 0;
+						padding-bottom: 0;
+					}
+				}
+
+				&.no-ff-padding {
+					@-moz-document url-prefix() {
+						padding-top: 0;
+						padding-bottom: 0;
+					}
 				}
 
 				.story-card {
@@ -60,13 +80,25 @@
 				$width: nth($nested-card, 1);
 				$type: nth($nested-card, 2);
 
+				// and again
+				@-moz-document url-prefix() {
+					padding: percentage($o-grid-gutter / 2) 0;
+				}
+
 				.article:nth-child(#{$card-int}) {
 					width: oGridColspan($width, $total-cols);
 					@if $width < 1 {
 						display: flex;
+
+						// and one last time, sigh.
+						@-moz-document url-prefix() {
+							padding-top: 0;
+							padding-bottom: 0;
+						}
 					} @else {
 						display: block;
 					}
+
 
 					.story-card {
 						@include nhStoryCard($type);
