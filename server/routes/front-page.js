@@ -7,12 +7,13 @@ import {Feed} from '../../components/feed/main';
 export default (region) => {
 	return (req, res) => {
 		const useElasticSearch = res.locals.flags.elasticSearchItemGet.isSwitchedOn;
+		const mockBackend = true;
 
 		res.set({
 			'Cache-Control': 'max-age=40, public, stale-if-error=86400' // 40 seconds; 24 hours
 		});
 
-		graphql(useElasticSearch).fetch(queries.frontPage(region))
+		graphql(useElasticSearch, mockBackend).fetch(queries.frontPage(region))
 		.then(contentData => {
 			res.render('uk', {
 				layout: 'wrapper',
@@ -21,6 +22,8 @@ export default (region) => {
 				content: contentData
 			});
 		})
-		.catch(console.log);
+		.catch(it => {
+			console.log(it);
+		});
 	}
 };

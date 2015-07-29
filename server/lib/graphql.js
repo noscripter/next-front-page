@@ -3,14 +3,15 @@ import {graphql} from 'graphql';
 import schema from '../graphql/schema';
 import backend from '../graphql/backend';
 import fastFtFeed from '../graphql/fast-ft-feed';
+import mockBackend from '../graphql/mock-backend';
 
-const fetch = (useElasticSearch) => {
+const fetch = (backend, fastFt) => {
 	return (query) => {
 		const then = new Date().getTime();
 
 		return graphql(schema, query, {
-			backend: backend(useElasticSearch),
-			fastFtFeed: fastFtFeed(useElasticSearch)
+			backend: backend,
+			fastFtFeed: fastFt
 		})
 		.then(it => {
 			const now = new Date().getTime();
@@ -23,9 +24,11 @@ const fetch = (useElasticSearch) => {
 	};
 };
 
-const fetchEs = fetch(true);
-const fetchCapi = fetch(false);
+const fetchEs = fetch(backend(true), fastFtFeed(true));
+const fetchCapi = fetch(backend(false), fastFtFeed(false));
 
-export default (elastic) => ({
-	fetch: (elastic ? fetchEs : fetchCapi)
+const fetchMock = fetch(mockBackend, fastFt(true))
+
+export default (elastic, mock) => ({
+	fetch: (mock ? fetchMock : (elastic ? fetchEs : fetchCapi))
 });

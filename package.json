@@ -15,7 +15,7 @@
     "ft-next-article-primary-tag": "1.0.1",
     "ft-next-express": "^13.0.0",
     "ft-poller": "0.0.4",
-    "graphql": "^0.1.3",
+    "graphql": "^0.1.10",
     "next-ft-api-client": "^3.9.0",
     "o-date": "https://github.com/Financial-Times/o-date/archive/1.1.1.tar.gz",
     "react": "^0.13.3"
