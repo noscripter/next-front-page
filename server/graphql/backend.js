@@ -57,7 +57,7 @@ class Backend {
 
 	page(uuid, sectionsId, ttl = 50) {
 		return this.cached(`pages.${uuid}`, ttl, () => {
-			return ApiClient.pages({ uuid: uuid })
+			return ApiClient.pages({ uuid: uuid, retry: 0 })
 			.then(it => ({
 				id: uuid,
 				title: it.title,
@@ -71,7 +71,8 @@ class Backend {
 		return this.cached(`byconcept.${uuid}`, ttl, () => {
 			return ApiClient.contentAnnotatedBy({
 				uuid: uuid,
-				useElasticSearch: this.elasticSearch
+				useElasticSearch: this.elasticSearch,
+				retry: 0
 			})
 			.then(ids => ({
 				title: title,
@@ -87,7 +88,8 @@ class Backend {
 			return ApiClient.searchLegacy({
 				query: query,
 				useLegacyContent: true,
-				useElasticSearch: this.elasticSearch
+				useElasticSearch: this.elasticSearch,
+				retry: 0
 			});
 		});
 	}
@@ -115,7 +117,8 @@ class Backend {
 		return this.cached(`contentv1.${uuids.join('_')}`, 50, () => {
 			return ApiClient.contentLegacy({
 				uuid: uuids,
-				useElasticSearch: this.elasticSearch
+				useElasticSearch: this.elasticSearch,
+				retry: 0
 			})
 		})
 		.then(items => {
@@ -134,7 +137,8 @@ class Backend {
 		return this.cached(`contentv2.${uuids.join('_')}`, 50, () => {
 			return ApiClient.content({
 				uuid: uuids,
-				useElasticSearch: this.elasticSearch
+				useElasticSearch: this.elasticSearch,
+				retry: 0
 			})
 		})
 		.then(items => {
