@@ -31,6 +31,7 @@ build:
 
 build-production:
 	NODE_ENV=production nbt build
+	nbt about
 
 watch:
 	nbt build --dev --watch
@@ -45,13 +46,13 @@ provision:
 	nbt provision ${TEST_HOST}
 	nbt configure ft-next-front-page ${TEST_HOST} --overrides "NODE_ENV=branch"
 	nbt deploy-hashed-assets
-	nbt deploy ${TEST_HOST} --skip-enable-preboot
+	nbt deploy ${TEST_HOST} --skip-enable-preboot --docker
 	make smoke
 
 deploy:
 	nbt configure
 	nbt deploy-hashed-assets
-	nbt deploy
+	nbt deploy --docker
 
 clean-deploy: clean install build-production deploy
 
