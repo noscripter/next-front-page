@@ -6,8 +6,10 @@ import {Feed} from '../../components/feed/main';
 
 export default (region) => {
 	return (req, res) => {
-		const useElasticSearch = res.locals.flags.elasticSearchItemGet.isSwitchedOn;
-		const mockBackend = true;
+		const useElasticSearch = res.locals.flags.elasticSearchItemGet;
+		const mockBackend = res.locals.flags.mockFrontPage;
+
+		console.log(useElasticSearch, mockBackend);
 
 		res.set({
 			'Cache-Control': 'max-age=40, public, stale-if-error=86400' // 40 seconds; 24 hours
