@@ -20,9 +20,7 @@
 	position: relative;
 	font-size: 18px;
 
-	@include nhGridRespondTo(M) {
-		font-size: 20px;
-	}
+	@include nhGridRespondTo(M) { font-size: 20px; }
 
 	a {
 		&:hover,
@@ -72,8 +70,7 @@
 }
 .story-card__summary {
 	@include nTypeDelta(3);
-	line-height: 1.2;
-
+	line-height: 1;
 	font-size: 18px;
 }
 .story-card__content {
@@ -102,6 +99,7 @@
 }
 
 @mixin nhLargeCard() {
+	font-size: 1.2em;
 	@include nhGridRespondTo($from: M) {
 		.story-card__summary {
 			display: initial;
@@ -130,11 +128,8 @@
 }
 
 @mixin nhMediumCard {
-	.story-card__image {
-		display: none;
-	}
-
-	.story-card__summary { display: initial; }
+	.story-card__image { display: none; }
+	.story-card__summary { display: none; }
 }
 
 @mixin nhSmallCard {
@@ -151,11 +146,7 @@
 		display: block;
 	}
 
-	.story-card__summary { display: initial; }
-
-	.story-card__summary {
-	}
-
+	.story-card__summary { display: none; }
 }
 
 @mixin nhWideCard() {
@@ -166,7 +157,7 @@
 		float: left;
 		margin: 0;
 	}
-
+	.story-card__summary { display: none; }
 	.story-card__content { margin: 0; }
 }
 
