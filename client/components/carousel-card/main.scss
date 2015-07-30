@@ -41,12 +41,13 @@
 .carousel-card__image {
 	@include oGridColumn(4);
 	margin-bottom: 10px;
-	padding-right: 3px;
 	float: left;
 
 
 	@include oGridRespondTo(XS) {
 		width: 100%;
+		padding: 0;
+		margin: 0 0 10px 0;
 		display: inline;
 	}
 
