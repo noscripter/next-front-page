@@ -130,11 +130,8 @@
 }
 
 @mixin nhMediumCard {
-	.story-card__image {
-		display: none;
-	}
-
-	.story-card__summary { display: initial; }
+	.story-card__image { display: none; }
+	.story-card__summary { display: none; }
 }
 
 @mixin nhSmallCard {
@@ -151,11 +148,7 @@
 		display: block;
 	}
 
-	.story-card__summary { display: initial; }
-
-	.story-card__summary {
-	}
-
+	.story-card__summary { display: none; }
 }
 
 @mixin nhWideCard() {
@@ -166,7 +159,7 @@
 		float: left;
 		margin: 0;
 	}
-
+	.story-card__summary { display: none; }
 	.story-card__content { margin: 0; }
 }
 
