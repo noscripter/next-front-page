@@ -147,6 +147,38 @@ class Backend {
 			return items;
 		});
 	}
+
+	liveblogUpdates(uri) {
+		const then = new Date();
+
+		return fetch(`${uri}?action=catchup&format=json`)
+		.then(res => {
+			const now = new Date();
+			console.log("Fetching live blog took %d ms", now - then);
+
+			return res;
+		})
+		.then(res => res.json())
+		.then(json => {
+			const now = new Date();
+			console.log("Fetching live blog took %d ms", now - then);
+
+			const dated = json.filter(it => !!it.data.datemodified)
+			const [first, second] = dated.slice(0, 2);
+
+			if(first.data.datemodified < second.data.datemodified) { json.reverse(); }
+
+			let [_, updates] = json.reduce(([skip, updates], event) => {
+				if (event.data.event == 'msg' && event.data.mid && !skip[event.data.mid]) {
+					updates.push(event);
+					skip[event.data.mid] = true;
+				}
+				return [skip, updates];
+			}, [{}, []]);
+
+			return updates;
+		});
+	}
 }
 
 // expire old content after 10 minutes

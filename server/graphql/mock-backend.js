@@ -8,6 +8,7 @@ import pages from './fixtures/pages';
 import searches from './fixtures/searches';
 import byConcept from './fixtures/by-concept';
 import popular from './fixtures/popular';
+import liveblogs from './fixtures/liveblogs';
 
 class Backend {
 	constructor() {
@@ -96,6 +97,47 @@ class Backend {
 		});
 	}
 
+	liveblogUpdates(uri) {
+		const liveblog = liveblogs[uri];
+		const extractUpdates = (json) => {
+			const dated = json.filter(it => !!it.data.datemodified)
+			const [first, second] = dated.slice(0, 2);
+
+			if(first.data.datemodified < second.data.datemodified) { json.reverse(); }
+
+			let [_, updates] = json.reduce(([skip, updates], event) => {
+				if (event.data.event == 'msg' && event.data.mid && !skip[event.data.mid]) {
+					updates.push(event);
+					skip[event.data.mid] = true;
+				}
+				return [skip, updates];
+			}, [{}, []]);
+
+			return updates;
+		}
+
+		console.log("Mock backend fetching", uri);
+		if(liveblog) {
+			return Promise.resolve(liveblog).then(extractUpdates);
+		}
+
+		const then = new Date();
+
+		return fetch(`${uri}?action=catchup&format=json`)
+		.then(res => {
+			const now = new Date();
+			console.log("Fetching live blog took %d ms", now - then);
+
+			return res;
+		})
+		.then(res => res.json())
+		.then(json => {
+			console.log(`Mock backend asked for live updates for blog: ${uri}. Add this to liveblogs.js to use current real response: \n'${uri}': ${JSON.stringify(json, null, 2)}`);
+			return json;
+		})
+		.then(extractUpdates);
+	}
+
 	// Content endpoints are not mocked because the responses are massive.
 
 	contentv1(uuids, {from, limit, genres}) {
@@ -131,6 +173,8 @@ class Backend {
 			return items;
 		});
 	}
+
+
 }
 
 // expire old content after 10 minutes

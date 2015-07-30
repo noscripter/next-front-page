@@ -1,6 +1,5 @@
 import articleGenres from 'ft-next-article-genre';
 import articlePrimaryTag from 'ft-next-article-primary-tag';
-import fetch from 'isomorphic-fetch';
 
 import {
 	GraphQLID,
@@ -16,7 +15,7 @@ const Content = new GraphQLInterfaceType({
 	name: 'Content',
 	description: 'A piece of FT content',
 	resolveType: (value) => {
-		if (value.item && !!value.item.location.uri.match(/liveblog/i)) {
+		if (value.item && !!value.item.location.uri.match(/liveblog|marketslive|liveqa/i)) {
 			return LiveBlog;
 		} else if (value.item) {
 			return ContentV1;
@@ -159,12 +158,43 @@ const ContentV1 = new GraphQLObjectType({
 	}
 });
 
+const LiveBlogUpdate = new GraphQLObjectType({
+	name: "LiveBlogUpdate",
+	description: "Update of a live blog",
+	fields: () => ({
+		event: { type: GraphQLString },
+		author: {
+			type: GraphQLString,
+			resolve: (update) => {
+				return update.data && update.data.authordisplayname;
+			}
+		},
+		date: {
+			type: GraphQLString,
+			resolve: (update) => {
+				return update.data && new Date(update.data.datemodified * 1000).toISOString();
+			}
+		},
+		text: {
+			type: GraphQLString,
+			resolve: (update) => {
+				return update.data && update.data.text;
+			}
+		},
+		html: {
+			type: GraphQLString,
+			resolve: (update) => {
+				return update.data && update.data.html;
+			}
+		}
+	})
+});
 
 const LiveBlog = new GraphQLObjectType({
 	name: "LiveBlog",
 	description: "Live blog item",
 	interfaces: [Content],
-	fields: {
+	fields: () => ({
 		id: {
 			type: GraphQLID,
 			resolve: (content) => content.item.id
@@ -220,59 +250,19 @@ const LiveBlog = new GraphQLObjectType({
 			}
 		},
 		updates: {
-			type: new GraphQLList(
-				new GraphQLObjectType({
-					name: "Event",
-					description: "Event for live blogs",
-					fields: () => ({
-						event: { type: GraphQLString },
-						author: {
-							type: GraphQLString,
-							resolve: (content) => {
-								return content.data && content.data.authordisplayname;
-							}
-						},
-						date: {
-							type: GraphQLString,
-							resolve: (content) => {
-								return content.data && new Date(content.data.datemodified * 1000).toISOString();
-							}
-						},
-						text: {
-							type: GraphQLString,
-							resolve: (content) => {
-								return content.data && content.data.text;
-							}
-						},
-						html: {
-							type: GraphQLString,
-							resolve: (content) => {
-								return content.data && content.data.html;
-							}
-						}
-					})
-				})
-			),
-			resolve: (content) => {
+			type: new GraphQLList(LiveBlogUpdate),
+			resolve: (content, _, {backend}) => {
 				const uri = content.item.location.uri;
-				const then = new Date();
-				return fetch(`${uri}?action=catchup&format=json`)
-					.then(res => res.json())
-					.then(json => {
-						const now = new Date();
-						console.log("Fetching live blog took %d ms", now - then);
-						let eventsMap = json.reduce((map, event) => {
-							if (event.data.mid && !map[event.data.mid]) {
-								map[event.data.mid] = event;
-							}
-							return map;
-						}, {});
 
-						return Object.keys(eventsMap).map(id => eventsMap[id]);
-					});
+				console.log("Fetching liveblog updates from", backend.liveblogUpdates);
+				try {
+					return backend.liveblogUpdates(uri);
+				} catch(e) {
+					console.log("BOOOM", e);
+				}
 			}
 		}
-	}
+	})
 });
 
 const ContentV2 = new GraphQLObjectType({

@@ -31,6 +31,7 @@ export default {
 		"items": [
 			"70e9e5aa-34d1-11e5-bdbb-35e55cbae175",
 			"d2f4b8b2-3506-11e5-b05b-b01debd57852",
+			'6a4016dd-2d08-3928-99ca-eda1d93deff6',
 			"0961875a-3501-11e5-b05b-b01debd57852",
 			"b674667c-34f4-11e5-b05b-b01debd57852",
 			"efd7b43c-34f9-11e5-bdbb-35e55cbae175",
