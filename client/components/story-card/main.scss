@@ -20,9 +20,7 @@
 	position: relative;
 	font-size: 18px;
 
-	@include nhGridRespondTo(M) {
-		font-size: 20px;
-	}
+	@include nhGridRespondTo(M) { font-size: 20px; }
 
 	a {
 		&:hover,
@@ -72,8 +70,7 @@
 }
 .story-card__summary {
 	@include nTypeDelta(3);
-	line-height: 1.2;
-
+	line-height: 1;
 	font-size: 18px;
 }
 .story-card__content {
@@ -102,6 +99,7 @@
 }
 
 @mixin nhLargeCard() {
+	font-size: 1.2em;
 	@include nhGridRespondTo($from: M) {
 		.story-card__summary {
 			display: initial;
