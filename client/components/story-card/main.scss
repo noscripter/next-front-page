@@ -61,7 +61,7 @@
 .story-card__image { width: 100%; }
 .story-card__taxon {
 	@include linkHover;
-	@include nTypeBeta(4);
+	@include nTypeBravo(4);
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	margin-right: 5px;
