@@ -1,23 +1,24 @@
 @import "variables";
 @import "next-type/main";
 
-@import "../grid/main";
+@import "o-grid/main";
 
-@mixin nhFlexipod($layout-spec, $total-cols: $nh-grid-columns) {
+@mixin nhFlexipod($layout-spec, $total-cols: $o-grid-columns) {
 	.article-group {
-		@include nhGridRow($total-cols);
+		@include oGridRow($total-cols);
+		@include oGridRowReset($total-cols);
+
 		clear: both;
 
-		.story-card {
-			@include nhGridColumn(null, $total-cols);
+		.article {
+			@include oGridColumn(null, $total-cols);
 		}
 	}
 
-	@include nhGridContainer;
 	@include nhFlexipodLayout($layout-spec, $total-cols);
 }
 
-@mixin nhFlexipodLayout($layout-spec, $total-cols: $nh-grid-columns) {
+@mixin nhFlexipodLayout($layout-spec, $total-cols: $o-grid-columns) {
 	@if type-of($layout-spec) == list {
 		@for $int from 1 through length($layout-spec) {
 			$card-spec: nth($layout-spec, $int);
@@ -26,7 +27,9 @@
 	}
 }
 
-@mixin nhFlexipodCard($int, $card-spec, $total-cols: $nh-grid-columns) {
+@mixin nhFlexipodCard($int, $card-spec, $total-cols: $o-grid-columns) {
+	$subgrid-ratio: $total-cols / $o-grid-columns;
+
 	@if type-of(nth($card-spec, 1)) == number {
 		$width: nth($card-spec, 1);
 		$type: nth($card-spec, 2);
@@ -34,16 +37,39 @@
 		.article-group:nth-child(#{$int}) {
 			@if $width < 1 {
 				display: flex;
-				@-moz-document url-prefix() {
-					margin-bottom: 0;
-				}
+				align-items: stretch;
 			} @else {
 				display: block;
 			}
 
-			.story-card {
-				@include nhStoryCard($type);
-				width: nhGridColspan($width, $total-cols);
+			// compensate for Gecko's to-the-letter interpretation of the standard
+			// when computing fractional vertical paddings in a flexbox
+			@-moz-document url-prefix() {
+				padding: percentage($o-grid-gutter / 2) 0;
+			}
+
+			.article {
+				width: oGridColspan($width, $total-cols);
+				@if $width < 1 {
+					display: flex;
+
+					// and again
+					@-moz-document url-prefix() {
+						padding-top: 0;
+						padding-bottom: 0;
+					}
+				}
+
+				&.no-ff-padding {
+					@-moz-document url-prefix() {
+						padding-top: 0;
+						padding-bottom: 0;
+					}
+				}
+
+				.story-card {
+					@include nhStoryCard($type);
+				}
 			}
 		}
 
@@ -54,22 +80,37 @@
 				$width: nth($nested-card, 1);
 				$type: nth($nested-card, 2);
 
-				.story-card:nth-child(#{$card-int}) {
-					@include nhStoryCard($type);
-					width: nhGridColspan($width, $total-cols);
+				// and again
+				@-moz-document url-prefix() {
+					padding: percentage($o-grid-gutter / 2) 0;
+				}
+
+				.article:nth-child(#{$card-int}) {
+					width: oGridColspan($width, $total-cols);
+					@if $width < 1 {
+						display: flex;
+
+						// and one last time, sigh.
+						@-moz-document url-prefix() {
+							padding-top: 0;
+							padding-bottom: 0;
+						}
+					} @else {
+						display: block;
+					}
+
+
+					.story-card {
+						@include nhStoryCard($type);
+					}
 				}
 
 				@if $width < 1 {
 					display: flex;
-					// HACK target Firefox
-					@-moz-document url-prefix() {
-						margin-bottom: 0;
-					}
 				} @else {
 					display: block;
 				}
 			}
-
 		}
 	}
 }

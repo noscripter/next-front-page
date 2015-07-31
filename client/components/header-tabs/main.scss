@@ -37,12 +37,12 @@
 		}
 
 		a {
-			@include nhGridColumn(1/2);
+			@include oGridColumn(1/2);
 
 			text-align: center;
 			cursor: pointer;
 			overflow-y: visible;
-			margin: 0;
+			padding: 0;
 
 			span {
 				padding: 0.5em;

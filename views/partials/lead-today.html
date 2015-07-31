@@ -1,17 +1,23 @@
 <section class="flexipod flexipod--lead-today" id="site-content" data-trackable="lead-today" role="region" tabindex="0" aria-labelledby="lead-pod-title">
 	<div class="article-group" role="presentation">
 		{{#slice leads limit=1}}
-			{{> story-card related=true }}
+			<div class="article no-ff-padding">
+				{{> story-card related=true showSummary=true }}
+			</div>
 		{{/slice}}
 	</div>
 	<div class="article-group" role="presentation">
 		{{#slice items limit=3}}
-			{{> story-card }}
+			<div class="article">
+				{{> story-card }}
+			</div>
 		{{/slice}}
 	</div>
 	<div class="article-group" role="presentation">
 		{{#slice items limit=3 offset=3}}
-			{{> story-card }}
+			<div class="article">
+				{{> story-card }}
+			</div>
 		{{/slice}}
 	</div>
 </section>
