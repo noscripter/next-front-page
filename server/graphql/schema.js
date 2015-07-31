@@ -29,7 +29,6 @@ const queryType = new GraphQLObjectType({
 		fastFT: {
 			type: Collection,
 			resolve: (root, _, {fastFtFeed}) => {
-				const uuid = sources.fastFt.uuid;
 				return fastFtFeed.fetch();
 			}
 		},

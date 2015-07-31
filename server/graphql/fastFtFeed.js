@@ -39,9 +39,7 @@ class FastFtFeed {
 		this.poller = setInterval(() => {
 			this.hasNewUpdates()
 			.then(hasNewUpdates => {
-				console.log('Checking for fastFT updates since %s', this.since);
 				if(hasNewUpdates) {
-					console.log('fastFt updates found. Updating cache...');
 					this.fetchFastFt();
 					this.since = new Date().toISOString();
 				}
