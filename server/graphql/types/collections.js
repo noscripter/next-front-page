@@ -34,7 +34,7 @@ const Page = new GraphQLObjectType({
 		url: {
 			type: GraphQLString,
 			resolve: (it) => {
-				return (it.sectionId ? `/stream/sectionsId/${it.sectionId}` : null)
+				return (it.sectionId ? `/stream/sectionsId/${it.sectionId}` : null);
 			}
 		},
 		title: {
@@ -65,7 +65,7 @@ const ContentByConcept = new GraphQLObjectType({
 		},
 		url: {
 			type: GraphQLString,
-			resolve: () => (null),
+			resolve: () => (null)
 		},
 		items: {
 			type: new GraphQLList(Content),
@@ -76,7 +76,7 @@ const ContentByConcept = new GraphQLObjectType({
 				genres: { type: new GraphQLList(GraphQLString) }
 			},
 			resolve: (result, {from, limit, genres}, {backend}) => {
-				return backend.contentv2(result.items, {from, limit, genres})
+				return backend.contentv2(result.items, {from, limit, genres});
 			}
 		}
 	}
@@ -86,4 +86,4 @@ export default {
 	Collection,
 	Page,
 	ContentByConcept
-}
+};

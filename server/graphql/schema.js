@@ -1,14 +1,13 @@
 import {Promise} from 'es6-promise';
 
 import {
-  graphql,
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLNonNull
 } from 'graphql';
 
-import {Region} from './types/basic'
-import {Collection} from './types/collections'
+import {Region} from './types/basic';
+import {Collection} from './types/collections';
 
 import sources from './config/sources';
 
@@ -57,7 +56,7 @@ const queryType = new GraphQLObjectType({
 						default:
 							throw "Unknown type: " + it.type;
 					}
-				})
+				});
 
 				return Promise.all(promises)
 				.then(ids => ({
@@ -65,13 +64,13 @@ const queryType = new GraphQLObjectType({
 					conceptId: null,
 					sectionId: null,
 					items: ids
-				}))
+				}));
 			}
 		},
 		opinion: {
 			type: Collection,
 			resolve: (root, _, {backend}) => {
-				let {uuid, sectionsId} = sources.opinion
+				let {uuid, sectionsId} = sources.opinion;
 
 				return backend.page(uuid, sectionsId);
 			}
@@ -79,7 +78,7 @@ const queryType = new GraphQLObjectType({
 		lifestyle: {
 			type: Collection,
 			resolve: (root, _, {backend}) => {
-				let {uuid, sectionsId} = sources.lifestyle
+				let {uuid, sectionsId} = sources.lifestyle;
 
 				return backend.page(uuid, sectionsId);
 			}
@@ -87,7 +86,7 @@ const queryType = new GraphQLObjectType({
 		markets: {
 			type: Collection,
 			resolve: (root, _, {backend}) => {
-				let {uuid, sectionsId} = sources.markets
+				let {uuid, sectionsId} = sources.markets;
 
 				return backend.page(uuid, sectionsId);
 			}
@@ -95,7 +94,7 @@ const queryType = new GraphQLObjectType({
 		technology: {
 			type: Collection,
 			resolve: (root, _, {backend}) => {
-				let {uuid, sectionsId} = sources.technology
+				let {uuid, sectionsId} = sources.technology;
 
 				return backend.page(uuid, sectionsId);
 			}

@@ -128,4 +128,4 @@ query FastFT {
 export default {
 	frontPage,
 	fastFT
-}
+};

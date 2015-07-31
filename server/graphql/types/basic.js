@@ -17,4 +17,4 @@ const Region = new GraphQLEnumType({
 
 export default {
 	Region
-}
+};

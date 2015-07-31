@@ -114,7 +114,7 @@ const ContentV1 = new GraphQLObjectType({
 		primaryTag: {
 			type: Concept,
 			resolve: (content) => {
-				return articlePrimaryTag(content.item.metadata)
+				return articlePrimaryTag(content.item.metadata);
 			}
 		},
 		primaryImage: {
@@ -176,7 +176,7 @@ const ContentV2 = new GraphQLObjectType({
 		primaryTag: {
 			type: Concept,
 			resolve: (content) => {
-				return articlePrimaryTag(content.item.metadata)
+				return articlePrimaryTag(content.item.metadata);
 			}
 		},
 		primaryImage: {
@@ -219,4 +219,4 @@ export default {
 	Image,
 	ContentV1,
 	ContentV2
-}
+};
