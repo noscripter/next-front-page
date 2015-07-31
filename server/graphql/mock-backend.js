@@ -1,5 +1,4 @@
 import {Promise} from 'es6-promise';
-import fetch from 'isomorphic-fetch';
 
 import ApiClient from 'next-ft-api-client';
 import articleGenres from 'ft-next-article-genre';
