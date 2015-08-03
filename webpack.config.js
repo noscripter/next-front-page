@@ -2,7 +2,25 @@ var path = require('path');
 var webpack = require('webpack');
 var BowerWebpackPlugin = require("bower-webpack-plugin");
 
-module.exports = {
+var plugins = [
+	new BowerWebpackPlugin({ includes: [/\.js?$/] }),
+	// Global definitions
+	new webpack.DefinePlugin({
+		'define': undefined,
+		"process.env": {
+			NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
+		}
+	})
+];
+
+if(process.env.NODE_ENV === 'production') {
+	plugins = plugins.concat([
+		new webpack.optimize.UglifyJsPlugin(),
+		new webpack.optimize.DedupePlugin()
+	]);
+}
+
+var config = {
 	entry: "./client/main.js",
 	output: {
 		path: path.join(__dirname, "public"),
@@ -21,10 +39,7 @@ module.exports = {
 			path.join(__dirname, 'bower_components')
 		]
 	},
-	plugins: [
-		new BowerWebpackPlugin({ includes: [/\.js?$/] }),
-		// Global definitions
-		new webpack.DefinePlugin({ 'define': undefined })
-	],
-	devtool: 'source-map'
+	plugins: plugins
 };
+
+module.exports = config;
