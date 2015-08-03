@@ -29,8 +29,9 @@ const queryType = new GraphQLObjectType({
 		},
 		fastFT: {
 			type: Collection,
-			resolve: (root, _, {fastFtFeed}) => {
-				return fastFtFeed.fetch();
+			resolve: (root, _, {backend}) => {
+				console.log("Fetching FastFT from the backend");
+				return backend.fastFT();
 			}
 		},
 		editorsPicks: {

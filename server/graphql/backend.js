@@ -1,7 +1,11 @@
-import ApiClient from 'next-ft-api-client';
 import {Promise} from 'es6-promise';
 
+import ApiClient from 'next-ft-api-client';
+import FastFtFeed from './backend-adapters/fast-ft';
+
 import articleGenres from 'ft-next-article-genre';
+
+import sources from './config/sources';
 
 // internal content filtering logic shared for ContentV1 and ContentV2
 const filterContent = ({from, limit, genres, type}, resolveType) => {
@@ -25,9 +29,10 @@ const filterContent = ({from, limit, genres, type}, resolveType) => {
 }
 
 class Backend {
-	constructor(elasticSearch, staleTtl) {
+	constructor(adapters, elasticSearch, staleTtl) {
 		this.elasticSearch = elasticSearch;
 		this.type = (elasticSearch ? 'elasticsearch' : 'capi');
+		this.adapters = adapters;
 
 		// in-memory content cache
 		this.contentCache = {};
@@ -188,6 +193,16 @@ class Backend {
 		});
 	}
 
+	fastFT() {
+		console.log("Fetching fastFT in the backend");
+		try {
+		console.log("FastFT:", this.adapters.fastFT.fetch());
+		return this.adapters.fastFT.fetch();
+	 	} catch(e) {
+	 		console.log("BOOOOM", e);
+	 	}
+	}
+
 	resolveContentType(value) {
 		if (value.item && !!value.item.location.uri.match(/liveblog|marketslive|liveqa/i)) {
 			return 'liveblog';
@@ -199,8 +214,10 @@ class Backend {
 	}
 }
 
-// expire old content after 10 minutes
-const esBackend = new Backend(true, 10 * 60);
-const capiBackend = new Backend(false, 10 * 60);
+const esFastFT = new FastFtFeed(true);
+const capiFastFT = new FastFtFeed(false);
+
+const esBackend = new Backend({fastFT: esFastFT}, true, 10 * 60);
+const capiBackend = new Backend({fastFT: capiFastFT},false, 10 * 60);
 
 export default (elasticSearch) => (elasticSearch ? esBackend : capiBackend);
