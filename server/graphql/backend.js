@@ -9,7 +9,7 @@ class Backend {
 		this.elasticSearch = elasticSearch;
 		this.type = (elasticSearch ? 'elasticsearch' : 'capi');
 
- 		// in-memory content cache
+		// in-memory content cache
 		this.contentCache = {};
 
 		const sweeper = () => {
@@ -20,10 +20,10 @@ class Backend {
 					delete this.contentCache[key];
 				}
 			}
-		}
+		};
 
 		// keep clearing the cache every minute
-		setInterval(sweeper, 60*1000);
+		setInterval(sweeper, 60 * 1000);
 	}
 
 	// Caching wrapper. Always returns a promise, when cache expires
@@ -31,22 +31,22 @@ class Backend {
 	cached(key, ttl, fetcher) {
 		const cache = this.contentCache;
 
-		const data = (cache[key] && cache[key].data);
-		const expire = (cache[key] && cache[key].expire);
+		const data = (cache[key] && cache[key].data);
+		const expire = (cache[key] && cache[key].expire);
 		const now = (new Date().getTime()) / 1000;
 
 		// we have fresh data
 		if(expire > now && data) { return Promise.resolve(data); }
 
 		// fetch fresh data
-		const eventualData = fetcher()
+		const eventualData = fetcher(data, expire)
 		.then((it) => {
-			let expire = now + ttl;
+			let expiry = now + ttl;
 
 			this.contentCache[key] = {
-				expire: expire,
+				expire: expiry,
 				data: it
-			}
+			};
 
 			return it;
 		});
@@ -79,7 +79,7 @@ class Backend {
 				sectionId: null,
 				items: ids.slice()
 			}));
-		})
+		});
 	}
 
 	search(query, ttl = 50) {
@@ -116,7 +116,7 @@ class Backend {
 			return ApiClient.contentLegacy({
 				uuid: uuids,
 				useElasticSearch: this.elasticSearch
-			})
+			});
 		})
 		.then(items => {
 			if(genres && genres.length) {
@@ -127,7 +127,7 @@ class Backend {
 			items = (limit ? items.slice(0, limit) : items);
 
 			return items;
-		})
+		});
 	}
 
 	contentv2(uuids, {from, limit, genres}) {
@@ -135,7 +135,7 @@ class Backend {
 			return ApiClient.content({
 				uuid: uuids,
 				useElasticSearch: this.elasticSearch
-			})
+			});
 		})
 		.then(items => {
 			if(genres && genres.length) {
@@ -146,12 +146,12 @@ class Backend {
 			items = (limit ? items.slice(0, limit) : items);
 
 			return items;
-		})
+		});
 	}
 }
 
 // expire old content after 10 minutes
-const esBackend = new Backend(true, 10 * 60);
-const capiBackend = new Backend(false, 10 * 60);
+const esBackend = new Backend(true, 10 * 60);
+const capiBackend = new Backend(false, 10 * 60);
 
-export default (elasticSearch) => (elasticSearch ? esBackend : capiBackend)
+export default (elasticSearch) => (elasticSearch ? esBackend : capiBackend);
