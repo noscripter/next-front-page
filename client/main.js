@@ -1,21 +1,23 @@
-'use strict';
-
-import oDate from 'o-date';
-import setup from 'next-js-setup';
 import fastFT from '../components/fastft/main';
-import headerFooter from 'n-header-footer';
 import headerTabs from './components/header-tabs/main';
 
-setup.bootstrap((result) => {
-	var flags = result.flags;
+import setup from 'next-js-setup';
+import headerFooter from 'n-header-footer';
+import oDate from 'o-date';
+import nextAds from 'next-ads-component';
 
-	headerFooter.init(flags);
+setup
+	.init()
+	.then(({flags}) => {
 
-	const feedContainer = document.getElementById("fastft");
-	fastFT.init(feedContainer);
+		headerFooter.init(flags);
 
-	const tabs = document.getElementById("header-tabs");
-	headerTabs.init(tabs, "#news-tab");
+		const feedContainer = document.getElementById("fastft");
+		fastFT.init(feedContainer);
 
-	oDate.init();
-});
+		const tabs = document.getElementById("header-tabs");
+		headerTabs.init(tabs, "#news-tab");
+
+		oDate.init();
+		nextAds.init(flags);
+	});
