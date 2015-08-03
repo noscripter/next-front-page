@@ -48,8 +48,6 @@ $container-widths: (
 );
 
 html {
-	@include oColorsFor(page);
-	@include nTypeAlpha(3);
 	background-color: oColorsGetPaletteColor('warm-bg');
 
 	// Prevent navigation menus from creating
