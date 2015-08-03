@@ -3,6 +3,31 @@ import {Promise} from 'es6-promise';
 
 import articleGenres from 'ft-next-article-genre';
 
+// internal content filtering logic shared for ContentV1 and ContentV2
+const filterContent = ({from, limit, genres, type}, resolveType) => {
+	return (items) => {
+		console.log("Filtering:", items.map(it => it.id || it.item.id));
+
+		if(genres && genres.length) {
+			items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
+		}
+
+		if(type) {
+			if(type == 'liveblog')
+				items = items.filter(it => resolveType(it) == 'liveblog');
+			else
+				items = items.filter(it => resolveType(it) != 'liveblog');
+		}
+
+		items = (from ? items.slice(from) : items);
+		items = (limit ? items.slice(0, limit) : items);
+
+		console.log("Result:", items.map(it => it.id || it.item.id));
+
+		return items;
+	}
+}
+
 class Backend {
 	constructor(elasticSearch, staleTtl) {
 		this.elasticSearch = elasticSearch;
@@ -110,42 +135,24 @@ class Backend {
 		});
 	}
 
-	contentv1(uuids, {from, limit, genres}) {
+	contentv1(uuids, opts) {
 		return this.cached(`contentv1.${uuids.join('_')}`, 50, () => {
 			return ApiClient.contentLegacy({
 				uuid: uuids,
 				useElasticSearch: this.elasticSearch
 			});
 		})
-		.then(items => {
-			if(genres && genres.length) {
-				items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
-			}
-
-			items = (from ? items.slice(from) : items);
-			items = (limit ? items.slice(0, limit) : items);
-
-			return items;
-		});
+		.then(filterContent(opts, this.resolveContentType));
 	}
 
-	contentv2(uuids, {from, limit, genres}) {
+	contentv2(uuids, opts) {
 		return this.cached(`contentv2.${uuids.join('_')}`, 50, () => {
 			return ApiClient.content({
 				uuid: uuids,
 				useElasticSearch: this.elasticSearch
 			});
 		})
-		.then(items => {
-			if(genres && genres.length) {
-				items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
-			}
-
-			items = (from ? items.slice(from) : items);
-			items = (limit ? items.slice(0, limit) : items);
-
-			return items;
-		});
+		.then(filterContent(opts, this.resolveContentType));
 	}
 
 	liveblogUpdates(uri) {
@@ -160,14 +167,13 @@ class Backend {
 		})
 		.then(res => res.json())
 		.then(json => {
-			const now = new Date();
-			console.log("Fetching live blog took %d ms", now - then);
-
 			const dated = json.filter(it => !!it.data.datemodified)
 			const [first, second] = dated.slice(0, 2);
 
+			// make sure updates are in order from latest to earliest
 			if(first.data.datemodified < second.data.datemodified) { json.reverse(); }
 
+			// dedupe updates and only keep messages
 			let [_, updates] = json.reduce(([skip, updates], event) => {
 				if (event.data.event == 'msg' && event.data.mid && !skip[event.data.mid]) {
 					updates.push(event);
@@ -178,6 +184,16 @@ class Backend {
 
 			return updates;
 		});
+	}
+
+	resolveContentType(value) {
+		if (value.item && !!value.item.location.uri.match(/liveblog|marketslive|liveqa/i)) {
+			return 'liveblog';
+		} else if (value.item) {
+			return 'contentv1';
+		} else {
+			return 'contentv2';
+		}
 	}
 }
 

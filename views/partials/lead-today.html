@@ -6,6 +6,13 @@
 			</div>
 		{{/slice}}
 	</div>
+	{{#if liveBlogs}}
+		<div class="liveblog-group" role="presentation">
+			{{#each liveBlogs}}
+				{{> story-card }}
+			{{/each}}
+		</div>
+	{{/if}}
 	<div class="article-group" role="presentation">
 		{{#slice items limit=3}}
 			<div class="article">

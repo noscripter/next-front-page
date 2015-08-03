@@ -15,6 +15,11 @@ const Content = new GraphQLInterfaceType({
 	name: 'Content',
 	description: 'A piece of FT content',
 	resolveType: (value) => {
+		// This logic is unfortunately duplicated in the backend. The clean way would be
+		// to use the backend here, but GraphQL unfortunately doesn't pass the execution
+		// context to us here.
+		// Logged as https://github.com/graphql/graphql-js/issues/103
+
 		if (value.item && !!value.item.location.uri.match(/liveblog|marketslive|liveqa/i)) {
 			return LiveBlog;
 		} else if (value.item) {
@@ -254,12 +259,7 @@ const LiveBlog = new GraphQLObjectType({
 			resolve: (content, _, {backend}) => {
 				const uri = content.item.location.uri;
 
-				console.log("Fetching liveblog updates from", backend.liveblogUpdates);
-				try {
-					return backend.liveblogUpdates(uri);
-				} catch(e) {
-					console.log("BOOOM", e);
-				}
+				return backend.liveblogUpdates(uri);
 			}
 		}
 	})

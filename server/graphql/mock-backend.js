@@ -3,16 +3,19 @@ import {Promise} from 'es6-promise';
 import ApiClient from 'next-ft-api-client';
 import articleGenres from 'ft-next-article-genre';
 
+import Backend from './backend';
+
 import pages from './fixtures/pages';
 import searches from './fixtures/searches';
 import byConcept from './fixtures/by-concept';
 import popular from './fixtures/popular';
 import liveblogs from './fixtures/liveblogs';
 
-class Backend {
+class MockBackend {
 	constructor() {
 		this.elasticSearch = true;
 		this.type = 'mock';
+		this.realBackend = new Backend(true, 10 * 60);
 	}
 
 	page(uuid, sectionsId, ttl = 50) {
@@ -115,7 +118,6 @@ class Backend {
 			return updates;
 		}
 
-		console.log("Mock backend fetching", uri);
 		if(liveblog) {
 			return Promise.resolve(liveblog).then(extractUpdates);
 		}
@@ -139,44 +141,16 @@ class Backend {
 
 	// Content endpoints are not mocked because the responses are massive.
 
-	contentv1(uuids, {from, limit, genres}) {
-		return ApiClient.contentLegacy({
-			uuid: uuids,
-			useElasticSearch: this.elasticSearch
-		})
-		.then(items => {
-			if(genres && genres.length) {
-				items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
-			}
-
-			items = (from ? items.slice(from) : items);
-			items = (limit ? items.slice(0, limit) : items);
-
-			return items;
-		})
+	contentv1(uuids, opts) {
+		return this.realBackend.contentv1(uuids, opts);
 	}
 
-	contentv2(uuids, {from, limit, genres}) {
-		return ApiClient.content({
-			uuid: uuids,
-			useElasticSearch: this.elasticSearch
-		})
-		.then(items => {
-			if(genres && genres.length) {
-				items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
-			}
-
-			items = (from ? items.slice(from) : items);
-			items = (limit ? items.slice(0, limit) : items);
-
-			return items;
-		});
+	contentv2(uuids, opts) {
+		return this.realBackend.contentv2(uuids, opts);
 	}
-
-
 }
 
 // expire old content after 10 minutes
-const backend = new Backend();
+const backend = new MockBackend();
 
 export default backend;

@@ -57,12 +57,22 @@ const frontPage = (region) => (`
 
 	query FrontPage {
 		top(region: ${region}) {
-			leads: items(limit: 1) {
+			leads: items(limit: 1, type: Article) {
 				... Basic
 				... Extended
 				... Related
 			}
-			items(from: 1) {
+			liveBlogs: items(type: LiveBlog) {
+				... Basic
+				... Extended
+				... on LiveBlog {
+					updates {
+						date
+						text
+					}
+				}
+			}
+			items(from: 1, type: Article) {
 				... Basic
 				... Extended
 				... on LiveBlog {

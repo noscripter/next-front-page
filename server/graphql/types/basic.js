@@ -15,6 +15,22 @@ const Region = new GraphQLEnumType({
 	}
 });
 
+const ContentType = new GraphQLEnumType({
+	name: "ContentType",
+	description: "Story type, e.g. article, live blog, video, infographic, etc.",
+	values: {
+		Article: {
+			value: 'article',
+			description: 'Basic article'
+		},
+		LiveBlog: {
+			value: 'liveblog',
+			description: 'LiveBlog with updates'
+		}
+	}
+})
+
 export default {
-	Region
+	Region,
+	ContentType
 };
