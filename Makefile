@@ -27,10 +27,12 @@ run-local:
 	nbt run --local
 
 build:
-	nbt build --dev
+	nbt build --dev --skip-js
+	webpack
 
 build-production:
-	NODE_ENV=production nbt build
+	NODE_ENV=production nbt build --skip-js
+	NODE_ENV=production webpack
 	nbt about
 
 watch:
