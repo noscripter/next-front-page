@@ -66,6 +66,7 @@ const frontPage = (region) => (`
 				... Basic
 				... Extended
 				... on LiveBlog {
+					status
 					updates {
 						date
 						text

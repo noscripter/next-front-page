@@ -1,4 +1,4 @@
-<article class='story-card article--{{genre}}' data-trackable="story" tabindex="0" aria-labelledby="{{id}}-title" role="article">
+<article class='story-card article--{{genre}} {{live}}' data-trackable="story" tabindex="0" aria-labelledby="{{id}}-title" role="article">
 	{{#if primaryImage}}
 		<a href="/{{id}}" class="story-card__link" data-trackable="image" role="presentation" aria-hidden="true">
 			{{#with primaryImage}}
@@ -37,6 +37,7 @@
 		</div>
 	{{/if}}
 	<div class='story-card__footer'>
+		{{status}}
 		<i class="time-icon"></i>
 		<span class="u-visually-hidden">Published</span>
 		<time

@@ -11,6 +11,10 @@ import {
 	GraphQLNonNull
 } from 'graphql';
 
+import {
+	LiveBlogStatus
+} from './basic';
+
 const Content = new GraphQLInterfaceType({
 	name: 'Content',
 	description: 'A piece of FT content',
@@ -254,12 +258,21 @@ const LiveBlog = new GraphQLObjectType({
 				return backend.contentv1(ids, {from, limit});
 			}
 		},
+		status: {
+			type: LiveBlogStatus,
+			resolve: (content, _, {backend}) => {
+				const uri = content.item.location.uri;
+
+				return backend.liveblogExtras(uri).then(it => it.status);
+			}
+		},
 		updates: {
 			type: new GraphQLList(LiveBlogUpdate),
 			resolve: (content, _, {backend}) => {
 				const uri = content.item.location.uri;
 
-				return backend.liveblogUpdates(uri);
+				console.log(backend.liveblogExtras(uri));
+				return backend.liveblogExtras(uri).then(it => it.updates);
 			}
 		}
 	})

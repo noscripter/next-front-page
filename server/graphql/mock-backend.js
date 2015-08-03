@@ -99,23 +99,34 @@ class MockBackend {
 		});
 	}
 
-	liveblogUpdates(uri) {
+	liveblogExtras(uri) {
 		const liveblog = liveblogs[uri];
+
+		// FIXME this is duplicated in the real backend. It shouldn't be.
 		const extractUpdates = (json) => {
 			const dated = json.filter(it => !!it.data.datemodified)
 			const [first, second] = dated.slice(0, 2);
 
-			if(first.data.datemodified < second.data.datemodified) { json.reverse(); }
+			// make sure updates are in order from latest to earliest
+			if((first && first.data.datemodified) < (second && second.data.datemodified)) { json.reverse(); }
 
-			let [_, updates] = json.reduce(([skip, updates], event) => {
-				if (event.data.event == 'msg' && event.data.mid && !skip[event.data.mid]) {
+			// dedupe updates and only keep messages, decide on status
+			let [_, updates, status] = json.reduce(([skip, updates, status], event) => {
+				if (event.event == 'end') {
+					return [skip, updates, 'closed'];
+				}
+
+				if (event.event == 'msg' && event.data.mid && !skip[event.data.mid]) {
 					updates.push(event);
 					skip[event.data.mid] = true;
+					status = status || 'inprogress';
 				}
-				return [skip, updates];
-			}, [{}, []]);
 
-			return updates;
+				return [skip, updates, status];
+			}, [{}, [], null]);
+			status = (status || 'comingsoon');
+
+			return {updates: updates, status: status};
 		}
 
 		if(liveblog) {

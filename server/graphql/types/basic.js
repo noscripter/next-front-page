@@ -28,9 +28,30 @@ const ContentType = new GraphQLEnumType({
 			description: 'LiveBlog with updates'
 		}
 	}
-})
+});
+
+const LiveBlogStatus = new GraphQLEnumType({
+	name: "LiveBlogStatus",
+	description: "State of the live blog, i.e. coming soon / in progress / closed",
+	values: {
+		ComingSoon: {
+			value: 'comingsoon',
+			description: 'Live blog will start, there are no updates'
+		},
+		InProgress: {
+			value: 'inprogress',
+			description: 'LiveBlog is currently being updated'
+		},
+		Closed: {
+			value: 'closed',
+			description: 'LiveBlog is over'
+		}
+	}
+});
+
 
 export default {
 	Region,
-	ContentType
+	ContentType,
+	LiveBlogStatus
 };

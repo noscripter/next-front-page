@@ -6,8 +6,6 @@ import articleGenres from 'ft-next-article-genre';
 // internal content filtering logic shared for ContentV1 and ContentV2
 const filterContent = ({from, limit, genres, type}, resolveType) => {
 	return (items) => {
-		console.log("Filtering:", items.map(it => it.id || it.item.id));
-
 		if(genres && genres.length) {
 			items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
 		}
@@ -21,8 +19,6 @@ const filterContent = ({from, limit, genres, type}, resolveType) => {
 
 		items = (from ? items.slice(from) : items);
 		items = (limit ? items.slice(0, limit) : items);
-
-		console.log("Result:", items.map(it => it.id || it.item.id));
 
 		return items;
 	}
@@ -155,34 +151,40 @@ class Backend {
 		.then(filterContent(opts, this.resolveContentType));
 	}
 
-	liveblogUpdates(uri) {
+	liveblogExtras(uri) {
 		const then = new Date();
 
-		return fetch(`${uri}?action=catchup&format=json`)
-		.then(res => {
-			const now = new Date();
-			console.log("Fetching live blog took %d ms", now - then);
+		return this.cached(`liveblogs.${uri}`, 50, () => {
+			return fetch(`${uri}?action=catchup&format=json`)
+			.then(res => {
+				const now = new Date();
+				console.log("Fetching live blog took %d ms", now - then);
 
-			return res;
-		})
-		.then(res => res.json())
-		.then(json => {
-			const dated = json.filter(it => !!it.data.datemodified)
-			const [first, second] = dated.slice(0, 2);
+				return res;
+			})
+			.then(res => res.json())
+			.then(json => {
+				const dated = json.filter(it => !!it.data.datemodified)
+				const [first, second] = dated.slice(0, 2);
 
-			// make sure updates are in order from latest to earliest
-			if(first.data.datemodified < second.data.datemodified) { json.reverse(); }
+				// make sure updates are in order from latest to earliest
+				if((first && first.data.datemodified) < (second && second.data.datemodified)) { json.reverse(); }
 
-			// dedupe updates and only keep messages
-			let [_, updates] = json.reduce(([skip, updates], event) => {
-				if (event.data.event == 'msg' && event.data.mid && !skip[event.data.mid]) {
-					updates.push(event);
-					skip[event.data.mid] = true;
-				}
-				return [skip, updates];
-			}, [{}, []]);
+				// dedupe updates and only keep messages, decide on status
+				let [_, updates, status] = json.reduce(([skip, updates, status], event) => {
+					if (event.event == 'end')
+						return [skip, updates, 'closed'];
 
-			return updates;
+					if (event.event == 'msg' && event.data.mid && !skip[event.data.mid]) {
+						updates.push(event);
+						skip[event.data.mid] = true;
+					}
+
+					return [skip, updates, 'inprogress'];
+				}, [{}, [], 'comingsoon']);
+
+				return {updates: updates, status: status};
+			})
 		});
 	}
 
