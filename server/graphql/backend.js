@@ -1,7 +1,7 @@
 import {Promise} from 'es6-promise';
 
-import ApiClient from 'next-ft-api-client';
 import FastFtFeed from './backend-adapters/fast-ft';
+import CAPI from './backend-adapters/capi';
 
 import articleGenres from 'ft-next-article-genre';
 
@@ -81,40 +81,37 @@ class Backend {
 	}
 
 	page(uuid, sectionsId, ttl = 50) {
-		return this.cached(`pages.${uuid}`, ttl, () => {
-			return ApiClient.pages({ uuid: uuid })
-			.then(it => ({
-				id: uuid,
-				title: it.title,
-				sectionId: sectionsId,
-				items: it.slice()
-			}));
-		});
+		return this.adapters.capi.page(uuid, ttl)
+		.then(it => ({
+			id: uuid,
+			title: it.title,
+			sectionId: sectionsId,
+			items: it.slice()
+		}));
 	}
 
 	byConcept(uuid, title, ttl = 50) {
-		return this.cached(`byconcept.${uuid}`, ttl, () => {
-			return ApiClient.contentAnnotatedBy({
-				uuid: uuid,
-				useElasticSearch: this.elasticSearch
-			})
-			.then(ids => ({
-				title: title,
-				conceptId: uuid,
-				sectionId: null,
-				items: ids.slice()
-			}));
-		});
+		return this.adapters.capi.contentAnnotatedBy(uuid, ttl)
+		.then(ids => ({
+			title: title,
+			conceptId: uuid,
+			sectionId: null,
+			items: ids.slice()
+		}));
 	}
 
 	search(query, ttl = 50) {
-		return this.cached(`search.${query}`, ttl, () => {
-			return ApiClient.searchLegacy({
-				query: query,
-				useLegacyContent: true,
-				useElasticSearch: this.elasticSearch
-			});
-		});
+		return this.adapters.capi.search(query, ttl)
+	}
+
+	contentv1(uuids, opts) {
+		return this.adapters.capi.contentv1(uuids)
+		.then(filterContent(opts, this.resolveContentType));
+	}
+
+	contentv2(uuids, opts) {
+		return this.adapters.capi.contentv2(uuids)
+		.then(filterContent(opts, this.resolveContentType));
 	}
 
 	popular(url, title, ttl = 50) {
@@ -134,26 +131,6 @@ class Backend {
 				items: ids
 			}));
 		});
-	}
-
-	contentv1(uuids, opts) {
-		return this.cached(`contentv1.${uuids.join('_')}`, 50, () => {
-			return ApiClient.contentLegacy({
-				uuid: uuids,
-				useElasticSearch: this.elasticSearch
-			});
-		})
-		.then(filterContent(opts, this.resolveContentType));
-	}
-
-	contentv2(uuids, opts) {
-		return this.cached(`contentv2.${uuids.join('_')}`, 50, () => {
-			return ApiClient.content({
-				uuid: uuids,
-				useElasticSearch: this.elasticSearch
-			});
-		})
-		.then(filterContent(opts, this.resolveContentType));
 	}
 
 	liveblogExtras(uri) {
@@ -194,13 +171,7 @@ class Backend {
 	}
 
 	fastFT() {
-		console.log("Fetching fastFT in the backend");
-		try {
-		console.log("FastFT:", this.adapters.fastFT.fetch());
 		return this.adapters.fastFT.fetch();
-	 	} catch(e) {
-	 		console.log("BOOOOM", e);
-	 	}
 	}
 
 	resolveContentType(value) {
@@ -217,7 +188,10 @@ class Backend {
 const esFastFT = new FastFtFeed(true);
 const capiFastFT = new FastFtFeed(false);
 
-const esBackend = new Backend({fastFT: esFastFT}, true, 10 * 60);
-const capiBackend = new Backend({fastFT: capiFastFT},false, 10 * 60);
+const esCAPI = new CAPI(true, 10 * 60);
+const directCAPI = new CAPI(false, 10 * 60);
+
+const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI}, true, 10 * 60);
+const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI},false, 10 * 60);
 
 export default (elasticSearch) => (elasticSearch ? esBackend : capiBackend);
