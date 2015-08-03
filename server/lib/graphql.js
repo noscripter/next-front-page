@@ -2,7 +2,7 @@ import {graphql} from 'graphql';
 
 import schema from '../graphql/schema';
 import backend from '../graphql/backend';
-import fastFtFeed from '../graphql/fastFtFeed';
+import fastFtFeed from '../graphql/fast-ft-feed';
 
 const fetch = (useElasticSearch) => {
 	return (query) => {

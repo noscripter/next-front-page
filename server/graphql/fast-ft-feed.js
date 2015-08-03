@@ -60,7 +60,6 @@ class FastFtFeed {
 	fetch() {	return this.contentCache; }
 }
 
-// expire old content after 10 minutes
 const esBackend = new FastFtFeed(true);
 const capiBackend = new FastFtFeed(false);
 
