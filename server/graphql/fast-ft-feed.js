@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-fetch';
 import {fastFt as config} from './config/sources.js';
 import ApiClient from 'next-ft-api-client';
 
