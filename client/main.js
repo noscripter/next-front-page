@@ -4,7 +4,6 @@ import headerTabs from './components/header-tabs/main';
 import setup from 'next-js-setup';
 import headerFooter from 'n-header-footer';
 import oDate from 'o-date';
-import nextAds from 'next-ads-component';
 
 setup
 	.init()
@@ -19,5 +18,4 @@ setup
 		headerTabs.init(tabs, "#news-tab");
 
 		oDate.init();
-		nextAds.init(flags);
 	});
