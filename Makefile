@@ -31,8 +31,7 @@ build:
 	webpack
 
 build-production:
-	NODE_ENV=production nbt build --skip-js
-	NODE_ENV=production webpack --bail
+	NODE_ENV=production nbt build
 	nbt about
 
 watch:
