@@ -271,7 +271,6 @@ const LiveBlog = new GraphQLObjectType({
 			resolve: (content, _, {backend}) => {
 				const uri = content.item.location.uri;
 
-				console.log(backend.liveblogExtras(uri));
 				return backend.liveblogExtras(uri).then(it => it.updates);
 			}
 		}

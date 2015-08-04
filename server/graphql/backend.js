@@ -1,11 +1,14 @@
-import {Promise} from 'es6-promise';
+import sources from './config/sources';
 
 import FastFtFeed from './backend-adapters/fast-ft';
 import CAPI from './backend-adapters/capi';
+import Popular from './backend-adapters/popular';
+import Liveblog from './backend-adapters/liveblog';
+
+import MockCAPI from './backend-adapters/mock-capi';
+import MockLiveblog from './backend-adapters/mock-liveblog';
 
 import articleGenres from 'ft-next-article-genre';
-
-import sources from './config/sources';
 
 // internal content filtering logic shared for ContentV1 and ContentV2
 const filterContent = ({from, limit, genres, type}, resolveType) => {
@@ -29,55 +32,8 @@ const filterContent = ({from, limit, genres, type}, resolveType) => {
 }
 
 class Backend {
-	constructor(adapters, elasticSearch, staleTtl) {
-		this.elasticSearch = elasticSearch;
-		this.type = (elasticSearch ? 'elasticsearch' : 'capi');
+	constructor(adapters) {
 		this.adapters = adapters;
-
-		// in-memory content cache
-		this.contentCache = {};
-
-		const sweeper = () => {
-			const now = (new Date().getTime()) / 1000;
-
-			for(let key in this.contentCache) {
-				if(this.contentCache[key].expire + staleTtl < now) {
-					delete this.contentCache[key];
-				}
-			}
-		};
-
-		// keep clearing the cache every minute
-		setInterval(sweeper, 60 * 1000);
-	}
-
-	// Caching wrapper. Always returns a promise, when cache expires
-	// returns stale data immediately and fetches fresh one
-	cached(key, ttl, fetcher) {
-		const cache = this.contentCache;
-
-		const data = (cache[key] && cache[key].data);
-		const expire = (cache[key] && cache[key].expire);
-		const now = (new Date().getTime()) / 1000;
-
-		// we have fresh data
-		if(expire > now && data) { return Promise.resolve(data); }
-
-		// fetch fresh data
-		const eventualData = fetcher(data, expire)
-		.then((it) => {
-			let expireTime = now + ttl;
-
-			this.contentCache[key] = {
-				expire: expireTime,
-				data: it
-			};
-
-			return it;
-		});
-
-		// return stale data or promise of fresh data
-		return (data ? Promise.resolve(data) : eventualData);
 	}
 
 	page(uuid, sectionsId, ttl = 50) {
@@ -115,59 +71,46 @@ class Backend {
 	}
 
 	popular(url, title, ttl = 50) {
-		return this.cached(`popular.${url}`, ttl, () => {
-			return fetch(url)
-			.then((response) => response.json())
-			.then((data) => {
-				return data.mostRead.pages.map(function (page) {
-						var index = page.url.lastIndexOf("/");
-						var id = page.url.substr(index + 1).replace('.html', '');
-						return id;
-				});
-			}).then((ids) => ({
-				id: null,
-				sectionId: null,
-				title: title,
-				items: ids
-			}));
-		});
+		return this.adapters.popular.fetch(url, ttl)
+		.then((data) => {
+			return data.mostRead.pages.map(function (page) {
+				var index = page.url.lastIndexOf("/");
+				var id = page.url.substr(index + 1).replace('.html', '');
+				return id;
+			});
+		})
+		.then((ids) => ({
+			id: null,
+			sectionId: null,
+			title: title,
+			items: ids
+		}));
 	}
 
-	liveblogExtras(uri) {
-		const then = new Date();
+	liveblogExtras(uri, ttl = 50) {
+		return this.adapters.liveblog.fetch(uri, ttl)
+		.then(json => {
+			const dated = json.filter(it => !!it.data.datemodified)
+			const [first, second] = dated.slice(0, 2);
 
-		return this.cached(`liveblogs.${uri}`, 50, () => {
-			return fetch(`${uri}?action=catchup&format=json`)
-			.then(res => {
-				const now = new Date();
-				console.log("Fetching live blog took %d ms", now - then);
+			// make sure updates are in order from latest to earliest
+			if((first && first.data.datemodified) < (second && second.data.datemodified)) { json.reverse(); }
 
-				return res;
-			})
-			.then(res => res.json())
-			.then(json => {
-				const dated = json.filter(it => !!it.data.datemodified)
-				const [first, second] = dated.slice(0, 2);
+			// dedupe updates and only keep messages, decide on status
+			let [_, updates, status] = json.reduce(([skip, updates, status], event) => {
+				if (event.event == 'end')
+					return [skip, updates, 'closed'];
 
-				// make sure updates are in order from latest to earliest
-				if((first && first.data.datemodified) < (second && second.data.datemodified)) { json.reverse(); }
+				if (event.event == 'msg' && event.data.mid && !skip[event.data.mid]) {
+					updates.push(event);
+					skip[event.data.mid] = true;
+				}
 
-				// dedupe updates and only keep messages, decide on status
-				let [_, updates, status] = json.reduce(([skip, updates, status], event) => {
-					if (event.event == 'end')
-						return [skip, updates, 'closed'];
+				return [skip, updates, 'inprogress'];
+			}, [{}, [], 'comingsoon']);
 
-					if (event.event == 'msg' && event.data.mid && !skip[event.data.mid]) {
-						updates.push(event);
-						skip[event.data.mid] = true;
-					}
-
-					return [skip, updates, 'inprogress'];
-				}, [{}, [], 'comingsoon']);
-
-				return {updates: updates, status: status};
-			})
-		});
+			return {updates: updates, status: status};
+		})
 	}
 
 	fastFT() {
@@ -185,13 +128,30 @@ class Backend {
 	}
 }
 
+const staleTTL = 10 * 60;
+
+// Adapters
 const esFastFT = new FastFtFeed(true);
 const capiFastFT = new FastFtFeed(false);
 
-const esCAPI = new CAPI(true, 10 * 60);
-const directCAPI = new CAPI(false, 10 * 60);
+const esCAPI = new CAPI(true, staleTTL);
+const directCAPI = new CAPI(false, staleTTL);
 
-const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI}, true, 10 * 60);
-const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI},false, 10 * 60);
+const popular = new Popular(staleTTL);
 
-export default (elasticSearch) => (elasticSearch ? esBackend : capiBackend);
+const liveblog = new Liveblog(staleTTL);
+
+// Mock Adapters
+const mockedCAPI = new MockCAPI(esCAPI);
+const mockLiveblog = new MockLiveblog(liveblog);
+
+// Backends
+const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI, popular: popular, liveblog: liveblog});
+const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI, popular: popular, liveblog: liveblog});
+
+// Mock backend
+const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: popular, liveblog: mockLiveblog});
+
+export default (elasticSearch, mock) => {
+	return (mock ? mockBackend : (elasticSearch ? esBackend : capiBackend));
+}

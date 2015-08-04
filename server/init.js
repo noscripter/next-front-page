@@ -22,6 +22,9 @@ var app = express({
 				image
 			) : null;
 		}
+	},
+	serviceDependencies: {
+		'most-popular': /^http:\/\/mostpopular\.sp\.ft-static\.com\/v1\/mostPopular/
 	}
 });
 

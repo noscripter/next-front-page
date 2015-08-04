@@ -13,7 +13,7 @@ export default (region) => {
 			'Cache-Control': 'max-age=40, public, stale-if-error=86400' // 40 seconds; 24 hours
 		});
 
-		graphql(useElasticSearch, false).fetch(queries.frontPage(region))
+		graphql(useElasticSearch, mockBackend).fetch(queries.frontPage(region))
 		.then(contentData => {
 			res.render('uk', {
 				layout: 'wrapper',

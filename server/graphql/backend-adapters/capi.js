@@ -52,7 +52,6 @@ class CAPI {
 	}
 
 	page(uuid, ttl = 50) {
-		console.log("!!! Fetching page", uuid);
 		return this.cached(`pages.${uuid}`, ttl, () => {
 			return ApiClient.pages({ uuid: uuid })
 		});

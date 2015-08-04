@@ -1,4 +1,4 @@
-class Popular {
+class Liveblog {
 	constructor(staleTtl) {
 		// in-memory content cache
 		this.contentCache = {};
@@ -46,12 +46,20 @@ class Popular {
 		return (data ? Promise.resolve(data) : eventualData);
 	}
 
-	fetch(url, ttl = 50) {
-		return this.cached(`popular.${url}`, ttl, () => {
-			return fetch(url)
-			.then((response) => response.json());
+	fetch(uri, ttl = 50) {
+		const then = new Date();
+
+		return this.cached(`liveblogs.${uri}`, 50, () => {
+			return fetch(`${uri}?action=catchup&format=json`)
+			.then(res => {
+				const now = new Date();
+				console.log("Fetching live blog took %d ms", now - then);
+
+				return res;
+			})
+			.then(res => res.json());
 		});
 	}
 }
 
-export default Popular;
+export default Liveblog;

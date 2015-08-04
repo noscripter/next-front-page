@@ -1,10 +1,10 @@
 import {Promise} from 'es6-promise';
 
 import {
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLString
+	GraphQLSchema,
+	GraphQLObjectType,
+	GraphQLNonNull,
+	GraphQLString
 } from 'graphql';
 
 import {Region} from './types/basic';
@@ -30,7 +30,6 @@ const queryType = new GraphQLObjectType({
 		fastFT: {
 			type: Collection,
 			resolve: (root, _, {backend}) => {
-				console.log("Fetching FastFT from the backend");
 				return backend.fastFT();
 			}
 		},
@@ -107,16 +106,16 @@ const queryType = new GraphQLObjectType({
 				return backend.popular(url, 'Popular');
 			}
 		},
-    search: {
-      type: Collection,
-      args: {
+		search: {
+			type: Collection,
+			args: {
 				query: { type: new GraphQLNonNull(GraphQLString) }
 			},
-      resolve: (_, {query}, {backend}) => {
-        return backend.search(query)
-          .then(ids => ({ items: ids }));
-      }
-    }
+			resolve: (_, {query}, {backend}) => {
+				return backend.search(query)
+					.then(ids => ({ items: ids }));
+			}
+		}
 	}
 });
 
