@@ -36,7 +36,7 @@ build-production:
 	nbt about
 
 watch:
-	nbt build --dev --watch
+	nbt build --dev --skip-js --watch & webpack --watch
 
 clean:
 	git clean -fxd
