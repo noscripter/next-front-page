@@ -4,18 +4,17 @@ import headerTabs from './components/header-tabs/main';
 import setup from 'next-js-setup';
 import headerFooter from 'n-header-footer';
 import oDate from 'o-date';
+setup.bootstrap(({flags}) => {
+	headerFooter.init(flags);
 
-setup
-	.init()
-	.then(({flags}) => {
+	const feedContainer = document.getElementById("fastft");
+	fastFT.init(feedContainer);
 
-		headerFooter.init(flags);
+	const tabs = document.getElementById("header-tabs");
+	headerTabs.init(tabs, "#news-tab");
 
-		const feedContainer = document.getElementById("fastft");
-		fastFT.init(feedContainer);
+	oDate.init();
+});
 
-		const tabs = document.getElementById("header-tabs");
-		headerTabs.init(tabs, "#news-tab");
-
-		oDate.init();
-	});
+// require styleSheets
+// require("./main.scss");

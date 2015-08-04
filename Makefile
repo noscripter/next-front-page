@@ -1,7 +1,7 @@
 API_KEY := $(shell cat ~/.ftapi 2>/dev/null)
 GIT_HASH := $(shell git rev-parse --short HEAD)
 TEST_HOST := "ft-next-front-page-${GIT_HASH}"
-TEST_URL := "http://ft-next-front-page-${GIT_HASH}.herokuapp.com/uk"
+TEST_URL := "http://ft-next-front-page-${GIT_HASH}.herokuapp.com"
 
 .PHONY: test build
 
@@ -59,5 +59,4 @@ deploy:
 clean-deploy: clean install build-production deploy
 
 smoke:
-	@echo "FIXME need saucelabs username and key"
-	# export TEST_URL=${TEST_URL}; nbt nightwatch tests/browser/tests/* # FIXME need saucelabs username and key
+	export TEST_URL=${TEST_URL}; nbt nightwatch tests/browser/tests/*
