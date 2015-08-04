@@ -1,5 +1,6 @@
 
 @mixin nhHeaderTabs {
+	@include nTypeAlpha(3);
 	.nh-header-tabs__marker {
 		display: none;
 	}
