@@ -1,14 +1,7 @@
 $o-grid-column: 100 / 1440;
 $o-grid-gutter: 20 / 1440;
 
-$o-grid-layouts: (
-	XS: 330px,
-	S: 480px,
-	M: 720px,
-	L: 960px,
-	XL: 1200px
-//	XXL: 1440px
-);
+$o-grid-layouts: ( XS: 330px, S: 480px, M: 720px, L: 960px, XL: 1200px );
 
 $o-grid-min-width: 280px;
 $o-grid-start-snappy-mode-at: XL;
@@ -32,8 +25,8 @@ $_next-ui-setup-first-pass: false;
 
 @import "icons";
 
-@import "components/feed/main";
-@import "components/fastft/main";
+@import "../components/feed/main";
+@import "../components/fastft/main";
 
 @import "components/flexipod/main";
 

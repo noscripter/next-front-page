@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var BowerWebpackPlugin = require("bower-webpack-plugin");
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var plugins = [
 	new BowerWebpackPlugin({ includes: [/\.js?$/] }),
@@ -10,7 +11,8 @@ var plugins = [
 		"process.env": {
 			NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
 		}
-	})
+	}),
+	new ExtractTextPlugin("main.css")
 ];
 
 if(process.env.NODE_ENV === 'production') {
@@ -20,6 +22,8 @@ if(process.env.NODE_ENV === 'production') {
 	]);
 }
 
+
+
 var config = {
 	entry: "./client/main.js",
 	output: {
@@ -28,9 +32,16 @@ var config = {
 	},
 	module: {
 		loaders: [
+			{ test: /\.js?$/, loader: 'babel' },
 			{
-				test: /\.js?$/,
-				loader: 'babel'
+				test: /\.scss|sass?$/,
+				loader: ExtractTextPlugin.extract(
+					[
+						"css",
+						"autoprefixer",
+						"sass?includePaths[]=" + (path.resolve(__dirname, "./bower_components"))
+					].join("!")
+				)
 			}
 		]
 	},

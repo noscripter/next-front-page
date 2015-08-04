@@ -26,7 +26,6 @@ run-local:
 	nbt run --local
 
 build:
-	nbt build --dev --skip-js
 	webpack
 
 build-production:
@@ -34,7 +33,7 @@ build-production:
 	nbt about
 
 watch:
-	nbt build --dev --skip-js --watch & webpack --watch
+	webpack --watch
 
 clean:
 	git clean -fxd
@@ -44,9 +43,9 @@ tidy:
 
 provision:
 	nbt provision ${TEST_HOST}
-	nbt configure ft-next-front-page ${TEST_HOST} --overrides "NODE_ENV=branch"
+	nbt configure ft-next-front-page ${TEST_HOST} --overrides "NODE_ENV=branch" --no-splunk
 	nbt deploy-hashed-assets
-	nbt deploy ${TEST_HOST} --skip-enable-preboot --docker
+	nbt deploy ${TEST_HOST} --skip-enable-preboot
 	make smoke
 
 deploy:

@@ -17,4 +17,4 @@ setup.bootstrap(({flags}) => {
 });
 
 // require styleSheets
-// require("./main.scss");
+require("./main.scss");
