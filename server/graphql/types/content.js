@@ -268,10 +268,13 @@ const LiveBlog = new GraphQLObjectType({
 		},
 		updates: {
 			type: new GraphQLList(LiveBlogUpdate),
-			resolve: (content, _, {backend}) => {
+			args: {
+				limit: { type: GraphQLInt }
+			},
+			resolve: (content, {limit}, {backend}) => {
 				const uri = content.item.location.uri;
 
-				return backend.liveblogExtras(uri).then(it => it.updates);
+				return backend.liveblogExtras(uri, {limit}).then(it => it.updates);
 			}
 		}
 	})

@@ -67,7 +67,7 @@ const frontPage = (region) => (`
 				... Extended
 				... on LiveBlog {
 					status
-					updates {
+					updates(limit: 1) {
 						date
 						text
 					}
@@ -76,13 +76,6 @@ const frontPage = (region) => (`
 			items(from: 1, type: Article) {
 				... Basic
 				... Extended
-				... on LiveBlog {
-					updates {
-						date
-						text
-						html
-					}
-				}
 			}
 		}
 		fastFT {

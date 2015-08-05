@@ -90,7 +90,7 @@ class Backend {
 		}));
 	}
 
-	liveblogExtras(uri, ttl = 50) {
+	liveblogExtras(uri, {limit}, ttl = 50) {
 		return this.adapters.liveblog.fetch(uri, ttl)
 		.then(json => {
 			const dated = json.filter(it => !!it.data.datemodified)
@@ -111,6 +111,9 @@ class Backend {
 
 				return [skip, updates, 'inprogress'];
 			}, [{}, [], 'comingsoon']);
+
+			if(limit)
+				updates = updates.slice(0, limit);
 
 			return {updates: updates, status: status};
 		})
