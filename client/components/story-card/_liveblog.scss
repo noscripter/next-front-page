@@ -1,0 +1,68 @@
+
+.story-card--liveblog {
+	.story-card__content {
+		span.liveblog__badge {
+			display: inline-block;
+			text-transform: uppercase;
+			@include nTypeBravo(4);
+			padding: 0.1em 0.5em 0.3em 0.5em;
+			margin: 0 0.2em 0 0;
+			color: white;
+			background-color: oColorsGetPaletteColor('grey-tint4');
+
+		}
+
+		.story-card__summary {
+			@include nTypeEcho(3);
+		}
+
+		.story-card__tag {
+			display: inline-block;
+		}
+
+	}
+
+	.story-card__footer {
+		color: oColorsGetPaletteColor('timestamp');
+		span {
+			margin: 0 -0.2em 0 0.2em;
+		}
+
+		.liveblog__live-indicator {
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			border-radius: 4px;
+			margin: 0 6px 0 4px;
+			background-color: oColorsGetPaletteColor('red');
+
+			.glow {
+				display: block;
+				width: 8px;
+				height: 8px;
+				border-radius: 4px;
+				background-color: oColorsGetPaletteColor('red');
+				opacity: 0.2;
+				transform-origin: center;
+				transform: scale(2.5, 2.5);
+			}
+		}
+	}
+
+
+	&.liveblog--InProgress {
+		.story-card__content {
+			.story-card__taxon {
+				color: oColorsGetPaletteColor('red');
+			}
+
+			span.liveblog__badge {
+				background-color: oColorsGetPaletteColor('red');
+			}
+		}
+
+		.story-card__footer {
+			border-color: oColorsGetPaletteColor('red');
+		}
+	}
+}

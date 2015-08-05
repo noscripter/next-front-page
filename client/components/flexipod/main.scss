@@ -4,7 +4,7 @@
 @import "o-grid/main";
 
 @mixin nhFlexipod($layout-spec, $total-cols: $o-grid-columns) {
-	.article-group {
+	.article-group, .liveblog-group {
 		@include oGridRow($total-cols);
 		@include oGridRowReset($total-cols);
 
@@ -12,6 +12,11 @@
 
 		.article {
 			@include oGridColumn(null, $total-cols);
+		}
+
+		.liveblog {
+			@include oGridColumn(null, $total-cols);
+			width: 100%;
 		}
 	}
 
