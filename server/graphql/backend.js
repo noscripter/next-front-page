@@ -131,6 +131,8 @@ class Backend {
 	}
 }
 
+// Assemble the beast
+
 const memCache = new Cache(10 * 60);
 
 // Adapters
@@ -148,7 +150,7 @@ const liveblog = new Liveblog(memCache);
 const mockedCAPI = new MockCAPI(esCAPI);
 const mockLiveblog = new MockLiveblog(liveblog);
 
-// Backends
+// Elasticsearch & direct CAPI Backends
 const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI, popular: popular, liveblog: liveblog});
 const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI, popular: popular, liveblog: liveblog});
 
