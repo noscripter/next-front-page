@@ -6,7 +6,7 @@ import {
 	GraphQLInterfaceType
 } from 'graphql';
 
-import {Content} from './content';
+import {Content, Video} from './content';
 
 const Collection = new GraphQLInterfaceType({
 	name: "Collection",
@@ -24,6 +24,16 @@ const Collection = new GraphQLInterfaceType({
 		}
 	},
 	resolveType: (value) => (value.conceptId == null ? Page : ContentByConcept)
+});
+
+const VideoCollection = new GraphQLObjectType({
+	name: "VideoCollection",
+	description: "Collection of videos",
+	fields: {
+		items: {
+			type: new GraphQLList(Video)
+		}
+	}
 });
 
 const Page = new GraphQLObjectType({
@@ -85,5 +95,6 @@ const ContentByConcept = new GraphQLObjectType({
 export default {
 	Collection,
 	Page,
-	ContentByConcept
+	ContentByConcept,
+	VideoCollection
 };

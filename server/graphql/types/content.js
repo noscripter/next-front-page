@@ -43,7 +43,7 @@ const Concept = new GraphQLObjectType({
 		},
 		taxonomy: {
 			type: GraphQLString,
-			description: 'Type of the concept',
+			description: 'Type of the concept'
 		},
 		name: {
 			type: GraphQLString,
@@ -70,12 +70,41 @@ const Image = new GraphQLObjectType({
 				width: { type: new GraphQLNonNull(GraphQLInt) }
 			},
 			resolve: (it, {width}) => {
-				return `//next-geebee.ft.com/image/v1/images/raw/${it.url}?source=next&fit=scale-down&width=${width}`
+				return `//next-geebee.ft.com/image/v1/images/raw/${it.url}?source=next&fit=scale-down&width=${width}`;
 			}
 		},
 		alt: {
 			type: GraphQLString,
 			description: "Alternative text"
+		}
+	})
+});
+
+const Video = new GraphQLObjectType({
+	name: "Video",
+	description: 'A Video',
+	fields: () => ({
+		id: { type: GraphQLID },
+		title: {
+			type: GraphQLString,
+			resolve: (it) => it.name
+		},
+		description: {
+			type: GraphQLString,
+			resolve: (it) => it.longDescription
+		},
+		lastPublished: {
+			type: GraphQLString,
+			resolve: (it) => it.publishedDate
+		},
+		image: {
+			type: Image,
+			resolve: (it) => {
+				return {
+					url: it.videoStillURL,
+					alt: it.name
+				};
+			}
 		}
 	})
 });
@@ -141,9 +170,8 @@ const ContentV1 = new GraphQLObjectType({
 				limit: { type: GraphQLInt }
 			},
 			resolve: (content, {from, limit}, {backend}) => {
-				let ids = content.item.package.map(it => it.id);
-				if(ids.length < 1)
-					return [];
+				let ids = content.item.package.map(it => it.id);
+				if(ids.length < 1) { return []; }
 
 				return backend.contentv1(ids, {from, limit});
 			}
@@ -162,9 +190,7 @@ const ContentV2 = new GraphQLObjectType({
 				return content.id.replace('http://www.ft.com/thing/', '');
 			}
 		},
-		title: {
-			type: GraphQLString,
-		},
+		title: { type: GraphQLString },
 		genre: {
 			type: GraphQLString,
 			resolve: (content) => articleGenres(content.item.metadata)
@@ -203,9 +229,8 @@ const ContentV2 = new GraphQLObjectType({
 				limit: { type: GraphQLInt }
 			},
 			resolve: (content, {from, limit}, {backend}) => {
-				let ids = content.item.package.map(it => it.id);
-				if(ids.length < 1)
-					return [];
+				let ids = content.item.package.map(it => it.id);
+				if(ids.length < 1) { return []; }
 
 				return backend.contentv2(ids, {from, limit});
 			}
@@ -217,6 +242,7 @@ export default {
 	Content,
 	Concept,
 	Image,
+	Video,
 	ContentV1,
 	ContentV2
 };

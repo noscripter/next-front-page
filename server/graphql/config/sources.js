@@ -52,6 +52,9 @@ const sources = {
 	},
 	popular: {
 		url: 'http://mostpopular.sp.ft-static.com/v1/mostPopular?source=nextArticle'
+	},
+	video: {
+		query: 'all=UK'
 	}
 };
 

@@ -147,6 +147,14 @@ class Backend {
 			return items;
 		});
 	}
+
+	video(query, title) {
+		return this.cached(`video.${query}`, 50, () => {
+			return fetch("http://next-video.ft.com/api/search?" + encodeURI(query))
+				.then(res => res.json())
+				.then(json => Object.assign({title}, json));
+		});
+	}
 }
 
 // expire old content after 10 minutes

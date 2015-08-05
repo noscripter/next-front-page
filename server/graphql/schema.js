@@ -7,7 +7,7 @@ import {
 } from 'graphql';
 
 import {Region} from './types/basic';
-import {Collection} from './types/collections';
+import {Collection, VideoCollection} from './types/collections';
 
 import sources from './config/sources';
 
@@ -104,7 +104,15 @@ const queryType = new GraphQLObjectType({
 
 				return backend.popular(url, 'Popular');
 			}
-		}
+		},
+    video: {
+      type: VideoCollection,
+      resolve: (root, _, {backend}) => {
+        let {query} = sources.video;
+
+        return backend.video(query, 'Video');
+      }
+    }
 	}
 });
 
