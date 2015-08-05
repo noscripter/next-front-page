@@ -12,7 +12,8 @@ import {
 } from 'graphql';
 
 import {
-	LiveBlogStatus
+	LiveBlogStatus,
+	ContentType
 } from './basic';
 
 const Content = new GraphQLInterfaceType({
@@ -34,6 +35,7 @@ const Content = new GraphQLInterfaceType({
 	},
 	fields: () => ({
 		id: { type: GraphQLID },
+		contentType: { type: ContentType },
 		title: { type: GraphQLString },
 		genre: { type: GraphQLString },
 		summary: { type: GraphQLString },
@@ -113,6 +115,11 @@ const ContentV1 = new GraphQLObjectType({
 		id: {
 			type: GraphQLID,
 			resolve: (content) => content.item.id
+		},
+		contentType: {
+			type: ContentType,
+			description: 'Type of content',
+			resolve: () => 'article'
 		},
 		title: {
 			type: GraphQLString,
@@ -208,6 +215,11 @@ const LiveBlog = new GraphQLObjectType({
 			type: GraphQLID,
 			resolve: (content) => content.item.id
 		},
+		contentType: {
+			type: ContentType,
+			description: 'Type of content',
+			resolve: () => 'liveblog'
+		},
 		title: {
 			type: GraphQLString,
 			resolve: (content) => {
@@ -263,7 +275,7 @@ const LiveBlog = new GraphQLObjectType({
 			resolve: (content, _, {backend}) => {
 				const uri = content.item.location.uri;
 
-				return backend.liveblogExtras(uri).then(it => it.status);
+				return backend.liveblogExtras(uri, {}).then(it => it.status);
 			}
 		},
 		updates: {
@@ -290,6 +302,11 @@ const ContentV2 = new GraphQLObjectType({
 			resolve: (content) => {
 				return content.id.replace('http://www.ft.com/thing/', '');
 			}
+		},
+		contentType: {
+			type: ContentType,
+			description: 'Type of content',
+			resolve: () => 'article'
 		},
 		title: {
 			type: GraphQLString

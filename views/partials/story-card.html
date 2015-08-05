@@ -1,4 +1,4 @@
-<article class='story-card article--{{genre}} {{live}}' data-trackable="story" tabindex="0" aria-labelledby="{{id}}-title" role="article">
+<article class='story-card article--{{genre}} {{#ifEquals contentType "LiveBlog"}}story-card--liveblog liveblog--{{status}}{{/ifEquals}}' data-trackable="story" tabindex="0" aria-labelledby="{{id}}-title" role="article">
 	{{#if primaryImage}}
 		<a href="/{{id}}" class="story-card__link" data-trackable="image" role="presentation" aria-hidden="true">
 			{{#with primaryImage}}
@@ -9,14 +9,17 @@
 		</a>
 	{{/if}}
 	<div class="story-card__content">
-		<a href="{{{primaryTag.url}}}" data-trackable="primary-tag" class="story-card__link">
+		{{#ifEquals type 'LiveBlog'}}
+			<span class="liveblog__badge">live</span>
+		{{/ifEquals}}
+		<a href="{{{primaryTag.url}}}" data-trackable="primary-tag" class="story-card__tag story-card__link">
 			<div class="story-card__taxon" aria-label="Topic: {{primaryTag.name}}">{{primaryTag.name}}</div>
 		</a>
 		<a href="/{{id}}" class="story-card__link" data-trackable="main-link">
 			<h1 id="{{id}}-title" class="story-card__title" data-trackable="title">{{title}}</h1>
 			{{#if updates}}
 				{{#slice updates limit=1}}
-					{{trim text sentences=1}}
+					<h2 class="story-card__summary" data-trackable="summary">{{trim text sentences=1}}</h2>
 				{{/slice}}
 			{{else}}
 				{{#if showSummary}}
@@ -37,15 +40,48 @@
 		</div>
 	{{/if}}
 	<div class='story-card__footer'>
-		{{status}}
-		<i class="time-icon"></i>
-		<span class="u-visually-hidden">Published</span>
-		<time
-			data-o-component="o-date"
-			class="o-date"
-			datetime="{{#dateformat}}{{lastPublished}}{{/dateformat}}">
-				{{#dateformat "dddd, d mmmm, yyyy"}}{{lastPublished}}{{/dateformat}}
-		</time>
+		{{#ifEquals type 'Article'}}
+			<i class="time-icon"></i>
+			<span class="u-visually-hidden">Published</span>
+			<time
+				data-o-component="o-date"
+				class="o-date"
+				datetime="{{#dateformat}}{{lastPublished}}{{/dateformat}}">
+					{{#dateformat "dddd, d mmmm, yyyy"}}{{lastPublished}}{{/dateformat}}
+			</time>
+		{{/ifEquals}}
+
+		{{#ifEquals type 'LiveBlog'}}
+			{{#ifEquals status 'InProgress'}}
+				<i class="liveblog__live-indicator"><i class="glow"></i></i>
+			{{else}}
+				<i class="time-icon"></i>
+			{{/ifEquals}}
+			{{#ifEquals status 'InProgress'}}
+				<span>last post</span>
+			{{/ifEquals}}
+			{{#ifEquals status 'Closed'}}
+				<span>liveblog closed</span>
+			{{/ifEquals}}
+			{{#ifEquals status 'ComingSoon'}}
+				<time
+					data-o-component="o-date"
+					class="o-date"
+					datetime="{{#dateformat}}{{lastPublished}}{{/dateformat}}">
+						{{#dateformat "dddd, d mmmm, yyyy"}}{{lastPublished}}{{/dateformat}}
+				</time>
+			{{else}}
+				{{#slice updates limit=1}}
+					<time
+						data-o-component="o-date"
+						class="o-date"
+						datetime="{{#dateformat}}{{date}}{{/dateformat}}">
+								{{#dateformat "dddd, d mmmm, yyyy"}}{{date}}{{/dateformat}}
+					</time>
+				{{/slice}}
+			{{/ifEquals}}
+		{{/ifEquals}}
+
 		{{>next-myft-ui/templates/save-for-later contentId=id}}
 	</div>
 </article>

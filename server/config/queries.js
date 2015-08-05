@@ -1,6 +1,7 @@
 const fragments = `
 	fragment Basic on Content {
 		type: __typename
+		contentType
 		id
 		title
 		lastPublished

@@ -107,15 +107,17 @@ class Backend {
 				if (event.event == 'msg' && event.data.mid && !skip[event.data.mid]) {
 					updates.push(event);
 					skip[event.data.mid] = true;
+					status = status || 'inprogress'
 				}
 
-				return [skip, updates, 'inprogress'];
-			}, [{}, [], 'comingsoon']);
+				return [skip, updates, status];
+			}, [{}, [], null]);
 
 			if(limit)
 				updates = updates.slice(0, limit);
 
-			return {updates: updates, status: status};
+			status = status || 'comingsoon';
+			return {updates, status};
 		})
 	}
 
