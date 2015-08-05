@@ -1,5 +1,7 @@
 import sources from './config/sources';
 
+import Cache from './cache';
+
 import FastFtFeed from './backend-adapters/fast-ft';
 import CAPI from './backend-adapters/capi';
 import Popular from './backend-adapters/popular';
@@ -43,7 +45,8 @@ class Backend {
 			title: it.title,
 			sectionId: sectionsId,
 			items: it.slice()
-		}));
+		}))
+		.catch(e => console.log(e));
 	}
 
 	byConcept(uuid, title, ttl = 50) {
@@ -128,18 +131,18 @@ class Backend {
 	}
 }
 
-const staleTTL = 10 * 60;
+const memCache = new Cache(10 * 60);
 
 // Adapters
 const esFastFT = new FastFtFeed(true);
 const capiFastFT = new FastFtFeed(false);
 
-const esCAPI = new CAPI(true, staleTTL);
-const directCAPI = new CAPI(false, staleTTL);
+const esCAPI = new CAPI(true, memCache);
+const directCAPI = new CAPI(false, memCache);
 
-const popular = new Popular(staleTTL);
+const popular = new Popular(memCache);
 
-const liveblog = new Liveblog(staleTTL);
+const liveblog = new Liveblog(memCache);
 
 // Mock Adapters
 const mockedCAPI = new MockCAPI(esCAPI);

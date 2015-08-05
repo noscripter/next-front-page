@@ -1,6 +1,6 @@
 import pages from '../fixtures/pages';
-import searches from '../fixtures/searches';
 import byConcept from '../fixtures/by-concept';
+import searches from '../fixtures/searches';
 
 class MockCAPI {
 	constructor(realBackend) {

@@ -24,7 +24,7 @@ const queryType = new GraphQLObjectType({
 			resolve: (root, {region}, {backend}) => {
 				let uuid = sources[`${region}Top`].uuid;
 
-				return backend.page(uuid);
+				return backend.page(uuid)
 			}
 		},
 		fastFT: {
