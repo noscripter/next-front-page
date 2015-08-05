@@ -23,16 +23,18 @@ $_next-ui-setup-first-pass: false;
 @import "n-header-footer/main";
 @import "next-welcome/main";
 @import "next-myft-ui/main";
+@import "n-video/main";
 
 @import "components/grid/main";
 @import "components/story-card/main";
 @import "components/carousel-card/main";
 @import "components/header-tabs/main";
+@import "components/video/main";
 
 @import "icons";
 
-@import "components/feed/main";
-@import "components/fastft/main";
+@import "../components/feed/main";
+@import "../components/fastft/main";
 
 @import "components/flexipod/main";
 
@@ -246,4 +248,8 @@ body {
 	}
 	&::before { top: 0; }
 	&::after { bottom: 0; }
+
+	&.video-hub {
+		background-color: oColorsGetPaletteColor('dark-bg');
+	}
 }

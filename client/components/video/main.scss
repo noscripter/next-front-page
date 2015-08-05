@@ -1,0 +1,45 @@
+.js-video {
+	position: relative;
+	display: inline-block;
+	img { width: 100%; }
+}
+
+video.video.n-video__video { width: 100%; }
+
+.video-item--title {
+	@include nTypeAlpha(2);
+	text-align: center;
+}
+
+.video__lead {
+	overflow: hidden;
+	border-bottom: 1px solid oColorsGetPaletteColor('warm-bg');
+	padding-bottom: 30px;
+  margin-bottom: 20px;
+
+	.video-item {
+		@include oGridColumn(6);
+		@include oGridPush(3);
+	}
+}
+
+.video__list {
+	overflow: hidden;
+	margin-bottom: 20px;
+
+	.video-item {
+		@include oGridColumn(3);
+		.video-item--title { font-size: 22px; }
+	}
+}
+
+.video-hub {
+	h1, p { color: oColorsGetPaletteColor('warm-bg'); }
+}
+.video-hub--subtitle {
+	font-size: 24px;
+	text-align: center;
+}
+
+.no-js .video-hub { display: none; }
+.js .video-hub { display: block; }
