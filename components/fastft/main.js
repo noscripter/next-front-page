@@ -25,7 +25,7 @@ const init = (el, opts) => {
 		});
 	};
 
-	setInterval(poller, 20000);
+	setInterval(poller, 60000);
 };
 
 export default {
