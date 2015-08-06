@@ -51,7 +51,7 @@ export default {
 	'fcdae4e8-cd25-11de-a748-00144feabdc0': {
 		"title": "management",
 		"items": [
-			"98189e2a-2af2-11e5-acfb-cbd2e1c81cca",
+			"98189e2a-2af2-11e5-acfb-cbd2e1c81cca"
 		]
 	}
-}
+};

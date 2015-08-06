@@ -1,5 +1,3 @@
-import sources from './config/sources';
-
 import Cache from './cache';
 
 import FastFtFeed from './backend-adapters/fast-ft';
@@ -20,18 +18,19 @@ const filterContent = ({from, limit, genres, type}, resolveType) => {
 		}
 
 		if(type) {
-			if(type == 'liveblog')
-				items = items.filter(it => resolveType(it) == 'liveblog');
-			else
-				items = items.filter(it => resolveType(it) != 'liveblog');
+			if(type === 'liveblog') {
+				items = items.filter(it => resolveType(it) === 'liveblog');
+			} else {
+				items = items.filter(it => resolveType(it) !== 'liveblog');
+			}
 		}
 
 		items = (from ? items.slice(from) : items);
 		items = (limit ? items.slice(0, limit) : items);
 
 		return items;
-	}
-}
+	};
+};
 
 class Backend {
 	constructor(adapters) {
@@ -60,7 +59,7 @@ class Backend {
 	}
 
 	search(query, ttl = 50) {
-		return this.adapters.capi.search(query, ttl)
+		return this.adapters.capi.search(query, ttl);
 	}
 
 	contentv1(uuids, opts) {
@@ -93,7 +92,7 @@ class Backend {
 	liveblogExtras(uri, {limit}, ttl = 50) {
 		return this.adapters.liveblog.fetch(uri, ttl)
 		.then(json => {
-			const dated = json.filter(it => !!it.data.datemodified)
+			const dated = json.filter(it => !!it.data.datemodified);
 			const [first, second] = dated.slice(0, 2);
 
 			// make sure updates are in order from latest to earliest
@@ -101,24 +100,22 @@ class Backend {
 
 			// dedupe updates and only keep messages, decide on status
 			let [_, updates, status] = json.reduce(([skip, updates, status], event) => {
-				if (event.event == 'end')
-					return [skip, updates, 'closed'];
+				if (event.event === 'end') { return [skip, updates, 'closed']; }
 
-				if (event.event == 'msg' && event.data.mid && !skip[event.data.mid]) {
+				if (event.event === 'msg' && event.data.mid && !skip[event.data.mid]) {
 					updates.push(event);
 					skip[event.data.mid] = true;
-					status = status || 'inprogress'
+					status = status || 'inprogress';
 				}
 
 				return [skip, updates, status];
 			}, [{}, [], null]);
 
-			if(limit)
-				updates = updates.slice(0, limit);
+			if(limit) { updates = updates.slice(0, limit); }
 
 			status = status || 'comingsoon';
 			return {updates, status};
-		})
+		});
 	}
 
 	fastFT() {
@@ -164,4 +161,4 @@ const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: po
 
 export default (elasticSearch, mock) => {
 	return (mock ? mockBackend : (elasticSearch ? esBackend : capiBackend));
-}
+};

@@ -9,7 +9,7 @@ class CAPI {
 
 	page(uuid, ttl = 50) {
 		return this.cache.cached(`pages.${uuid}`, ttl, () => {
-			return ApiClient.pages({ uuid: uuid })
+			return ApiClient.pages({ uuid: uuid });
 		});
 	}
 
@@ -18,7 +18,7 @@ class CAPI {
 			return ApiClient.contentAnnotatedBy({
 				uuid: uuid,
 				useElasticSearch: this.elasticSearch
-			})
+			});
 		});
 	}
 
@@ -38,7 +38,7 @@ class CAPI {
 				uuid: uuids,
 				useElasticSearch: this.elasticSearch
 			});
-		})
+		});
 	}
 
 	contentv2(uuids) {
@@ -47,8 +47,8 @@ class CAPI {
 				uuid: uuids,
 				useElasticSearch: this.elasticSearch
 			});
-		})
+		});
 	}
 }
 
-export default CAPI
+export default CAPI;

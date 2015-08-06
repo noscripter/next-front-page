@@ -11,4 +11,4 @@ export default {
 		"98438bca-3476-11e5-bdbb-35e55cbae175",
 		"c75a0196-2ed6-11e5-8873-775ba7c2ea3d"
 	]
-}
+};

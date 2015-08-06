@@ -7,7 +7,7 @@ export default {
 				"excerpt": "Live markets commentary from FT.com",
 				"event": "postSaved"
 			}
-		},
+		}
 	],
   'http://ftalphaville.ft.com/marketslive/2015-07-31/': [
   {
@@ -206,4 +206,4 @@ export default {
     }
   }
 ]
-}
+};

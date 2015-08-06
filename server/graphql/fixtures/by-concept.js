@@ -13,4 +13,4 @@ export default {
 			"5c504034-6541-35ce-a340-bd9f8cb173bc"
 		]
 	}
-}
+};

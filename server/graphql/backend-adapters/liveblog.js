@@ -6,7 +6,7 @@ class Liveblog {
 	fetch(uri, ttl = 50) {
 		const then = new Date();
 
-		return this.cache.cached(`liveblogs.${uri}`, 50, () => {
+		return this.cache.cached(`liveblogs.${uri}`, ttl, () => {
 			return fetch(`${uri}?action=catchup&format=json`)
 			.then(res => {
 				const now = new Date();

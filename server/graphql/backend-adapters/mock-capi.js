@@ -44,7 +44,7 @@ class MockCAPI {
 	search(query, ttl = 50) {
 		const search = searches[query];
 
-		if(search) return Promise.resolve(search);
+		if(search) { return Promise.resolve(search); }
 
 		return this.realBackend.search(query, ttl)
 		.then(it => {
