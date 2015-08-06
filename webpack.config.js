@@ -7,7 +7,6 @@ var plugins = [
 	new BowerWebpackPlugin({ includes: [/\.js?$/] }),
 	// Global definitions
 	new webpack.DefinePlugin({
-		'define': undefined,
 		"process.env": {
 			NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
 		}
@@ -33,6 +32,7 @@ var config = {
 	module: {
 		loaders: [
 			{ test: /\.js?$/, loader: 'babel' },
+			{ test: /fastclick\.js$/, loader: 'imports?define=>false' }, // force fastclick to load CommonJS
 			{
 				test: /\.scss|sass?$/,
 				loader: ExtractTextPlugin.extract(
