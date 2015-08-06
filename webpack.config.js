@@ -24,7 +24,7 @@ if(process.env.NODE_ENV === 'production') {
 
 
 var config = {
-	entry: "./client/main.js",
+	entry: ["./client/main.js", "./client/main.scss"],
 	output: {
 		path: path.join(__dirname, "public"),
 		filename: "main.js"
