@@ -9,7 +9,8 @@ export default (region) => {
 		const useElasticSearch = res.locals.flags.elasticSearchItemGet.isSwitchedOn;
 
 		res.set({
-			'Cache-Control': 'max-age=40, public, stale-if-error=86400' // 40 seconds; 24 hours
+			// needs to be private so we can vary for signed in state, ab tests, etc
+			'Cache-Control': 'max-age=0, private, no-cache'
 		});
 
 		graphql(useElasticSearch).fetch(queries.frontPage(region))
