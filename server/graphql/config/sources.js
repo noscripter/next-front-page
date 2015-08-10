@@ -54,7 +54,7 @@ const sources = {
 		url: 'http://mostpopular.sp.ft-static.com/v1/mostPopular?source=nextArticle'
 	},
 	video: {
-		query: 'all=UK'
+		uuid: '69917354001' // BrightCove ID
 	}
 };
 

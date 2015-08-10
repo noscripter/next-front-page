@@ -136,7 +136,7 @@ const frontPage = (region) => (`
 			}
 		}
 	}
-`;
+`);
 
 // fastFT query
 const fastFT = `
