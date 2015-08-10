@@ -29,7 +29,7 @@ build:
 	webpack
 
 build-production:
-	NODE_ENV=production nbt build
+	NODE_ENV=production webpack --bail
 	nbt about
 
 watch:

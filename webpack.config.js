@@ -11,7 +11,8 @@ var plugins = [
 			NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
 		}
 	}),
-	new ExtractTextPlugin("main.css")
+	new ExtractTextPlugin("main.css"),
+	new webpack.NoErrorsPlugin()
 ];
 
 if(process.env.NODE_ENV === 'production') {
