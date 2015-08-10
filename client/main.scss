@@ -15,6 +15,7 @@ $o-grid-start-snappy-mode-at: XL;
 
 // Shut up next-sass-setup
 $_next-ui-setup-first-pass: false;
+
 @import "next-sass-setup/main";
 
 @import "colors";
@@ -39,6 +40,8 @@ $_next-ui-setup-first-pass: false;
 @import "components/flexipod/main";
 
 @import "flexipod-layouts";
+
+@include oGridSurfaceCurrentLayout;
 
 $container-widths: (
 	XS: 100%,
@@ -129,6 +132,16 @@ body {
 			display: none;
 		}
 	}
+}
+
+// make n-header-footer work with o-grid@0.4
+.next-header__row--inner > div {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.next-header__logo {
+	line-height: 1.3;
 }
 
 .fixed-width-container {

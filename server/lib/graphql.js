@@ -2,15 +2,13 @@ import {graphql} from 'graphql';
 
 import schema from '../graphql/schema';
 import backend from '../graphql/backend';
-import fastFtFeed from '../graphql/fast-ft-feed';
 
-const fetch = (useElasticSearch) => {
+const fetch = (backend) => {
 	return (query) => {
 		const then = new Date().getTime();
 
 		return graphql(schema, query, {
-			backend: backend(useElasticSearch),
-			fastFtFeed: fastFtFeed(useElasticSearch)
+			backend: backend
 		})
 		.then(it => {
 			const now = new Date().getTime();
@@ -23,9 +21,11 @@ const fetch = (useElasticSearch) => {
 	};
 };
 
-const fetchEs = fetch(true);
-const fetchCapi = fetch(false);
+const fetchEs = fetch(backend(true));
+const fetchCapi = fetch(backend(false));
 
-export default (elastic) => ({
-	fetch: (elastic ? fetchEs : fetchCapi)
+const fetchMock = fetch(backend(true, true));
+
+export default (elastic, mock) => ({
+	fetch: (mock ? fetchMock : (elastic ? fetchEs : fetchCapi))
 });

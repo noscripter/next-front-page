@@ -1,5 +1,7 @@
 const fragments = `
 	fragment Basic on Content {
+		type: __typename
+		contentType
 		id
 		title
 		lastPublished
@@ -51,81 +53,90 @@ const fragments = `
 `;
 
 // Produces a front page query for a given region
-const frontPage = (region) => {
-	return `
-		${fragments}
+const frontPage = (region) => (`
+	${fragments}
 
-		query FrontPage {
-			top(region: ${region}) {
-				leads: items(limit: 1) {
-					... Basic
-					... Extended
-					... Related
-				}
-				items(from: 1) {
-					... Basic
-					... Extended
+	query FrontPage {
+		top(region: ${region}) {
+			leads: items(limit: 1, type: Article) {
+				... Basic
+				... Extended
+				... Related
+			}
+			liveBlogs: items(type: LiveBlog) {
+				... Basic
+				... Extended
+				... on LiveBlog {
+					status
+					updates(limit: 1) {
+						date
+						text
+					}
 				}
 			}
-			fastFT {
-				items {
-					... Basic
-				}
-			}
-			editorsPicks {
-				items {
-					... Basic
-					... ExtendedSmallImage
-				}
-			}
-			opinion {
-				url
-				items {
-					... Basic
-					... Extended
-				}
-			}
-			lifestyle {
-				url
-				items(limit: 2) {
-					... Basic
-					... Extended
-				}
-			}
-			markets {
-				url
-				items(limit: 2, genres: ["analysis", "comment"]) {
-					... Basic
-					... Extended
-				}
-			}
-			technology {
-				url
-				items(limit: 2, genres: ["analysis", "comment"]) {
-					... Basic
-					... Extended
-				}
-			}
-			popular {
-				items(limit: 10) {
-					... Basic
-				}
-			}
-			video {
-        items {
-            id
-						title
-						description
-						lastPublished
-            image {
-              src(width: 320)
-							alt
-            }
-        }
+			items(from: 1, type: Article) {
+				... Basic
+				... Extended
 			}
 		}
-	`;
-};
+		fastFT {
+			items {
+				... Basic
+			}
+		}
+		editorsPicks {
+			items {
+				... Basic
+				... ExtendedSmallImage
+			}
+		}
+		opinion {
+			url
+			items {
+				... Basic
+				... Extended
+			}
+		}
+		lifestyle {
+			url
+			items(limit: 2) {
+				... Basic
+				... Extended
+			}
+		}
+		markets {
+			url
+			items(limit: 2, genres: ["analysis", "comment"]) {
+				... Basic
+				... Extended
+			}
+		}
+		technology {
+			url
+			items(limit: 2, genres: ["analysis", "comment"]) {
+				... Basic
+				... Extended
+			}
+		}
+		popular {
+			items(limit: 10) {
+				... Basic
+			}
+		}
+		video {
+			items {
+				id
+				title
+				description
+				lastPublished
+				image {
+					src(width: 320)
+					alt
+				}
+			}
+		}
+	}
+`;
 
 // fastFT query
 const fastFT = `

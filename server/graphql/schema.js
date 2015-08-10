@@ -1,9 +1,10 @@
 import {Promise} from 'es6-promise';
 
 import {
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLNonNull
+	GraphQLSchema,
+	GraphQLObjectType,
+	GraphQLNonNull,
+	GraphQLString
 } from 'graphql';
 
 import {Region} from './types/basic';
@@ -23,13 +24,13 @@ const queryType = new GraphQLObjectType({
 			resolve: (root, {region}, {backend}) => {
 				let uuid = sources[`${region}Top`].uuid;
 
-				return backend.page(uuid);
+				return backend.page(uuid)
 			}
 		},
 		fastFT: {
 			type: Collection,
-			resolve: (root, _, {fastFtFeed}) => {
-				return fastFtFeed.fetch();
+			resolve: (root, _, {backend}) => {
+				return backend.fastFT();
 			}
 		},
 		editorsPicks: {
@@ -103,6 +104,16 @@ const queryType = new GraphQLObjectType({
 				let url = sources.popular.url;
 
 				return backend.popular(url, 'Popular');
+			}
+		},
+		search: {
+			type: Collection,
+			args: {
+				query: { type: new GraphQLNonNull(GraphQLString) }
+			},
+			resolve: (_, {query}, {backend}) => {
+				return backend.search(query)
+					.then(ids => ({ items: ids }));
 			}
 		},
     video: {

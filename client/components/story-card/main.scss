@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'footer';
+@import 'liveblog';
 
 @mixin nhStoryGenreColors($color) {
 	.story-card__footer { border-bottom: 1px $color solid; }
@@ -28,8 +29,6 @@
 .story-card__related {
 	clear: both;
 }
-
-// .story-card__link { align-items: stretch; }
 
 .story-card__heading {
 	display: inline-block;

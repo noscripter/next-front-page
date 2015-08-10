@@ -7,6 +7,7 @@ import {
 } from 'graphql';
 
 import {Content, Video} from './content';
+import {ContentType} from './basic';
 
 const Collection = new GraphQLInterfaceType({
 	name: "Collection",
@@ -19,7 +20,8 @@ const Collection = new GraphQLInterfaceType({
 			args: {
 				from: { type: GraphQLInt },
 				limit: { type: GraphQLInt },
-				genres: { type: new GraphQLList(GraphQLString) }
+				genres: { type: new GraphQLList(GraphQLString) },
+				type: { type: ContentType }
 			}
 		}
 	},
@@ -56,10 +58,13 @@ const Page = new GraphQLObjectType({
 			args: {
 				from: { type: GraphQLInt },
 				limit: { type: GraphQLInt },
-				genres: { type: new GraphQLList(GraphQLString) }
+				genres: { type: new GraphQLList(GraphQLString) },
+				type: { type: ContentType }
 			},
-			resolve: (page, {from, limit, genres}, {backend}) => {
-				return backend.contentv1(page.items, {from, limit, genres});
+			resolve: (page, {from, limit, genres, type}, {backend}) => {
+				if(!page.items || page.items.length < 1) return [];
+
+				return backend.contentv1(page.items, {from, limit, genres, type});
 			}
 		}
 	}
@@ -83,10 +88,13 @@ const ContentByConcept = new GraphQLObjectType({
 			args: {
 				from: { type: GraphQLInt },
 				limit: { type: GraphQLInt },
-				genres: { type: new GraphQLList(GraphQLString) }
+				genres: { type: new GraphQLList(GraphQLString) },
+				type: { type: ContentType }
 			},
-			resolve: (result, {from, limit, genres}, {backend}) => {
-				return backend.contentv2(result.items, {from, limit, genres});
+			resolve: (result, args, {backend}) => {
+				if(!result.items || result.items.length < 1) return [];
+
+				return backend.contentv2(result.items, args);
 			}
 		}
 	}
