@@ -11,17 +11,15 @@ import query from './routes/query';
 var app = express({
 	helpers: {
 		lowercase: (it) => it && it.toLowerCase(),
+		trim: (it, {hash: {sentences}}) => {
+			return it.split(/\.\s/).slice(0, sentences).join('. ') + '.';
+		},
 		reactRenderToString: (klass, props) => {
 			return React.renderToString(React.createElement(klass, props.hash));
-		},
-		getImage(images, type, maxWidth) {
-			assertEqual(typeof maxWidth, 'number', 'getImageSrc: maxWidth must be a number');
-			const image = images && images.find(img => img.type === type);
-			return image ? Object.assign(
-				{ src: `//next-geebee.ft.com/image/v1/images/raw/${image.url}?source=next&fit=scale-down&width=${maxWidth}` },
-				image
-			) : null;
 		}
+	},
+	serviceDependencies: {
+		'most-popular': /^http:\/\/mostpopular\.sp\.ft-static\.com\/v1\/mostPopular/
 	}
 });
 

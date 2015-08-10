@@ -1,156 +1,164 @@
-import ApiClient from 'next-ft-api-client';
-import {Promise} from 'es6-promise';
+import Cache from './cache';
+
+import FastFtFeed from './backend-adapters/fast-ft';
+import CAPI from './backend-adapters/capi';
+import Popular from './backend-adapters/popular';
+import Liveblog from './backend-adapters/liveblog';
+
+import MockCAPI from './backend-adapters/mock-capi';
+import MockLiveblog from './backend-adapters/mock-liveblog';
 
 import articleGenres from 'ft-next-article-genre';
 
-class Backend {
-	constructor(elasticSearch, staleTtl) {
-		this.elasticSearch = elasticSearch;
-		this.type = (elasticSearch ? 'elasticsearch' : 'capi');
+// internal content filtering logic shared for ContentV1 and ContentV2
+const filterContent = ({from, limit, genres, type}, resolveType) => {
+	return (items) => {
+		if(genres && genres.length) {
+			items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
+		}
 
-		// in-memory content cache
-		this.contentCache = {};
-
-		const sweeper = () => {
-			const now = (new Date().getTime()) / 1000;
-
-			for(let key in this.contentCache) {
-				if(this.contentCache[key].expire + staleTtl < now) {
-					delete this.contentCache[key];
-				}
+		if(type) {
+			if(type === 'liveblog') {
+				items = items.filter(it => resolveType(it) === 'liveblog');
+			} else {
+				items = items.filter(it => resolveType(it) !== 'liveblog');
 			}
-		};
+		}
 
-		// keep clearing the cache every minute
-		setInterval(sweeper, 60 * 1000);
-	}
+		items = (from ? items.slice(from) : items);
+		items = (limit ? items.slice(0, limit) : items);
 
-	// Caching wrapper. Always returns a promise, when cache expires
-	// returns stale data immediately and fetches fresh one
-	cached(key, ttl, fetcher) {
-		const cache = this.contentCache;
+		return items;
+	};
+};
 
-		const data = (cache[key] && cache[key].data);
-		const expire = (cache[key] && cache[key].expire);
-		const now = (new Date().getTime()) / 1000;
-
-		// we have fresh data
-		if(expire > now && data) { return Promise.resolve(data); }
-
-		// fetch fresh data
-		const eventualData = fetcher(data, expire)
-		.then((it) => {
-			let expiry = now + ttl;
-
-			this.contentCache[key] = {
-				expire: expiry,
-				data: it
-			};
-
-			return it;
-		});
-
-		// return stale data or promise of fresh data
-		return (data ? Promise.resolve(data) : eventualData);
+class Backend {
+	constructor(adapters) {
+		this.adapters = adapters;
 	}
 
 	page(uuid, sectionsId, ttl = 50) {
-		return this.cached(`pages.${uuid}`, ttl, () => {
-			return ApiClient.pages({ uuid: uuid })
-			.then(it => ({
-				id: uuid,
-				title: it.title,
-				sectionId: sectionsId,
-				items: it.slice()
-			}));
-		});
+		return this.adapters.capi.page(uuid, ttl)
+		.then(it => ({
+			id: uuid,
+			title: it.title,
+			sectionId: sectionsId,
+			items: it.slice()
+		}))
+		.catch(e => console.log(e));
 	}
 
 	byConcept(uuid, title, ttl = 50) {
-		return this.cached(`byconcept.${uuid}`, ttl, () => {
-			return ApiClient.contentAnnotatedBy({
-				uuid: uuid,
-				useElasticSearch: this.elasticSearch
-			})
-			.then(ids => ({
-				title: title,
-				conceptId: uuid,
-				sectionId: null,
-				items: ids.slice()
-			}));
-		});
+		return this.adapters.capi.contentAnnotatedBy(uuid, ttl)
+		.then(ids => ({
+			title: title,
+			conceptId: uuid,
+			sectionId: null,
+			items: ids.slice()
+		}));
 	}
 
 	search(query, ttl = 50) {
-		return this.cached(`search.${query}`, ttl, () => {
-			return ApiClient.searchLegacy({
-				query: query,
-				useLegacyContent: true,
-				useElasticSearch: this.elasticSearch
-			});
-		});
+		return this.adapters.capi.search(query, ttl);
+	}
+
+	contentv1(uuids, opts) {
+		return this.adapters.capi.contentv1(uuids)
+		.then(filterContent(opts, this.resolveContentType));
+	}
+
+	contentv2(uuids, opts) {
+		return this.adapters.capi.contentv2(uuids)
+		.then(filterContent(opts, this.resolveContentType));
 	}
 
 	popular(url, title, ttl = 50) {
-		return this.cached(`popular.${url}`, ttl, () => {
-			return fetch(url)
-			.then((response) => response.json())
-			.then((data) => {
-				return data.mostRead.pages.map(function (page) {
-						var index = page.url.lastIndexOf("/");
-						var id = page.url.substr(index + 1).replace('.html', '');
-						return id;
-				});
-			}).then((ids) => ({
-				id: null,
-				sectionId: null,
-				title: title,
-				items: ids
-			}));
+		return this.adapters.popular.fetch(url, ttl)
+		.then((data) => {
+			return data.mostRead.pages.map(function (page) {
+				var index = page.url.lastIndexOf("/");
+				var id = page.url.substr(index + 1).replace('.html', '');
+				return id;
+			});
+		})
+		.then((ids) => ({
+			id: null,
+			sectionId: null,
+			title: title,
+			items: ids
+		}));
+	}
+
+	liveblogExtras(uri, {limit}, ttl = 50) {
+		return this.adapters.liveblog.fetch(uri, ttl)
+		.then(json => {
+			const dated = json.filter(it => !!it.data.datemodified);
+			const [first, second] = dated.slice(0, 2);
+
+			// make sure updates are in order from latest to earliest
+			if((first && first.data.datemodified) < (second && second.data.datemodified)) { json.reverse(); }
+
+			// dedupe updates and only keep messages, decide on status
+			let [_, updates, status] = json.reduce(([skip, updates, status], event) => {
+				if (event.event === 'end') { return [skip, updates, 'closed']; }
+
+				if (event.event === 'msg' && event.data.mid && !skip[event.data.mid]) {
+					updates.push(event);
+					skip[event.data.mid] = true;
+					status = status || 'inprogress';
+				}
+
+				return [skip, updates, status];
+			}, [{}, [], null]);
+
+			if(limit) { updates = updates.slice(0, limit); }
+
+			status = status || 'comingsoon';
+			return {updates, status};
 		});
 	}
 
-	contentv1(uuids, {from, limit, genres}) {
-		return this.cached(`contentv1.${uuids.join('_')}`, 50, () => {
-			return ApiClient.contentLegacy({
-				uuid: uuids,
-				useElasticSearch: this.elasticSearch
-			});
-		})
-		.then(items => {
-			if(genres && genres.length) {
-				items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
-			}
-
-			items = (from ? items.slice(from) : items);
-			items = (limit ? items.slice(0, limit) : items);
-
-			return items;
-		});
+	fastFT() {
+		return this.adapters.fastFT.fetch();
 	}
 
-	contentv2(uuids, {from, limit, genres}) {
-		return this.cached(`contentv2.${uuids.join('_')}`, 50, () => {
-			return ApiClient.content({
-				uuid: uuids,
-				useElasticSearch: this.elasticSearch
-			});
-		})
-		.then(items => {
-			if(genres && genres.length) {
-				items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
-			}
-
-			items = (from ? items.slice(from) : items);
-			items = (limit ? items.slice(0, limit) : items);
-
-			return items;
-		});
+	resolveContentType(value) {
+		if (value.item && !!value.item.location.uri.match(/liveblog|marketslive|liveqa/i)) {
+			return 'liveblog';
+		} else if (value.item) {
+			return 'contentv1';
+		} else {
+			return 'contentv2';
+		}
 	}
 }
 
-// expire old content after 10 minutes
-const esBackend = new Backend(true, 10 * 60);
-const capiBackend = new Backend(false, 10 * 60);
+// Assemble the beast
 
-export default (elasticSearch) => (elasticSearch ? esBackend : capiBackend);
+const memCache = new Cache(10 * 60);
+
+// Adapters
+const esFastFT = new FastFtFeed(true);
+const capiFastFT = new FastFtFeed(false);
+
+const esCAPI = new CAPI(true, memCache);
+const directCAPI = new CAPI(false, memCache);
+
+const popular = new Popular(memCache);
+
+const liveblog = new Liveblog(memCache);
+
+// Mock Adapters
+const mockedCAPI = new MockCAPI(esCAPI);
+const mockLiveblog = new MockLiveblog(liveblog);
+
+// Elasticsearch & direct CAPI Backends
+const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI, popular: popular, liveblog: liveblog});
+const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI, popular: popular, liveblog: liveblog});
+
+// Mock backend
+const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: popular, liveblog: mockLiveblog});
+
+export default (elasticSearch, mock) => {
+	return (mock ? mockBackend : (elasticSearch ? esBackend : capiBackend));
+};

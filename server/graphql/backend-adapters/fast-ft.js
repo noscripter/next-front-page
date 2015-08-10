@@ -1,14 +1,18 @@
-import {fastFt as config} from './config/sources.js';
 import ApiClient from 'next-ft-api-client';
+
+// FIXME sources shouldn't be necessary here
+// we should be able to pass the fastFT uuid from the top
+import sources from '../config/sources';
 
 // Polls for changes on the notification api to determine whether a fetch should
 // be made for new content. Hopefully this is a little nicer to the content api
 // polling it directly.
 
 class FastFtFeed {
-	constructor(elasticSearch) {
+	constructor(elasticSearch, source) {
 		this.elasticSearch = elasticSearch;
 		this.type = (elasticSearch ? 'elasticsearch' : 'capi');
+		this.source = source;
 
 		// in-memory content cache
 		this.contentCache = {};
@@ -18,7 +22,7 @@ class FastFtFeed {
 	}
 
 	fetchFastFt() {
-		const {uuid} = config;
+		const {uuid} = this.source;
 		return ApiClient.contentAnnotatedBy({
 			uuid: uuid,
 			useElasticSearch: this.elasticSearch
@@ -56,10 +60,11 @@ class FastFtFeed {
 			.catch(console.error);
 	}
 
+	// FIXME take uuid as an argument
 	fetch() {	return this.contentCache; }
 }
 
-const esBackend = new FastFtFeed(true);
-const capiBackend = new FastFtFeed(false);
+const esBackend = new FastFtFeed(true, sources.fastFt);
+const capiBackend = new FastFtFeed(false, sources.fastFt);
 
 export default (elasticSearch) => (elasticSearch ? esBackend : capiBackend);
