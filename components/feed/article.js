@@ -19,7 +19,6 @@ class Article extends React.Component {
 				<a href={linkHref(id)} tabIndex="0" data-trackable="feed-link">
 					<h2 id={`${id}-title`}>{title}</h2>
 					<span>
-						<i className="time-icon" aria-label="Published" />
 						<time data-o-component="o-date" className="o-date" dateTime={lastPublished} aria-live="off">
 							{format(lastPublished, dateFormat)}
 						</time>
