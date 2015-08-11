@@ -40,17 +40,6 @@
 		</div>
 	{{/if}}
 	<div class='story-card__footer'>
-		{{#ifEquals type 'Article'}}
-			<i class="time-icon"></i>
-			<span class="u-visually-hidden">Published</span>
-			<time
-				data-o-component="o-date"
-				class="o-date"
-				datetime="{{#dateformat}}{{lastPublished}}{{/dateformat}}">
-					{{#dateformat "dddd, d mmmm, yyyy"}}{{lastPublished}}{{/dateformat}}
-			</time>
-		{{/ifEquals}}
-
 		{{#ifEquals type 'LiveBlog'}}
 			{{#ifEquals status 'InProgress'}}
 				<i class="liveblog__live-indicator"><i class="glow"></i></i>
@@ -80,6 +69,15 @@
 					</time>
 				{{/slice}}
 			{{/ifEquals}}
+			{{else}}
+				<i class="time-icon"></i>
+				<span class="u-visually-hidden">Published</span>
+				<time
+					data-o-component="o-date"
+					class="o-date"
+					datetime="{{#dateformat}}{{lastPublished}}{{/dateformat}}">
+						{{#dateformat "dddd, d mmmm, yyyy"}}{{lastPublished}}{{/dateformat}}
+				</time>
 		{{/ifEquals}}
 
 		{{>next-myft-ui/templates/save-for-later contentId=id}}
