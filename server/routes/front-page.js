@@ -11,7 +11,7 @@ export default (region) => {
 
 		res.set({
 			// needs to be private so we can vary for signed in state, ab tests, etc
-			'Cache-Control': 'max-age=0, private, no-cache'
+			'Surrogate-Control': 'max-age: 60'
 		});
 
 		graphql(useElasticSearch, mockBackend).fetch(queries.frontPage(region))
