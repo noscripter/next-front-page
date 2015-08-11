@@ -5,6 +5,7 @@ import setup from 'next-js-setup';
 import headerFooter from 'n-header-footer';
 import oDate from 'o-date';
 import nVideo from 'n-video';
+import nAds from 'next-ads-component';
 
 setup.bootstrap(({flags}) => {
 	headerFooter.init(flags);
@@ -16,10 +17,10 @@ setup.bootstrap(({flags}) => {
 	headerTabs.init(tabs, "#news-tab");
 
 	nVideo.init({
-    optimumWidth: 710,
-    placeholder: true,
-    classes: ['video'],
-    selector: '.js-video'
+		optimumWidth: 710,
+		placeholder: true,
+		classes: ['video'],
+		selector: '.js-video'
 	});
 	oDate.init();
 });
