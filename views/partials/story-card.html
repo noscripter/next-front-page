@@ -41,8 +41,8 @@
 	{{/if}}
 	<div class='story-card__footer'>
 		{{#ifEquals type 'LiveBlog'}}
+			<i class="liveblog__live-indicator"><i class="glow"></i></i>
 			{{#ifEquals status 'InProgress'}}
-				<i class="liveblog__live-indicator"><i class="glow"></i></i>
 				<span>last post</span>
 			{{/ifEquals}}
 			{{#ifEquals status 'Closed'}}
@@ -50,12 +50,7 @@
 			{{/ifEquals}}
 
 			{{#ifEquals status 'ComingSoon'}}
-				<time
-					data-o-component="o-date"
-					class="o-date"
-					datetime="{{#dateformat}}{{lastPublished}}{{/dateformat}}">
-						{{#dateformat "dddd, d mmmm, yyyy"}}{{lastPublished}}{{/dateformat}}
-				</time>
+				<span>coming soon</span>
 			{{else}}
 				{{#slice updates limit=1}}
 					<time

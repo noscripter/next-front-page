@@ -1,4 +1,28 @@
 
+@mixin liveBlogStateColor($color) {
+	.story-card__content {
+		.story-card__taxon {
+			color: oColorsGetPaletteColor($color);
+		}
+
+		span.liveblog__badge {
+			background-color: oColorsGetPaletteColor($color);
+		}
+	}
+
+	.story-card__footer {
+		border-color: oColorsGetPaletteColor($color);
+	}
+
+	.liveblog__live-indicator {
+		background-color: oColorsGetPaletteColor($color);
+
+		.glow {
+			background-color: oColorsGetPaletteColor($color);
+		}
+	}
+}
+
 .story-card--liveblog {
 	.story-card__content {
 		span.liveblog__badge {
@@ -8,8 +32,6 @@
 			padding: 0.1em 0.5em 0.3em 0.5em;
 			margin: 0 0.2em 0 0;
 			color: white;
-			background-color: oColorsGetPaletteColor('grey-tint4');
-
 		}
 
 		.story-card__summary {
@@ -36,49 +58,46 @@
 			height: 8px;
 			border-radius: 4px;
 			margin: 0 6px 0 4px;
-			background-color: oColorsGetPaletteColor('red');
 
 			.glow {
 				display: block;
 				width: 8px;
 				height: 8px;
 				border-radius: 4px;
-				background-color: oColorsGetPaletteColor('red');
 				opacity: 0.2;
 				transform-origin: center;
 				transform: scale(2.5, 2.5);
-
-				animation: pulse 1.7s ease infinite;
-
-				@keyframes pulse {
-					0% {
-						transform: scale(2.5, 2.5);
-					}
-					50% {
-						transform: scale(1, 1);
-					}
-					100% {
-						transform: scale(2.5, 2.5);
-					}
-				}
 			}
 		}
 	}
 
+	&.liveblog--ComingSoon {
+		@include liveBlogStateColor('liveblog-amber');
+	}
 
 	&.liveblog--InProgress {
-		.story-card__content {
-			.story-card__taxon {
-				color: oColorsGetPaletteColor('red');
-			}
+		@include liveBlogStateColor('red');
+	}
 
-			span.liveblog__badge {
-				background-color: oColorsGetPaletteColor('red');
-			}
-		}
+	&.liveblog--Closed {
+		@include liveBlogStateColor('grey-tint4');
+	}
 
-		.story-card__footer {
-			border-color: oColorsGetPaletteColor('red');
+	&.liveblog--InProgress {
+		.liveblog__live-indicator .glow {
+			animation: pulse 1.7s ease infinite;
+
+			@keyframes pulse {
+				0% {
+					transform: scale(2.5, 2.5);
+				}
+				50% {
+					transform: scale(1, 1);
+				}
+				100% {
+					transform: scale(2.5, 2.5);
+				}
+			}
 		}
 	}
 }
