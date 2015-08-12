@@ -16,15 +16,16 @@ export default (region) => {
 
 		graphql(useElasticSearch, mockBackend).fetch(queries.frontPage(region))
 		.then(contentData => {
-			res.render('uk', {
+			res.render('front-page', {
 				layout: 'wrapper',
 				FastFtFeed: FastFtFeed,
 				Feed: Feed,
-				content: contentData
+				content: contentData,
+				region: region
 			});
 		})
 		.catch(it => {
 			console.log(it);
 		});
-	}
+	};
 };
