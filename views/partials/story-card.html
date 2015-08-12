@@ -75,9 +75,8 @@
 					{{#dateformat "dddd, d mmmm, yyyy"}}{{lastPublished}}{{/dateformat}}
 			</time>
 		{{/ifEquals}}
-		{{#if relatedContent}}
-		{{else}}
+		{{#unless related}}
 			{{>next-myft-ui/templates/save-for-later contentId=id}}
-		{{/if}}
+		{{/unless}}
 	</div>
 </article>
