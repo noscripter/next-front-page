@@ -3,26 +3,6 @@
 	vertical-align: middle;
 }
 
-.save-icon,
-.n-myft-ui__button[data-alternate-text="saved"] {
-	@include nextIcon(bookmark-circle, oColorsGetPaletteColor(link-1), 30px);
-	vertical-align: middle;
-
-	&:hover {
-		@include nextIcon(bookmark-circle, oColorsGetPaletteColor(link-2), 30px);
-	}
-}
-
-.save-selected-icon,
-.n-myft-ui__button[data-alternate-text="save"], {
-	@include nextIcon(bookmark-circle-saved, oColorsGetPaletteColor(link-1), 30px);
-	vertical-align: middle;
-
-	&:hover {
-		@include nextIcon(bookmark-circle-saved, oColorsGetPaletteColor(link-2), 30px);
-	}
-}
-
 .more-icon,
 button[data-alternate-text="More"] {
 	@include nextIcon(go-to-circle, oColorsGetPaletteColor(link-1), 30px);
