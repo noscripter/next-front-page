@@ -43,14 +43,12 @@
 		{{#ifEquals type 'LiveBlog'}}
 			{{#ifEquals status 'InProgress'}}
 				<i class="liveblog__live-indicator"><i class="glow"></i></i>
-			{{else}}
-			{{/ifEquals}}
-			{{#ifEquals status 'InProgress'}}
 				<span>last post</span>
 			{{/ifEquals}}
 			{{#ifEquals status 'Closed'}}
 				<span>liveblog closed</span>
 			{{/ifEquals}}
+
 			{{#ifEquals status 'ComingSoon'}}
 				<time
 					data-o-component="o-date"
@@ -68,14 +66,14 @@
 					</time>
 				{{/slice}}
 			{{/ifEquals}}
-			{{else}}
-				<span class="u-visually-hidden">Published</span>
-				<time
-					data-o-component="o-date"
-					class="o-date"
-					datetime="{{#dateformat}}{{lastPublished}}{{/dateformat}}">
-						{{#dateformat "dddd, d mmmm, yyyy"}}{{lastPublished}}{{/dateformat}}
-				</time>
+		{{else}}
+			<span class="u-visually-hidden">Published</span>
+			<time
+				data-o-component="o-date"
+				class="o-date"
+				datetime="{{#dateformat}}{{lastPublished}}{{/dateformat}}">
+					{{#dateformat "dddd, d mmmm, yyyy"}}{{lastPublished}}{{/dateformat}}
+			</time>
 		{{/ifEquals}}
 
 		{{>next-myft-ui/templates/save-for-later contentId=id}}
