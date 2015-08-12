@@ -31,6 +31,7 @@ $_next-ui-setup-first-pass: false;
 @import "components/carousel-card/main";
 @import "components/header-tabs/main";
 @import "components/video/main";
+@import "components/ads/main";
 
 @import "icons";
 
@@ -254,7 +255,7 @@ body {
 	position: relative;
 	background-color: oColorsGetPaletteColor('warm-carousel');
 	padding: 10px 0;
-	margin: 20px 0;
+	margin: 0 0 20px;
 	&::before, &::after {
 		@include dots;
 		position: absolute;
