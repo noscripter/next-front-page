@@ -1,16 +1,18 @@
 var path = require('path');
 var webpack = require('webpack');
 var BowerWebpackPlugin = require("bower-webpack-plugin");
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var plugins = [
 	new BowerWebpackPlugin({ includes: [/\.js?$/] }),
 	// Global definitions
 	new webpack.DefinePlugin({
-		'define': undefined,
 		"process.env": {
 			NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
 		}
-	})
+	}),
+	new ExtractTextPlugin("main.css"),
+	new webpack.NoErrorsPlugin()
 ];
 
 if(process.env.NODE_ENV === 'production') {
@@ -20,17 +22,27 @@ if(process.env.NODE_ENV === 'production') {
 	]);
 }
 
+
+
 var config = {
-	entry: "./client/main.js",
+	entry: ["./client/main.js", "./client/main.scss"],
 	output: {
 		path: path.join(__dirname, "public"),
 		filename: "main.js"
 	},
 	module: {
 		loaders: [
+			{ test: /\.js?$/, loader: 'babel' },
+			{ test: /fastclick\.js$/, loader: 'imports?define=>false' }, // force fastclick to load CommonJS
 			{
-				test: /\.js?$/,
-				loader: 'babel'
+				test: /\.scss|sass?$/,
+				loader: ExtractTextPlugin.extract(
+					[
+						"css",
+						"autoprefixer",
+						"sass?includePaths[]=" + (path.resolve(__dirname, "./bower_components"))
+					].join("!")
+				)
 			}
 		]
 	},

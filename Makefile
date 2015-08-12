@@ -20,15 +20,14 @@ run-local:
 	nbt run --local
 
 build:
-	nbt build --dev --skip-js
 	webpack
 
 build-production:
-	NODE_ENV=production nbt build
+	NODE_ENV=production webpack --bail
 	nbt about
 
 watch:
-	nbt build --dev --skip-js --watch & webpack --watch
+	webpack --watch
 
 clean:
 	git clean -fxd

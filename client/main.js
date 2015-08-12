@@ -28,6 +28,3 @@ setup.bootstrap(({flags}) => {
 	}
 	oDate.init();
 });
-
-// require styleSheets
-// require("./main.scss");
