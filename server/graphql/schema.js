@@ -4,11 +4,13 @@ import {
 	GraphQLSchema,
 	GraphQLObjectType,
 	GraphQLNonNull,
-	GraphQLString
+	GraphQLString,
+	GraphQLList,
 } from 'graphql';
 
 import {Region} from './types/basic';
 import {Collection, VideoCollection} from './types/collections';
+import {Video} from './types/content';
 
 import sources from './config/sources';
 
@@ -116,12 +118,12 @@ const queryType = new GraphQLObjectType({
 					.then(ids => ({ items: ids }));
 			}
     },
-    video: {
-      type: VideoCollection,
+    videos: {
+      type: new GraphQLList(Video),
       resolve: (root, _, {backend}) => {
-        let {uuid} = sources.video;
+        let {id} = sources.videos;
 
-        return backend.video(uuid, 'Video');
+        return backend.videos(id);
       }
     }
   }

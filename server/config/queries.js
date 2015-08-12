@@ -123,16 +123,14 @@ const frontPage = (region) => (`
 				... Basic
 			}
 		}
-		video {
-			items {
-				id
-				title
-				description
-				lastPublished
-				image {
-					src(width: 320)
-					alt
-				}
+		videos {
+			id
+			title
+			description
+			lastPublished
+			image {
+				src(width: 320)
+				alt
 			}
 		}
 	}

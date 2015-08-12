@@ -3,10 +3,11 @@ class Playlist {
 		this.cache = cache;
 	}
 
-	fetch(uuid, ttl = 50) {
-		return this.cache.cached(`video.${uuid}`, ttl, () => {
-			return fetch("http://next-video.ft.com/api/playlist/" + encodeURI(uuid))
-				.then(res => res.json());
+	fetch(id, ttl = 50) {
+		return this.cache.cached(`videos.${id}`, ttl, () => {
+			return fetch("http://next-video.ft.com/api/playlist/" + encodeURI(id))
+				.then(res => res.json())
+				.then(json => json.items);
 		});
 	}
 }

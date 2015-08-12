@@ -133,8 +133,8 @@ class Backend {
 		}
 	}
 
-	video(uuid, ttl = 50) {
-		return this.adapters.video.fetch(uuid, ttl);
+	videos(id, ttl = 50) {
+		return this.adapters.videos.fetch(id, ttl);
 	}
 }
 
@@ -160,11 +160,11 @@ const mockedCAPI = new MockCAPI(esCAPI);
 const mockLiveblog = new MockLiveblog(liveblog);
 
 // Elasticsearch & direct CAPI Backends
-const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI, popular: popular, liveblog: liveblog, video: playlist});
-const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI, popular: popular, liveblog: liveblog, video: playlist});
+const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI, popular: popular, liveblog: liveblog, videos: playlist});
+const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI, popular: popular, liveblog: liveblog, videos: playlist});
 
 // Mock backend
-const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: popular, liveblog: mockLiveblog, video: playlist});
+const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: popular, liveblog: mockLiveblog, videos: playlist});
 
 export default (elasticSearch, mock) => {
 	return (mock ? mockBackend : (elasticSearch ? esBackend : capiBackend));

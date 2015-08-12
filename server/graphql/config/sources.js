@@ -53,8 +53,8 @@ const sources = {
 	popular: {
 		url: 'http://mostpopular.sp.ft-static.com/v1/mostPopular?source=nextArticle'
 	},
-	video: {
-		uuid: '69917354001' // BrightCove ID
+	videos: {
+		id: '69917354001' // BrightCove ID
 	}
 };
 
