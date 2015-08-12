@@ -22,6 +22,7 @@ video.video.n-video__video { width: 100%; }
 
 	.video-item {
 		@include oGridColumn(12);
+		text-align: center;
 		.video-item--title {
 			font-size: 22px;
 			margin: 0 20px 20px;
