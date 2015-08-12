@@ -4,6 +4,7 @@ import FastFtFeed from './backend-adapters/fast-ft';
 import CAPI from './backend-adapters/capi';
 import Popular from './backend-adapters/popular';
 import Liveblog from './backend-adapters/liveblog';
+import Playlist from './backend-adapters/playlist';
 
 import MockCAPI from './backend-adapters/mock-capi';
 import MockLiveblog from './backend-adapters/mock-liveblog';
@@ -131,6 +132,10 @@ class Backend {
 			return 'contentv2';
 		}
 	}
+
+	videos(id, ttl = 50) {
+		return this.adapters.videos.fetch(id, ttl);
+	}
 }
 
 // Assemble the beast
@@ -146,6 +151,8 @@ const directCAPI = new CAPI(false, memCache);
 
 const popular = new Popular(memCache);
 
+const playlist = new Playlist(memCache);
+
 const liveblog = new Liveblog(memCache);
 
 // Mock Adapters
@@ -153,11 +160,11 @@ const mockedCAPI = new MockCAPI(esCAPI);
 const mockLiveblog = new MockLiveblog(liveblog);
 
 // Elasticsearch & direct CAPI Backends
-const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI, popular: popular, liveblog: liveblog});
-const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI, popular: popular, liveblog: liveblog});
+const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI, popular: popular, liveblog: liveblog, videos: playlist});
+const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI, popular: popular, liveblog: liveblog, videos: playlist});
 
 // Mock backend
-const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: popular, liveblog: mockLiveblog});
+const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: popular, liveblog: mockLiveblog, videos: playlist});
 
 export default (elasticSearch, mock) => {
 	return (mock ? mockBackend : (elasticSearch ? esBackend : capiBackend));

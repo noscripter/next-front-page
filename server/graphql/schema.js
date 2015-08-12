@@ -4,11 +4,13 @@ import {
 	GraphQLSchema,
 	GraphQLObjectType,
 	GraphQLNonNull,
-	GraphQLString
+	GraphQLString,
+	GraphQLList,
 } from 'graphql';
 
 import {Region} from './types/basic';
-import {Collection} from './types/collections';
+import {Collection, VideoCollection} from './types/collections';
+import {Video} from './types/content';
 
 import sources from './config/sources';
 
@@ -24,7 +26,7 @@ const queryType = new GraphQLObjectType({
 			resolve: (root, {region}, {backend}) => {
 				let uuid = sources[`${region}Top`].uuid;
 
-				return backend.page(uuid)
+				return backend.page(uuid);
 			}
 		},
 		fastFT: {
@@ -115,8 +117,16 @@ const queryType = new GraphQLObjectType({
 				return backend.search(query)
 					.then(ids => ({ items: ids }));
 			}
-		}
-	}
+    },
+    videos: {
+      type: new GraphQLList(Video),
+      resolve: (root, _, {backend}) => {
+        let {id} = sources.videos;
+
+        return backend.videos(id);
+      }
+    }
+  }
 });
 
 export default new GraphQLSchema({

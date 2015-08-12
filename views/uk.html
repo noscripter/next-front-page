@@ -51,3 +51,18 @@
 		</aside>
 	</div>
 </div>
+{{#flags.frontPageVideo}}
+	<div class="o-grid-container bordered-row nh-header-tabs__panel video-hub">
+		<div class="fixed-width-container">
+			<div class="o-grid-row">
+				<div class="main-content" data-o-grid-colspan="12">
+					<div class="flexipod flexipod--video" data-trackable="video-picks" id="video-picks">
+						<h1 class='carousel-heading' id="editors-picks-title" aria-hidden="true">Video</h1>
+						<p class="video-hub--subtitle">Over 80 videos per week bring the news agenda to life</p>
+						{{> videos items=content.videos }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{{/flags.frontPageVideo}}

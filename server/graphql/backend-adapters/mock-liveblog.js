@@ -16,7 +16,7 @@ class MockLiveblog {
 		.then(json => {
 			console.log(`Mock backend asked for live updates for blog: ${uri}. Add this to liveblogs.js to use current real response: \n'${uri}': ${JSON.stringify(json, null, 2)}`);
 			return json;
-		})
+		});
 	}
 }
 

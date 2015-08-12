@@ -6,7 +6,7 @@ import {
 	GraphQLInterfaceType
 } from 'graphql';
 
-import {Content} from './content';
+import {Content, Video} from './content';
 import {ContentType} from './basic';
 
 const Collection = new GraphQLInterfaceType({

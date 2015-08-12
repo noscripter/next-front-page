@@ -99,6 +99,35 @@ const Image = new GraphQLObjectType({
 	})
 });
 
+const Video = new GraphQLObjectType({
+	name: "Video",
+	description: 'A Video',
+	fields: () => ({
+		id: { type: GraphQLID },
+		title: {
+			type: GraphQLString,
+			resolve: (it) => it.name
+		},
+		description: {
+			type: GraphQLString,
+			resolve: (it) => it.longDescription
+		},
+		lastPublished: {
+			type: GraphQLString,
+			resolve: (it) => it.publishedDate
+		},
+		image: {
+			type: Image,
+			resolve: (it) => {
+				return {
+					url: it.videoStillURL,
+					alt: it.name
+				};
+			}
+		}
+	})
+});
+
 const ImageTypePriority = [
 	'wide-format',
 	'article',
@@ -362,6 +391,7 @@ export default {
 	Content,
 	Concept,
 	Image,
+	Video,
 	ContentV1,
 	ContentV2
 };

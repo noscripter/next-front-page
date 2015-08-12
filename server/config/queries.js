@@ -123,20 +123,31 @@ const frontPage = (region) => (`
 				... Basic
 			}
 		}
-	}`
-);
+		videos {
+			id
+			title
+			description
+			lastPublished
+			image {
+				src(width: 320)
+				alt
+			}
+		}
+	}
+`);
 
 // fastFT query
 const fastFT = `
-query FastFT {
-	fastFT {
-		items {
-			id
-			title
-			lastPublished
+	query FastFT {
+		fastFT {
+			items {
+				id
+				title
+				lastPublished
+			}
 		}
 	}
-}`;
+`;
 
 export default {
 	frontPage,

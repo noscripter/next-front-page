@@ -1,0 +1,10 @@
+<div class="video__lead">
+	{{#slice items limit=1}}
+		{{> video }}
+	{{/slice}}
+</div>
+<div class="video__list">
+	{{#slice items limit=4 offset=1}}
+			{{> video }}
+	{{/slice}}
+</div>
