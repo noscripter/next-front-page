@@ -245,8 +245,8 @@ body {
 }
 
 .bordered-spacer {
-	@include dots;
 	margin: 10px 0;
+	height: 10px;
 }
 
 .bordered-row {
