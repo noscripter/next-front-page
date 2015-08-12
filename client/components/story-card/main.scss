@@ -2,16 +2,6 @@
 @import 'footer';
 @import 'liveblog';
 
-@mixin nhStoryGenreColors($color) {
-	.story-card__footer { border-bottom: 1px $color solid; }
-	.story-card__taxon, .carousel-card__taxon { color: $color; }
-}
-
-.article--default { @include nhStoryGenreColors(oColorsGetPaletteColor('claret')); }
-.article--comment { @include nhStoryGenreColors(oColorsGetPaletteColor('section-blue')); }
-.article--lifestyle { @include nhStoryGenreColors(oColorsGetPaletteColor('section-purple')); }
-.article--analysis { @include nhStoryGenreColors(oColorsGetPaletteColor('section-green')); }
-
 .story-card {
 	background-color: oColorsGetPaletteColor('warm-base');
 	width: 100%;
@@ -59,6 +49,7 @@
 .story-card__taxon {
 	@include linkHover;
 	@include nTypeBravo(4);
+	color: oColorsGetPaletteColor('claret');
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	margin-right: 5px;
