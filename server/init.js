@@ -17,9 +17,6 @@ var app = express({
 		reactRenderToString: (klass, props) => {
 			return React.renderToString(React.createElement(klass, props.hash));
 		}
-	},
-	serviceDependencies: {
-		'most-popular': /^http:\/\/mostpopular\.sp\.ft-static\.com\/v1\/mostPopular/
 	}
 });
 

@@ -9,9 +9,10 @@ module.exports = function(req, res) {
 		'Cache-Control': 'max-age=20, public' // 20 seconds
 	});
 
-	graphql(useElasticSearch, mockBackend).fetch(queries.fastFT)
-	.then(data => {
-		res.json(data.fastFT);
-	})
-	.catch(console.log);
+	graphql(useElasticSearch, mockBackend)
+		.fetch(queries.fastFT)
+		.then(data => {
+			res.json(data.fastFT);
+		})
+		.catch(console.log);
 };

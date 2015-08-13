@@ -1,21 +1,23 @@
 'use strict';
 
-import React from 'react';
+import React from 'react/addons';
 import Article from './article';
 
-class Feed extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {items: props.items || []};
-	}
+let Anim = React.addons.CSSTransitionGroup;
 
+class Feed extends React.Component {
 	render() {
-		const articles = this.state.items.map((it) => <Article article={it} key={it.id} />);
+		const articles = this.props.items.map((it) => <Article article={it} key={it.id} />);
 
 		return (
-			<div className="feed" tabIndex="0" role="region" aria-labelledby={this.props.labelId}>
+			<Anim
+				transitionName="fade"
+				className="feed"
+				tabIndex="0"
+				role="region"
+				aria-labelledby={this.props.labelId} >
 				{articles}
-			</div>
+			</Anim>
 		);
 	}
 }
