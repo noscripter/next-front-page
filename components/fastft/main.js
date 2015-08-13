@@ -5,7 +5,7 @@ const init = (el, opts) => {
 	el = el || document.body;
 	const initialItems = JSON.parse(el.getAttribute('data-fastft-articles'));
 
-	const feedInstance = React.render(<FastFtFeed items={initialItems} />, el);
+	React.render(<FastFtFeed items={initialItems} />, el);
 
 	const poller = () => {
 		fetch('/home/fastft.json', {credentials: 'include'})
@@ -17,7 +17,7 @@ const init = (el, opts) => {
 			return response.json();
 		})
 		.then((fastft) => {
-			return feedInstance.setState({items: fastft.items});
+			React.render(<FastFtFeed items={fastft.items} />, el);
 		})
 		.catch((error) => {
 			console.log(error);
