@@ -46,6 +46,9 @@ var config = {
 			}
 		]
 	},
+	resolveLoader: {
+		fallback:	path.join(__dirname, 'node_modules')
+	},
 	resolve: {
 		root: [
 			path.join(__dirname, 'bower_components')

@@ -145,6 +145,13 @@ body {
 	line-height: 1.3;
 }
 
+.n-welcome {
+	[data-o-grid-colspan] {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+}
+
 .fixed-width-container {
 	@each $layout in $container-widths {
 		@include oGridRespondTo(nth($layout, 1)) {
