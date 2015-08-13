@@ -34,8 +34,9 @@ const filterContent = ({from, limit, genres, type}, resolveType) => {
 };
 
 class Backend {
-	constructor(adapters) {
+	constructor(adapters, type) {
 		this.adapters = adapters;
+		this.type = type;
 	}
 
 	page(uuid, sectionsId, ttl = 50) {
@@ -160,8 +161,8 @@ const mockedCAPI = new MockCAPI(esCAPI);
 const mockLiveblog = new MockLiveblog(liveblog);
 
 // Elasticsearch & direct CAPI Backends
-const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI, popular: popular, liveblog: liveblog, videos: playlist});
-const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI, popular: popular, liveblog: liveblog, videos: playlist});
+const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI, popular: popular, liveblog: liveblog, videos: playlist}, 'elasticsearch');
+const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI, popular: popular, liveblog: liveblog, videos: playlist}, 'direct');
 
 // Mock backend
 const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: popular, liveblog: mockLiveblog, videos: playlist});
