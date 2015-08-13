@@ -8,13 +8,13 @@ class CAPI {
 	}
 
 	page(uuid, ttl = 50) {
-		return this.cache.cached(`pages.${uuid}`, ttl, () => {
+		return this.cache.cached(`${this.type}.pages.${uuid}`, ttl, () => {
 			return ApiClient.pages({ uuid: uuid });
 		});
 	}
 
 	byConcept(uuid, ttl = 50) {
-		return this.cache.cached(`byconcept.${uuid}`, ttl, () => {
+		return this.cache.cached(`${this.type}.byconcept.${uuid}`, ttl, () => {
 			return ApiClient.contentAnnotatedBy({
 				uuid: uuid,
 				useElasticSearch: this.elasticSearch
@@ -23,7 +23,7 @@ class CAPI {
 	}
 
 	search(query, ttl = 50) {
-		return this.cache.cached(`search.${query}`, ttl, () => {
+		return this.cache.cached(`${this.type}.search.${query}`, ttl, () => {
 			return ApiClient.searchLegacy({
 				query: query,
 				useLegacyContent: true,
@@ -33,7 +33,7 @@ class CAPI {
 	}
 
 	contentv1(uuids) {
-		return this.cache.cached(`contentv1.${uuids.join('_')}`, 50, () => {
+		return this.cache.cached(`${this.type}.contentv1.${uuids.join('_')}`, 50, () => {
 			return ApiClient.contentLegacy({
 				uuid: uuids,
 				useElasticSearch: this.elasticSearch
@@ -42,7 +42,7 @@ class CAPI {
 	}
 
 	contentv2(uuids) {
-		return this.cache.cached(`contentv2.${uuids.join('_')}`, 50, () => {
+		return this.cache.cached(`${this.type}.contentv2.${uuids.join('_')}`, 50, () => {
 			return ApiClient.content({
 				uuid: uuids,
 				useElasticSearch: this.elasticSearch
