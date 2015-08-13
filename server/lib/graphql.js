@@ -13,7 +13,7 @@ const fetch = (backend) => {
 		.then(it => {
 			const now = new Date().getTime();
 
-			console.log("Graphql responded in", now - then, "ms");
+			console.log("Graphql (", backend.type, ") responded in", now - then, "ms");
 			if(it.data) { return it.data; }
 
 			throw it.errors;
