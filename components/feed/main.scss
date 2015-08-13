@@ -3,7 +3,7 @@
 
 @mixin nhFeedItem($hover-color) {
 	border: 1px oColorsGetPaletteColor(warm-2) solid;
-	border-width: 0 0 1px 0;
+	border-width: 0 0 1px;
 
 	a {
 		padding: 6px 0;
@@ -12,7 +12,7 @@
 
 	&:hover,
 	&:focus {
-		border-width: 1px 0 1px;
+		border-width: 1px 0;
 		margin-top: -1px;
 		border-color: oColorsGetPaletteColor($hover-color);
 
@@ -22,7 +22,7 @@
 	}
 
 	&:first-of-type {
-		border-width: 1px 0 1px;
+		border-width: 1px 0;
 		&:hover,
 		&:focus {
 			margin-top: 0px;

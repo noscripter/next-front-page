@@ -72,7 +72,7 @@ a {
 }
 
 img {
-	border: none;
+	border: 0;
 }
 
 .u-visually-hidden:focus,
@@ -85,11 +85,11 @@ img {
 }
 
 body {
-	padding: 0;
-	margin: 0;
-
 	@include oGridGenerate();
 	@include nhHeaderTabs();
+
+	padding: 0;
+	margin: 0;
 
 	// Top tabs (News, fastFT)
 
@@ -263,7 +263,8 @@ body {
 	background-color: oColorsGetPaletteColor('warm-carousel');
 	padding: 10px 0;
 	margin: 0 0 20px;
-	&::before, &::after {
+	&::before,
+	&::after {
 		@include dots;
 		position: absolute;
 	}

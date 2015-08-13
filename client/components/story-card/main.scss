@@ -32,12 +32,14 @@
 
 .story-card__related-link {
 	@include oGridColumn((default: 9, M: 3), 9);
-	@include oGridRespondTo($from: M) { border-bottom: none; }
 	@include nTypeFoxtrotSize(4);
 
+	font-size: 16px;
 	border-bottom: 1px dotted oColorsGetPaletteColor('warm-3');
 	margin-bottom: 4px;
 	padding-bottom: 4px;
+
+	@include oGridRespondTo($from: M) { border-bottom: 0; }
 }
 
 .story-card__image { width: 100%; }

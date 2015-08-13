@@ -20,14 +20,15 @@
 	// toggles style
 
 	.nh-header-tabs__tablist {
-		padding: 0 0 0.5em 0;
+		padding: 0 0 0.5em;
 
 		nav {
 			margin: 0 auto;
-			background-color: #fff;
+			background-color: #ffffff;
 			overflow: visible;
 
-			&:before, &:after {
+			&:before,
+			&:after {
 				content: " ";
 				display: table;
 			}
@@ -58,7 +59,7 @@
 				padding: 0.5em;
 				margin: 0 auto -3px 0;
 				border: 5px solid oColorsGetPaletteColor(fastft-brand);
-				border-width: 0 0 5px 0;
+				border-width: 0 0 5px;
 			}
 		}
 	}

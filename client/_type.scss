@@ -5,8 +5,9 @@
 }
 
 @mixin linkHover {
-	&:hover, &:active {
-		border-width: 0 0 1px 0;
+	&:hover,
+	&:active {
+		border-width: 0 0 1px;
 		border-style: dotted;
 	}
 }
@@ -31,7 +32,7 @@
 
 .carousel-heading {
 	@include podHeading;
-	border: none;
+	border: 0;
 	text-align: center;
 	margin-bottom: 10px;
 }
@@ -49,13 +50,14 @@
 		color: oColorsGetPaletteColor('link-1');
 	}
 
-	&:hover, &:active {
+	&:hover,
+	&:active {
 		span {
 			color: oColorsGetPaletteColor('link-2');
 		}
 
 		.more-icon,
-		button[data-alternate-text="More"] {
+		[data-alternate-text="More"] {
 			@include nextIcon(go-to-circle, oColorsGetPaletteColor(link-2), 30px);
 		}
 	}

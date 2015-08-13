@@ -1,23 +1,18 @@
 @import "../grid/main";
 
 .carousel-card {
+	@include oGridColumn((default: 12, XS: 6, S: 4, L: 2));
+
 	width: 100%;
 	text-align: left;
-
-	@include oGridColumn((default: 12, XS: 6, S: 4, L: 2));
-	@include oGridRespondTo(S) { text-align: center; }
-
 	margin-top: 0px;
 	margin-bottom: 20px;
 	float: left;
 
-	.story-card__title {
-		font-size: 0.9em;
-	}
+	@include oGridRespondTo(S) { text-align: center; }
 
-	.story-card__taxon {
-		margin-bottom: 5px;
-	}
+	.story-card__title { font-size: 0.9em; }
+	.story-card__taxon { margin-bottom: 5px; }
 
 	a {
 		@include linkHover;
@@ -41,7 +36,7 @@
 	@include oGridRespondTo(XS) {
 		width: 100%;
 		padding: 0;
-		margin: 0 0 10px 0;
+		margin: 0 0 10px;
 		display: inline;
 	}
 
