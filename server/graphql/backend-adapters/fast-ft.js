@@ -29,7 +29,7 @@ class FastFtFeed {
 		})
 		.then(ids => {
 			this.contentCache = {
-				title: "fastFt",
+				title: 'fastFt',
 				conceptId: uuid,
 				sectionId: null,
 				items: ids.slice()

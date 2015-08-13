@@ -55,13 +55,13 @@ const queryType = new GraphQLObjectType({
 							return backend.search(it.uuid)
 							.then(ids => ids[0]);
 						default:
-							throw "Unknown type: " + it.type;
+							throw 'Unknown type: ' + it.type;
 					}
 				});
 
 				return Promise.all(promises)
 				.then(ids => ({
-					title: "Editor's picks",
+					title: 'Editor\'s picks',
 					conceptId: null,
 					sectionId: null,
 					items: ids

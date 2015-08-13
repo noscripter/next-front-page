@@ -106,14 +106,14 @@ const frontPage = (region) => (`
 		}
 		markets {
 			url
-			items(limit: 2, genres: ["analysis", "comment"]) {
+			items(limit: 2, genres: ['analysis', 'comment']) {
 				... Basic
 				... Extended
 			}
 		}
 		technology {
 			url
-			items(limit: 2, genres: ["analysis", "comment"]) {
+			items(limit: 2, genres: ['analysis', 'comment']) {
 				... Basic
 				... Extended
 			}

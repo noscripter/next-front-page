@@ -53,8 +53,8 @@ const Content = new GraphQLInterfaceType({
 });
 
 const Concept = new GraphQLObjectType({
-	name: "Concept",
-	description: "Metadata tag describing a person/region/brand/...",
+	name: 'Concept',
+	description: 'Metadata tag describing a person/region/brand/...',
 	fields: () => ({
 		id: {
 			type: GraphQLID,
@@ -79,12 +79,12 @@ const Concept = new GraphQLObjectType({
 });
 
 const Image = new GraphQLObjectType({
-	name: "Image",
-	description: "An image",
+	name: 'Image',
+	description: 'An image',
 	fields: () => ({
 		src: {
 			type: GraphQLString,
-			description: "Source URL of the image",
+			description: 'Source URL of the image',
 			args: {
 				width: { type: new GraphQLNonNull(GraphQLInt) }
 			},
@@ -94,13 +94,13 @@ const Image = new GraphQLObjectType({
 		},
 		alt: {
 			type: GraphQLString,
-			description: "Alternative text"
+			description: 'Alternative text'
 		}
 	})
 });
 
 const Video = new GraphQLObjectType({
-	name: "Video",
+	name: 'Video',
 	description: 'A Video',
 	fields: () => ({
 		id: { type: GraphQLID },
@@ -137,8 +137,8 @@ const ImageTypePriority = [
 ];
 
 const ContentV1 = new GraphQLObjectType({
-	name: "ContentV1",
-	description: "Content item",
+	name: 'ContentV1',
+	description: 'Content item',
 	interfaces: [Content],
 	fields: {
 		id: {
@@ -204,8 +204,8 @@ const ContentV1 = new GraphQLObjectType({
 });
 
 const LiveBlogUpdate = new GraphQLObjectType({
-	name: "LiveBlogUpdate",
-	description: "Update of a live blog",
+	name: 'LiveBlogUpdate',
+	description: 'Update of a live blog',
 	fields: () => ({
 		event: { type: GraphQLString },
 		author: {
@@ -236,8 +236,8 @@ const LiveBlogUpdate = new GraphQLObjectType({
 });
 
 const LiveBlog = new GraphQLObjectType({
-	name: "LiveBlog",
-	description: "Live blog item",
+	name: 'LiveBlog',
+	description: 'Live blog item',
 	interfaces: [Content],
 	fields: () => ({
 		id: {
@@ -322,8 +322,8 @@ const LiveBlog = new GraphQLObjectType({
 });
 
 const ContentV2 = new GraphQLObjectType({
-	name: "ContentV2",
-	description: "Content item",
+	name: 'ContentV2',
+	description: 'Content item',
 	interfaces: [Content],
 	fields: () => ({
 		id: {

@@ -10,7 +10,7 @@ class Liveblog {
 			return fetch(`${uri}?action=catchup&format=json`)
 			.then(res => {
 				const now = new Date();
-				console.log("Fetching live blog updates from %s?action=catchup&format=json took %d ms", uri, now - then);
+				console.log('Fetching live blog updates from %s?action=catchup&format=json took %d ms', uri, now - then);
 
 				return res;
 			})

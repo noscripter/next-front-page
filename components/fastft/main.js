@@ -1,5 +1,5 @@
 import React from 'react';
-import FastFtFeed from "./fastftfeed";
+import FastFtFeed from './fastftfeed';
 
 const init = (el, opts) => {
 	el = el || document.body;
