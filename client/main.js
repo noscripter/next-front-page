@@ -23,7 +23,7 @@ setup.bootstrap(({flags}) => {
 		selector: '.js-video'
 	});
 
-	if(flags.flags.frontPageAds) {
+	if(flags.get('frontPageAds')) {
 		nAds.init(flags);
 	}
 	oDate.init();
