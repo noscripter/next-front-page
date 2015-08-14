@@ -26,18 +26,14 @@
 
 .story-card__title,
 .story-card__related-link {
-	@include nTypeCharlie(3);
-	line-height: 1.2;
+	@include nTypeFoxtrot(3);
 	margin-bottom: 10px;
-	font-style: normal;
-
-	font-size: 20px;
 }
 
 .story-card__related-link {
 	@include oGridColumn((default: 9, M: 3), 9);
 	@include oGridRespondTo($from: M) { border-bottom: none; }
-	font-size: 16px;
+	@include nTypeFoxtrotSize(4);
 
 	border-bottom: 1px dotted oColorsGetPaletteColor('warm-3');
 	margin-bottom: 4px;
@@ -92,7 +88,7 @@
 	}
 
 	.story-card__title {
-		font-size: 26px;
+		@include nTypeFoxtrotSize(2);
 	}
 
 	.story-card__image {
