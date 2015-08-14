@@ -20,17 +20,13 @@
 	}
 
 	a {
-		&:hover,
-		&:focus { text-decoration: underline; }
+		@include linkHover;
 	}
 
 }
 
 .carousel-card--link {
-	&:hover,
-	&:focus {
-		text-decoration: underline;
-	}
+	@include linkHover;
 }
 
 .carousel-card__content {

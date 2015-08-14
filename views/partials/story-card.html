@@ -12,21 +12,25 @@
 		{{#ifEquals type 'LiveBlog'}}
 			<span class="liveblog__badge">live</span>
 		{{/ifEquals}}
-		<a href="{{{primaryTag.url}}}" data-trackable="primary-tag" class="story-card__tag story-card__link">
-			<div class="story-card__taxon" aria-label="Topic: {{primaryTag.name}}">{{primaryTag.name}}</div>
-		</a>
-		<a href="/{{id}}" class="story-card__link" data-trackable="main-link">
-			<h1 id="{{id}}-title" class="story-card__title" data-trackable="title">{{title}}</h1>
-			{{#if updates}}
-				{{#slice updates limit=1}}
-					<h2 class="story-card__summary" data-trackable="summary">{{trim text sentences=1}}</h2>
-				{{/slice}}
-			{{else}}
-				{{#if showSummary}}
-					<h2 class="story-card__summary" data-trackable="summary">{{{summary}}}</h2>
-				{{/if}}
+		<div class="story-card__taxon" aria-label="Topic: {{primaryTag.name}}">
+			<a href="{{{primaryTag.url}}}" data-trackable="primary-tag" class="story-card__tag story-card__link">
+				{{primaryTag.name}}
+			</a>
+		</div>
+		<h1 id="{{id}}-title" class="story-card__title" data-trackable="title">
+			<a href="/{{id}}" class="story-card__link" data-trackable="main-link">
+			{{title}}
+			</a>
+		</h1>
+		{{#if updates}}
+			{{#slice updates limit=1}}
+				<h2 class="story-card__summary" data-trackable="summary">{{trim text sentences=1}}</h2>
+			{{/slice}}
+		{{else}}
+			{{#if showSummary}}
+				<h2 class="story-card__summary" data-trackable="summary">{{{summary}}}</h2>
 			{{/if}}
-		</a>
+		{{/if}}
 	</div>
 	{{#if relatedContent}}
 		<div class="story-card__related" data-trackable="related-links" tabindex="0" role="group" aria-label="Related links">

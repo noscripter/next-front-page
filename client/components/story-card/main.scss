@@ -11,8 +11,7 @@
 	font-size: 18px;
 
 	a {
-		&:hover,
-		&:focus { text-decoration: underline; }
+		@include linkHover;
 	}
 }
 
@@ -47,7 +46,6 @@
 
 .story-card__image { width: 100%; }
 .story-card__taxon {
-	@include linkHover;
 	@include nTypeBravo(4);
 	color: oColorsGetPaletteColor('claret');
 	text-transform: uppercase;

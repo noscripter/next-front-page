@@ -1,20 +1,24 @@
 <article class='carousel-card article--{{genre}}' tabindex="0" aria-labelledby="{{id}}-title" role="article">
-  {{#if primaryImage}}
-    <a href="/{{id}}" class="carousel-card--link" role="presentation" aria-hidden="true">
-      {{#with primaryImage}}
-        <img class='carousel-card__image'
-          src="{{src}}"
-          alt=""
-        />
-      {{/with}}
-    </a>
-  {{/if}}
-  <div class="carousel-card__content">
-    <a href="{{primaryTag.url}}" class="story-card--link" tabindex="0" aria-label="Topic: {{primaryTag.name}}">
-      <h2 class="story-card__taxon">{{primaryTag.name}}</h2>
-    </a>
-  	<a href="/{{id}}" class="carousel-card--link" tabindex="0" aria-label="{{title}}">
-			<h1 id="{{id}}-title" class="story-card__title">{{title}}</h1>
-    </a>
+	{{#if primaryImage}}
+		<a href="/{{id}}" class="carousel-card--link" role="presentation" aria-hidden="true">
+			{{#with primaryImage}}
+				<img class='carousel-card__image'
+					src="{{src}}"
+					alt=""
+				/>
+			{{/with}}
+		</a>
+	{{/if}}
+	<div class="carousel-card__content">
+		<h2 class="story-card__taxon">
+			<a href="{{primaryTag.url}}" data-trackable="primary-tag" class="story-card--link" tabindex="0" aria-label="Topic: {{primaryTag.name}}">
+				{{primaryTag.name}}
+			</a>
+		</h2>
+		<h1 id="{{id}}-title" class="story-card__title">
+			<a href="/{{id}}" data-trackable="main-link" class="carousel-card--link" tabindex="0" aria-label="{{title}}">
+				{{title}}
+			</a>
+		</h1>
 	</div>
 </article>
