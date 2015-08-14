@@ -6,7 +6,8 @@
 
 @mixin linkHover {
 	&:hover, &:active {
-		text-decoration: underline;
+		border-width: 0 0 1px 0;
+		border-style: dotted;
 	}
 }
 
@@ -50,11 +51,10 @@
 
 	&:hover, &:active {
 		span {
-			text-decoration: underline;
 			color: oColorsGetPaletteColor('link-2');
 		}
 
-	  .more-icon,
+		.more-icon,
 		button[data-alternate-text="More"] {
 			@include nextIcon(go-to-circle, oColorsGetPaletteColor(link-2), 30px);
 		}
