@@ -10,8 +10,9 @@ install:
 verify:
 	nbt verify
 
-# FIXME enable verify for ES6 + JSX, test: verify build-production unit-test
-test: build-production
+# FIXME enable verify for ES6 + JSX, test: verify unit-test
+test:
+	@echo "TODO: Implement tests"
 
 run:
 	nbt run
