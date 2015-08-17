@@ -1,7 +1,7 @@
 {
   "name": "next-front-page",
   "dependencies": {
-    "next-express": "^12.5.0",
+    "next-express": "^13.0.0",
     "next-sass-setup": "^6.2.6",
     "sass-mq": "^3.1.2",
     "o-date": "^1.1.1",
