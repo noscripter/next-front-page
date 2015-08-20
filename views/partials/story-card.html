@@ -1,4 +1,4 @@
-<article class='story-card article--{{genre}} {{#ifEquals contentType "LiveBlog"}}story-card--liveblog liveblog--{{status}}{{/ifEquals}}' data-trackable="story" tabindex="0" aria-labelledby="{{id}}-title" role="article">
+<article class='story-card article--{{genre}} {{#ifEquals contentType "LiveBlog"}}story-card--liveblog liveblog--{{lowercase status}}{{/ifEquals}}' data-trackable="story" tabindex="0" aria-labelledby="{{id}}-title" role="article">
 	{{#if primaryImage}}
 		<a href="/{{id}}" class="story-card__link" data-trackable="image" role="presentation" aria-hidden="true">
 			{{#with primaryImage}}

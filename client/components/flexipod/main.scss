@@ -4,7 +4,8 @@
 @import "o-grid/main";
 
 @mixin nhFlexipod($layout-spec, $total-cols: $o-grid-columns) {
-	.article-group, .liveblog-group {
+	.article-group,
+	.liveblog-group {
 		@include oGridRow($total-cols);
 		@include oGridRowReset($total-cols);
 
@@ -103,7 +104,6 @@
 					} @else {
 						display: block;
 					}
-
 
 					.story-card {
 						@include nhStoryCard($type);

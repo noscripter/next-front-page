@@ -10,11 +10,11 @@ import nAds from 'next-ads-component';
 setup.bootstrap(({flags}) => {
 	headerFooter.init(flags);
 
-	const feedContainer = document.getElementById("fastft");
+	const feedContainer = document.getElementById('fastft');
 	fastFT.init(feedContainer);
 
-	const tabs = document.getElementById("header-tabs");
-	headerTabs.init(tabs, "#news-tab");
+	const tabs = document.getElementById('header-tabs');
+	headerTabs.init(tabs, '#news-tab');
 
 	nVideo.init({
 		optimumWidth: 710,

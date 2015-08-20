@@ -8,7 +8,7 @@ install:
 	origami-build-tools install --verbose
 
 verify:
-	nbt verify
+	obt verify --esLintPath=./.eslintrc
 
 # FIXME enable verify for ES6 + JSX, test: verify unit-test
 test:

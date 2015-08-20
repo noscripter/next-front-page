@@ -4,15 +4,14 @@
 }
 
 .more-icon,
-button[data-alternate-text="More"] {
+[data-alternate-text="More"] {
 	@include nextIcon(go-to-circle, oColorsGetPaletteColor(link-1), 30px);
 	vertical-align: middle;
 	margin-top: 5px;
 }
 
 .more-icon--fastft,
-button[data-alternate-text="More"]
-{
+[data-alternate-text="More"] {
 	@include nextIcon(go-to-circle, oColorsGetPaletteColor(fastft-brand), 30px);
 	vertical-align: middle;
 	margin-top: 5px;

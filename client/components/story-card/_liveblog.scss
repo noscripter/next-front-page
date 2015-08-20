@@ -5,7 +5,7 @@
 			color: oColorsGetPaletteColor($color);
 		}
 
-		span.liveblog__badge {
+		.liveblog__badge {
 			background-color: oColorsGetPaletteColor($color);
 		}
 	}
@@ -25,11 +25,11 @@
 
 .story-card--liveblog {
 	.story-card__content {
-		span.liveblog__badge {
+		.liveblog__badge {
+			@include nTypeBravo(4);
 			display: inline-block;
 			text-transform: uppercase;
-			@include nTypeBravo(4);
-			padding: 0.1em 0.5em 0.3em 0.5em;
+			padding: 0.1em 0.5em 0.3em;
 			margin: 0 0.2em 0 0;
 			color: white;
 		}
@@ -48,9 +48,7 @@
 
 	.story-card__footer {
 		color: oColorsGetPaletteColor('timestamp');
-		span {
-			margin: 0 -0.2em 0 0.2em;
-		}
+		span { margin: 0 -0.2em 0 0.2em; }
 
 		.liveblog__live-indicator {
 			display: inline-block;
@@ -71,33 +69,33 @@
 		}
 	}
 
-	&.liveblog--ComingSoon {
+	&.liveblog--comingsoon {
 		@include liveBlogStateColor('liveblog-amber');
 	}
 
-	&.liveblog--InProgress {
+	&.liveblog--inprogress {
 		@include liveBlogStateColor('red');
 	}
 
-	&.liveblog--Closed {
+	&.liveblog--closed {
 		@include liveBlogStateColor('grey-tint4');
 	}
 
-	&.liveblog--InProgress {
+	&.liveblog--inprogress {
 		.liveblog__live-indicator .glow {
 			animation: pulse 1.7s ease infinite;
-
-			@keyframes pulse {
-				0% {
-					transform: scale(2.5, 2.5);
-				}
-				50% {
-					transform: scale(1, 1);
-				}
-				100% {
-					transform: scale(2.5, 2.5);
-				}
-			}
 		}
+	}
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(2.5, 2.5);
+	}
+	50% {
+		transform: scale(1, 1);
+	}
+	100% {
+		transform: scale(2.5, 2.5);
 	}
 }

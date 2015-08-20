@@ -48,7 +48,7 @@ class MockCAPI {
 
 		return this.realBackend.search(query, ttl)
 		.then(it => {
-			console.log(`Mock backend asked for a search: "${query}". Add this to searches.js to use current real response: \n'${query}': ${JSON.stringify(it, null, 2)}`);
+			console.log(`Mock backend asked for a search: '${query}'. Add this to searches.js to use current real response: \n'${query}': ${JSON.stringify(it, null, 2)}`);
 			return it;
 		});
 	}

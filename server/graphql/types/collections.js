@@ -6,12 +6,12 @@ import {
 	GraphQLInterfaceType
 } from 'graphql';
 
-import {Content, Video} from './content';
+import {Content} from './content';
 import {ContentType} from './basic';
 
 const Collection = new GraphQLInterfaceType({
-	name: "Collection",
-	description: "Set of items of type Content",
+	name: 'Collection',
+	description: 'Set of items of type Content',
 	fields: {
 		title: { type: GraphQLString },
 		url: { type: GraphQLString },
@@ -29,8 +29,8 @@ const Collection = new GraphQLInterfaceType({
 });
 
 const Page = new GraphQLObjectType({
-	name: "Page",
-	description: "Page of content",
+	name: 'Page',
+	description: 'Page of content',
 	interfaces: [Collection],
 	fields: {
 		url: {
@@ -44,7 +44,7 @@ const Page = new GraphQLObjectType({
 		},
 		items: {
 			type: new GraphQLList(Content),
-			description: "Content items of the page",
+			description: 'Content items of the page',
 			args: {
 				from: { type: GraphQLInt },
 				limit: { type: GraphQLInt },
@@ -52,7 +52,7 @@ const Page = new GraphQLObjectType({
 				type: { type: ContentType }
 			},
 			resolve: (page, {from, limit, genres, type}, {backend}) => {
-				if(!page.items || page.items.length < 1) return [];
+				if(!page.items || page.items.length < 1) { return []; }
 
 				return backend.contentv1(page.items, {from, limit, genres, type});
 			}
@@ -61,8 +61,8 @@ const Page = new GraphQLObjectType({
 });
 
 const ContentByConcept = new GraphQLObjectType({
-	name: "ContentByConcept",
-	description: "Content annotated by a concept",
+	name: 'ContentByConcept',
+	description: 'Content annotated by a concept',
 	interfaces: [Collection],
 	fields: {
 		title: {
@@ -74,7 +74,7 @@ const ContentByConcept = new GraphQLObjectType({
 		},
 		items: {
 			type: new GraphQLList(Content),
-			description: "Content items",
+			description: 'Content items',
 			args: {
 				from: { type: GraphQLInt },
 				limit: { type: GraphQLInt },
@@ -82,7 +82,7 @@ const ContentByConcept = new GraphQLObjectType({
 				type: { type: ContentType }
 			},
 			resolve: (result, args, {backend}) => {
-				if(!result.items || result.items.length < 1) return [];
+				if(!result.items || result.items.length < 1) { return []; }
 
 				return backend.contentv2(result.items, args);
 			}
