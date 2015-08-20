@@ -54,7 +54,8 @@ var config = {
 			path.join(__dirname, 'bower_components')
 		]
 	},
-	plugins: plugins
+	plugins: plugins,
+	devtool: "source-map"
 };
 
 module.exports = config;
