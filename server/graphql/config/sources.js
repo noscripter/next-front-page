@@ -28,15 +28,15 @@ const sources = {
 	},
 	bigRead: {
 		type: 'search',
-		uuid: 'sections:\'The Big Read\''
+		uuid: 'sections:"The Big Read"'
 	},
 	lunch: {
 		type: 'search',
-		uuid: 'brand:\'Lunch with the FT\''
+		uuid: 'brand:"Lunch with the FT"'
 	},
 	lex: {
 		type: 'search',
-		uuid: 'brand:\'Lex\''
+		uuid: 'brand:"Lex"'
 	},
 	management: {
 		type: 'page',
@@ -44,7 +44,7 @@ const sources = {
 	},
 	personInNews: {
 		type: 'search',
-		uuid: 'brand:\'Person in the news\''
+		uuid: 'brand:"Person in the news"'
 	},
 	frontPageSkyline: {
 		type: 'page',
