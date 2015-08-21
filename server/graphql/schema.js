@@ -1,4 +1,5 @@
 import {Promise} from 'es6-promise';
+import directly from 'directly';
 
 import {
 	GraphQLSchema,
@@ -41,7 +42,7 @@ const queryType = new GraphQLObjectType({
 				// HACK this is waiting for editorial to start managing an Editor's picks list
 				let config = ['bigRead', 'lunch', 'management', 'frontPageSkyline', 'personInNews', 'lex'];
 
-				let promises = config
+				let fetchers = config
 				.map((it) => ({
 					type: sources[it].type,
 					uuid: sources[it].uuid
@@ -49,17 +50,21 @@ const queryType = new GraphQLObjectType({
 				.map((it) => {
 					switch(it.type) {
 						case 'page':
-							return backend.page(it.uuid)
-							.then(page => page.items[0]);
+							return () => {
+ 								return backend.page(it.uuid)
+								.then(page => page.items[0]);
+							};
 						case 'search':
-							return backend.search(it.uuid)
-							.then(ids => ids[0]);
+							return () => {
+								return backend.search(it.uuid)
+								.then(ids => ids[0]);
+							};
 						default:
 							throw 'Unknown type: ' + it.type;
 					}
 				});
 
-				return Promise.all(promises)
+				return directly(3, fetchers)
 				.then(ids => ({
 					title: 'Editor\'s picks',
 					conceptId: null,
