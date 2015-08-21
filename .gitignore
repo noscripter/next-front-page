@@ -16,5 +16,4 @@ npm-debug.log
 /tests/browser/reports
 /tests/browser/screenshots
 .editorconfig
-.eslintrc
 .idea/
