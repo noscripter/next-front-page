@@ -3,8 +3,9 @@
 		node: true,
 		es6: true
 	},
-		ecmaFeatures: {
-		modules: false
+	ecmaFeatures: {
+		jsx: true,
+		modules: true
 	},
 	rules: {
 		eqeqeq: 2,
