@@ -34,7 +34,6 @@ clean:
 	git clean -fxd
 
 tidy:
-	heroku logs -a ${TEST_HOST}
 	nbt destroy ${TEST_HOST}
 
 provision:
