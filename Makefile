@@ -1,4 +1,3 @@
-API_KEY := $(shell cat ~/.ftapi 2>/dev/null)
 TEST_HOST := "ft-next-fp-branch-${CIRCLE_BUILD_NUM}"
 TEST_URL := "http://ft-next-fp-branch-${CIRCLE_BUILD_NUM}.herokuapp.com"
 
