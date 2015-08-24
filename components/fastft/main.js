@@ -1,11 +1,16 @@
 import React from 'react';
 import FastFtFeed from './fastftfeed';
 
+const renderFeed = (el, items) => {
+	React.render(<FastFtFeed items={items} />, el);
+}
+
 const init = (el, opts) => {
 	el = el || document.body;
 	const initialItems = JSON.parse(el.getAttribute('data-fastft-articles'));
+	let items = null;
 
-	React.render(<FastFtFeed items={initialItems} />, el);
+	renderFeed(el, initialItems);
 
 	const poller = () => {
 		fetch('/home/fastft.json', {credentials: 'include'})
@@ -17,12 +22,22 @@ const init = (el, opts) => {
 			return response.json();
 		})
 		.then((fastft) => {
-			React.render(<FastFtFeed items={fastft.items} />, el);
+			items = fastft.items;
+
+			if(document.visibilityState !== 'hidden') {
+				renderFeed(el, items);
+			}
 		})
 		.catch((error) => {
 			console.log(error);
 		});
 	};
+
+	document.addEventListener("visibilitychange", function() {
+		if(document.visibilityState === 'visible') {
+			renderFeed(el, items);
+		}
+	});
 
 	setInterval(poller, 60000);
 };
