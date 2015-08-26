@@ -39,13 +39,13 @@ provision:
 	nbt provision ${TEST_HOST}
 	nbt configure ft-next-front-page ${TEST_HOST} --overrides "NODE_ENV=branch"
 	nbt deploy-hashed-assets
-	nbt deploy ${TEST_HOST} --skip-enable-preboot --docker
+	nbt deploy ${TEST_HOST} --skip-enable-preboot
 	make smoke
 
 deploy:
 	nbt configure
 	nbt deploy-hashed-assets
-	nbt deploy --docker
+	nbt deploy
 
 clean-deploy: clean install build-production deploy
 
