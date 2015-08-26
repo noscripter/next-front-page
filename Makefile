@@ -33,7 +33,7 @@ clean:
 	git clean -fxd
 
 tidy:
-	nbt destroy ${TEST_HOST}
+	#nbt destroy ${TEST_HOST}
 
 provision:
 	nbt provision ${TEST_HOST}
