@@ -1,3 +1,4 @@
+import 'n-message-prompts';
 import fastFT from '../components/fastft/main';
 import headerTabs from './components/header-tabs/main';
 
@@ -6,6 +7,7 @@ import headerFooter from 'n-header-footer';
 import oDate from 'o-date';
 import nVideo from 'n-video';
 import nAds from 'next-ads-component';
+
 
 setup.bootstrap(({flags}) => {
 	headerFooter.init(flags);
