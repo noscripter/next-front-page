@@ -7,7 +7,8 @@
     "o-date": "^1.1.1",
     "o-grid": "4.0.0-beta.1",
     "n-video": "^2.8.2",
-    "next-ads-component": "^6.0.3"
+    "next-ads-component": "^6.0.3",
+    "n-message-prompts": "Financial-Times/n-message-prompts#^v1.0.0"
   },
   "resolutions": {
     "next-myft-ui": "^3.0.0",

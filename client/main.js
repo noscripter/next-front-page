@@ -6,6 +6,7 @@ import headerFooter from 'n-header-footer';
 import oDate from 'o-date';
 import nVideo from 'n-video';
 import nAds from 'next-ads-component';
+import prompts from 'n-message-prompts';
 
 setup.bootstrap(({flags}) => {
 	headerFooter.init(flags);
@@ -27,4 +28,5 @@ setup.bootstrap(({flags}) => {
 		nAds.init(flags);
 	}
 	oDate.init();
+	prompts.init();
 });
