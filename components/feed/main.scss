@@ -47,7 +47,7 @@
 
 	time {
 		@include nTypeAlpha(5);
-		color: oColorsGetPaletteColor(timestamp);
+		color: oColorsGetColorFor(timestamp, text);
 		text-transform: uppercase;
 		height: 42px;
 	}

@@ -3,16 +3,12 @@
 @import 'liveblog';
 
 .story-card {
-	background-color: oColorsGetPaletteColor('warm-base');
+	background-color: oColorsGetColorFor('card', 'background');
 	width: 100%;
 	overflow: hidden;
 	padding-bottom: $story-card--footer-height;
 	position: relative;
 	font-size: 18px;
-
-	a {
-		@include linkHover;
-	}
 }
 
 .story-card__related {
@@ -28,6 +24,9 @@
 .story-card__related-link {
 	@include nTypeFoxtrot(3);
 	margin-bottom: 10px;
+	a {
+		@include nLinksHeadline();
+	}
 }
 
 .story-card__related-link {
@@ -44,12 +43,12 @@
 
 .story-card__image { width: 100%; }
 .story-card__taxon {
-	@include nTypeBravo(4);
-	color: oColorsGetPaletteColor('claret');
-	text-transform: uppercase;
-	letter-spacing: 1px;
 	margin-right: 5px;
 	margin-bottom: 5px;
+	@include nTypeBravoSize(4);
+	a {
+		@include nLinksTopic();
+	}
 }
 .story-card__summary {
 	@include nTypeDelta(3);

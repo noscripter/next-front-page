@@ -1,12 +1,10 @@
 // TODO get these back into o-colors on the next branch
 
-@include oColorsSetColor('warm-bg', #fdf8f2);
-@include oColorsSetColor('warm-base', #fff1e0);
+
 @include oColorsSetColor('warm-carousel', #f9f1e7);
 
 @include oColorsSetColor('fastft-brand', #cf191d);
 
-@include oColorsSetColor('timestamp', #8b572a);
 
 @include oColorsSetColor('opinion', #3d798c);
 @include oColorsSetColor('news', #955252);
@@ -14,6 +12,7 @@
 @include oColorsSetColor('analysis', #f99a45);
 @include oColorsSetColor('features', #08bbb7);
 
-@include oColorsSetColor('dark-bg', #505050);
 @include oColorsSetColor('video-border', rgba(253, 248, 242, 0.4));
 @include oColorsSetColor('liveblog-amber', #fd9d00);
+
+@include oColorsSetUseCase('dark-bg', 'background', 'cold-1');

@@ -1,5 +1,5 @@
 .time-icon {
-	@include nextIcon(timestamp, oColorsGetPaletteColor(timestamp), 14px);
+	@include nextIcon(timestamp, oColorsGetColorFor(timestamp, 'text'), 14px);
 	vertical-align: middle;
 }
 
