@@ -6,7 +6,7 @@
 	right: 0;
 	left: 0;
 	width: 100%;
-	border-bottom: 1px oColorsGetPaletteColor('warm-3') solid;
+	border-bottom: 1px oColorsGetColorFor('card', 'border') solid;
 	text-transform: uppercase;
 	height: $story-card--footer-height;
 	padding: 0 10px;
@@ -17,7 +17,7 @@
 	}
 
 	time {
-		color: oColorsGetPaletteColor('timestamp');
+		color: oColorsGetColorFor('timestamp', 'text');
 	}
 
 	.n-myft-ui--save {

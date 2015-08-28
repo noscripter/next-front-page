@@ -55,7 +55,7 @@ $container-widths: (
 );
 
 html {
-	background-color: oColorsGetPaletteColor('warm-bg');
+	background-color: oColorsGetColorFor('page', 'background');
 
 	// Prevent navigation menus from creating
 	// extra space on sides of the page
@@ -273,6 +273,6 @@ body {
 	&::after { bottom: 0; }
 
 	&.video-hub {
-		background-color: oColorsGetPaletteColor('dark-bg');
+		background-color: oColorsGetColorFor('dark-bg', 'background');
 	}
 }
