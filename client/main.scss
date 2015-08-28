@@ -21,6 +21,7 @@ $_next-ui-setup-first-pass: false;
 @import "colors";
 @import "type";
 
+@import "n-layout/main";
 @import "n-header-footer/main";
 @import "next-welcome/main";
 @import "next-myft-ui/main";
