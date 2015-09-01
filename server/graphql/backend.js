@@ -15,7 +15,7 @@ import articleGenres from 'ft-next-article-genre';
 const filterContent = ({from, limit, genres, type}, resolveType) => {
 	return (items) => {
 		if(genres && genres.length) {
-			items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata)) > -1);
+			items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata, {requestedProp: 'editorialTone'})) > -1);
 		}
 
 		if(type) {
