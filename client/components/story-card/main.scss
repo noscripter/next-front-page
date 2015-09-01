@@ -46,10 +46,12 @@
 	margin-right: 5px;
 	margin-bottom: 5px;
 	@include nTypeBravoSize(4);
-	a {
+	&.story-card__link,
+	.story-card__link {
 		@include nLinksTopic();
 	}
 }
+
 .story-card__summary {
 	@include nTypeDelta(3);
 	line-height: 1;
