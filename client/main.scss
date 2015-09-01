@@ -92,12 +92,6 @@ body {
 	padding: 0;
 	margin: 0;
 
-	// Top tabs (News, fastFT)
-
-	.nh-header-tabs__tablist {
-		display: none;
-	}
-
 	@include oGridRespondTo($until: L) {
 		@include nhHeaderTabsActive();
 
@@ -133,6 +127,11 @@ body {
 		#fastft-tab:target ~ .nh-header-tabs__panel {
 			display: none;
 		}
+	}
+
+	// Top tabs (News, fastFT)
+	.nh-header-tabs__tablist {
+		display: none;
 	}
 }
 

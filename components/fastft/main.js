@@ -33,7 +33,7 @@ const init = (el, opts) => {
 		});
 	};
 
-	document.addEventListener("visibilitychange", function() {
+	document.addEventListener('visibilitychange', function() {
 		if(document.visibilityState === 'visible') {
 			renderFeed(el, items);
 		}
