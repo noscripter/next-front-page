@@ -3,7 +3,6 @@ import headerTabs from './components/header-tabs/main';
 
 import layout from 'n-layout';
 import setup from 'next-js-setup';
-import headerFooter from 'n-header-footer';
 import oDate from 'o-date';
 import nVideo from 'n-video';
 import nAds from 'next-ads-component';
@@ -11,7 +10,6 @@ import prompts from 'n-message-prompts';
 
 setup.bootstrap(({flags}) => {
 	layout.init(flags);
-	headerFooter.init(flags);
 
 	const feedContainer = document.getElementById('fastft');
 	fastFT.init(feedContainer);
