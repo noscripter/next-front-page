@@ -1,7 +1,7 @@
 import {graphql} from 'graphql';
 
 import schema from '../graphql/schema';
-import backend from '../graphql/backend';
+import {factory as backend} from '../graphql/backend';
 
 const fetch = (backend) => {
 	return (query) => {

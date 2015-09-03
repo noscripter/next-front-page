@@ -11,7 +11,7 @@ verify:
 
 # FIXME enable verify for ES6 + JSX, test: verify unit-test
 test:
-	@echo "TODO: Implement tests"
+	mocha --compilers js:babel/register --recursive --reporter spec test/server/
 
 run:
 	nbt run

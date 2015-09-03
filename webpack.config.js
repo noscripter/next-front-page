@@ -53,7 +53,7 @@ var config = {
 		]
 	},
 	plugins: plugins,
-	devtool: "source-map"
+	devtool: 'source-map'
 };
 
 module.exports = config;
