@@ -7,7 +7,7 @@ let Anim = React.addons.CSSTransitionGroup;
 
 class Feed extends React.Component {
 	render() {
-		const articles = this.props.items.map((it) => <Article article={it} key={it.id} />);
+		const articles = this.props.items ? this.props.items.map((it) => <Article article={it} key={it.id} />) : [];
 
 		return (
 			<Anim

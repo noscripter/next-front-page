@@ -85,7 +85,7 @@ const frontPage = (region) => (`
 			}
 		}
 		editorsPicks {
-			items {
+			items(limit: 6) {
 				... Basic
 				... ExtendedSmallImage
 			}

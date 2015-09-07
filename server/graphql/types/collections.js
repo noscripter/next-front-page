@@ -90,8 +90,39 @@ const ContentByConcept = new GraphQLObjectType({
 	}
 });
 
+const List = new GraphQLObjectType({
+	name: 'List',
+	description: 'Items contained in a list',
+	interfaces: [Collection],
+	fields: {
+		title: {
+			type: GraphQLString
+		},
+		url: {
+			type: GraphQLString,
+			resolve: () => (null)
+		},
+		items: {
+			type: new GraphQLList(Content),
+			description: 'Content items',
+			args: {
+				from: { type: GraphQLInt },
+				limit: { type: GraphQLInt },
+				genres: { type: new GraphQLList(GraphQLString) },
+				type: { type: ContentType }
+			},
+			resolve: (result, args, {backend}) => {
+				if(!result.items || result.items.length < 1) { return []; }
+
+				return backend.contentv1(result.items.map(result => result.id.replace('http://api.ft.com/thing/', '')), args);
+			}
+		}
+	}
+});
+
 export default {
 	Collection,
 	Page,
-	ContentByConcept
+	ContentByConcept,
+	List
 };

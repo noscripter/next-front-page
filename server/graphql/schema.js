@@ -10,7 +10,7 @@ import {
 } from 'graphql';
 
 import {Region} from './types/basic';
-import {Collection, VideoCollection} from './types/collections';
+import {Collection, VideoCollection, List} from './types/collections';
 import {Video} from './types/content';
 
 import sources from './config/sources';
@@ -37,41 +37,8 @@ const queryType = new GraphQLObjectType({
 			}
 		},
 		editorsPicks: {
-			type: Collection,
-			resolve: (root, _, {backend}) => {
-				// HACK this is waiting for editorial to start managing an Editor's picks list
-				let config = ['bigRead', 'lunch', 'management', 'frontPageSkyline', 'personInNews', 'lex'];
-
-				let fetchers = config
-				.map((it) => ({
-					type: sources[it].type,
-					uuid: sources[it].uuid
-				}))
-				.map((it) => {
-					switch(it.type) {
-						case 'page':
-							return () => {
- 								return backend.page(it.uuid)
-								.then(page => page.items[0]);
-							};
-						case 'search':
-							return () => {
-								return backend.search(it.uuid)
-								.then(ids => ids[0]);
-							};
-						default:
-							throw 'Unknown type: ' + it.type;
-					}
-				});
-
-				return directly(3, fetchers)
-				.then(ids => ({
-					title: 'Editor\'s picks',
-					conceptId: null,
-					sectionId: null,
-					items: ids
-				}));
-			}
+			type: List,
+			resolve: (root, _, {backend}) => backend.list(sources['editorsPicks'].uuid)
 		},
 		opinion: {
 			type: Collection,
@@ -122,16 +89,15 @@ const queryType = new GraphQLObjectType({
 				return backend.search(query)
 					.then(ids => ({ items: ids }));
 			}
-    },
-    videos: {
-      type: new GraphQLList(Video),
-      resolve: (root, _, {backend}) => {
-        let {id} = sources.videos;
-
-        return backend.videos(id);
-      }
-    }
-  }
+		},
+		videos: {
+			type: new GraphQLList(Video),
+			resolve: (root, _, {backend}) => {
+				let {id} = sources.videos;
+				return backend.videos(id);
+			}
+		}
+	}
 });
 
 export default new GraphQLSchema({

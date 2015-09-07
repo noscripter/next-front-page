@@ -137,6 +137,10 @@ class Backend {
 	videos(id, ttl = 50) {
 		return this.adapters.videos.fetch(id, ttl);
 	}
+
+	list(uuid, ttl = 50) {
+		return this.adapters.capi.list(uuid, ttl);
+	}
 }
 
 // Assemble the beast
