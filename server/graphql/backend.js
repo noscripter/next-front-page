@@ -169,7 +169,7 @@ const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI, popular: popular,
 const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI, popular: popular, liveblog: liveblog, videos: playlist}, 'direct');
 
 // Mock backend
-const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: popular, liveblog: mockLiveblog, videos: playlist});
+const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: popular, liveblog: mockLiveblog, videos: playlist}, 'mocked');
 
 export default {
 	Backend: Backend,

@@ -1,6 +1,8 @@
 import pages from '../fixtures/pages';
 import byConcept from '../fixtures/by-concept';
 import searches from '../fixtures/searches';
+import lists from '../fixtures/lists';
+import contentV1 from '../fixtures/contentV1';
 
 class MockCAPI {
 	constructor(realBackend) {
@@ -51,6 +53,20 @@ class MockCAPI {
 			console.log(`Mock backend asked for a search: '${query}'. Add this to searches.js to use current real response: \n'${query}': ${JSON.stringify(it, null, 2)}`);
 			return it;
 		});
+	}
+
+	list(uuid, opts) {
+		let list = lists[uuid];
+
+		if (list) {
+			return Promise.resolve(list);
+		}
+
+		return this.realBackend.list(uuid, opts)
+			.then(it => {
+				console.log(`Mock backend asked for a list: '${uuid}'. Add this to lists.js to use current real response: \n'${uuid}': ${JSON.stringify(it, null, 2)}`);
+				return it;
+			});
 	}
 
 	// Content endpoints are not mocked because the responses are massive.
