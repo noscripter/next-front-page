@@ -14,7 +14,7 @@ export default (region) => {
 			'Surrogate-Control': 'max-age=60'
 		});
 
-		graphql(useElasticSearch, mockBackend).fetch(queries.frontPage(region))
+		graphql(useElasticSearch, mockBackend, { flags: res.locals.flags }).fetch(queries.frontPage(region))
 		.then(contentData => {
 			res.render('front-page', {
 				layout: 'wrapper',

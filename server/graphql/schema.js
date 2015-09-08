@@ -38,7 +38,13 @@ const queryType = new GraphQLObjectType({
 		},
 		editorsPicks: {
 			type: List,
-			resolve: (root, _, {backend}) => backend.list(sources['editorsPicks'].uuid)
+			resolve: (root, _, {backend, flags}) => {
+				if (flags.editorsPicksFromList) {
+					return backend.list(sources['editorsPicks'].uuid);
+				} else {
+					return backend.list(sources['editorsPicks'].uuid);
+				}
+			}
 		},
 		opinion: {
 			type: Collection,

@@ -3,30 +3,31 @@ import {graphql} from 'graphql';
 import schema from '../graphql/schema';
 import {factory as backend} from '../graphql/backend';
 
-const fetch = (backend) => {
+const fetch = (backend, opts = {}) => {
 	return (query) => {
 		const then = new Date().getTime();
 
-		return graphql(schema, query, {
+		return graphql(schema, query, Object.assign(opts, {
 			backend: backend
-		})
+		}))
 		.then(it => {
 			const now = new Date().getTime();
 
 			console.log('Graphql (', backend.type, ') responded in', now - then, 'ms');
-			if (it.errors) {
-				throw it.errors;
-			}
 			if(it.data) { return it.data; }
+
+			throw it.errors;
 		});
 	};
 };
 
-const fetchEs = fetch(backend(true));
-const fetchCapi = fetch(backend(false));
+export default (elastic, mock, opts = {}) => {
+	const fetchEs = fetch(backend(true), opts);
+	const fetchCapi = fetch(backend(false), opts);
 
-const fetchMock = fetch(backend(true, true));
+	const fetchMock = fetch(backend(true, true), opts);
 
-export default (elastic, mock) => ({
-	fetch: (mock ? fetchMock : (elastic ? fetchEs : fetchCapi))
-});
+	return {
+		fetch: (mock ? fetchMock : (elastic ? fetchEs : fetchCapi))
+	}
+};
