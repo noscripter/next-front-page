@@ -4,7 +4,7 @@ New front page
 
 ## Install
 
-    $ git clone https://github.com/Financial-Times/next-article.git
+    $ git clone https://github.com/Financial-Times/next-front-page.git
     $ cd next-front-page
     $ make install
 
