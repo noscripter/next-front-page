@@ -10,6 +10,7 @@ New front page
 
 ## Run
 
+    $ make build
     $ make run
 
 ## Test
