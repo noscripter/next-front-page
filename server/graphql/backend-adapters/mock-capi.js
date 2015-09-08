@@ -72,7 +72,10 @@ class MockCAPI {
 	// Content endpoints are not mocked because the responses are massive.
 
 	contentv1(uuids, opts) {
-		return this.realBackend.contentv1(uuids, opts);
+		var contentPromises = uuids.map(uuid =>
+			contentV1[uuid] ? Promise.resolve(contentV1[uuid]) : this.realBackend.contentv1(uuid, opts)
+		);
+		return Promise.all(contentPromises);
 	}
 
 	contentv2(uuids, opts) {

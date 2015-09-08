@@ -4,20 +4,18 @@ import {Promise} from 'es6-promise';
 global.fetch = fetch;
 
 import chai from 'chai';
-import chaiAsPromised from 'chai-as-promised';
-chai.use(chaiAsPromised);
-const expect = chai.expect;
+chai.should();
 
 import graphql from '../../../server/lib/graphql';
 
-describe.only('GraphQL Schema', () => {
+describe('GraphQL Schema', () => {
 	describe('#list', () => {
-		it('fetches stories', () => {
+		it('fetches list', () => {
 			return graphql(false, true)
 				.fetch(`
 					query List {
 						editorsPicks {
-							items(limit: 6) {
+							items(limit: 2) {
 								type: __typename
 								contentType
 								id
@@ -28,7 +26,13 @@ describe.only('GraphQL Schema', () => {
 					}
 				`)
 				.then(it => {
-					expect(it.editorsPicks.items.length).to.eq(6);
+					it.editorsPicks.items.length.should.eq(2);
+					it.editorsPicks.items.forEach(item => {
+						item.contentType.should.exist;
+						item.id.should.exist;
+						item.title.should.exist;
+						item.lastPublished.should.exist;
+					});
 				});
 		});
 	});

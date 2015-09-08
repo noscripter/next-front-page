@@ -14,9 +14,10 @@ const fetch = (backend) => {
 			const now = new Date().getTime();
 
 			console.log('Graphql (', backend.type, ') responded in', now - then, 'ms');
+			if (it.errors) {
+				throw it.errors;
+			}
 			if(it.data) { return it.data; }
-
-			throw it.errors;
 		});
 	};
 };

@@ -16,38 +16,6 @@ export default {
 			{
 				id: 'http://api.ft.com/thing/265ceb78-15ae-11e5-8e6a-00144feabdc0',
 				apiUrl: 'http://api.ft.com/content/265ceb78-15ae-11e5-8e6a-00144feabdc0'
-			},
-			{
-				id: 'http://api.ft.com/thing/65e3be20-1991-11e5-8201-cbdb03d71480',
-				apiUrl: 'http://api.ft.com/content/65e3be20-1991-11e5-8201-cbdb03d71480'
-			},
-			{
-				id: 'http://api.ft.com/thing/d6029592-0eb9-11e5-8aca-00144feabdc0',
-				apiUrl: 'http://api.ft.com/content/d6029592-0eb9-11e5-8aca-00144feabdc0'
-			},
-			{
-				id: 'http://api.ft.com/thing/ffa6355a-0ac4-11e5-a8e8-00144feabdc0',
-				apiUrl: 'http://api.ft.com/content/ffa6355a-0ac4-11e5-a8e8-00144feabdc0'
-			},
-			{
-				id: 'http://api.ft.com/thing/fac4ae4c-146d-11e5-ad6e-00144feabdc0',
-				apiUrl: 'http://api.ft.com/content/fac4ae4c-146d-11e5-ad6e-00144feabdc0'
-			},
-			{
-				id: 'http://api.ft.com/thing/d42d3c68-141d-11e5-abda-00144feabdc0',
-				apiUrl: 'http://api.ft.com/content/d42d3c68-141d-11e5-abda-00144feabdc0'
-			},
-			{
-				id: 'http://api.ft.com/thing/9ef3b4e2-0e2c-11e5-8ce9-00144feabdc0',
-				apiUrl: 'http://api.ft.com/content/9ef3b4e2-0e2c-11e5-8ce9-00144feabdc0'
-			},
-			{
-				id: 'http://api.ft.com/thing/3dfa2168-0e8f-11e5-9ae0-00144feabdc0',
-				apiUrl: 'http://api.ft.com/content/3dfa2168-0e8f-11e5-9ae0-00144feabdc0'
-			},
-			{
-				id: 'http://api.ft.com/thing/d5a0c9ba-1559-11e5-a587-00144feabdc0',
-				apiUrl: 'http://api.ft.com/content/d5a0c9ba-1559-11e5-a587-00144feabdc0'
 			}
 		]
 	}
