@@ -128,9 +128,10 @@ body {
 		}
 	}
 
-	// Top tabs (News, fastFT)
-	.nh-header-tabs__tablist {
-		display: none;
+	@include oGridRespondTo(L) {
+		.nh-header-tabs__tablist {
+			display: none;
+		}
 	}
 }
 
