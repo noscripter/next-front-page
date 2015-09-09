@@ -139,7 +139,9 @@ class Backend {
 	}
 
 	list(uuid, ttl = 50) {
-		return this.adapters.capi.list(uuid, ttl);
+		return this.adapters.capi.list(uuid, ttl)
+			// return 'fake' list, so Collection can resolveType correctly
+			.catch(e => ({ apiUrl: `http://api.ft.com/lists/${uuid}` }));
 	}
 }
 

@@ -10,7 +10,7 @@ import {
 } from 'graphql';
 
 import {Region} from './types/basic';
-import {Collection, VideoCollection, List} from './types/collections';
+import {Collection} from './types/collections';
 import {Video} from './types/content';
 
 import sources from './config/sources';
@@ -37,7 +37,7 @@ const queryType = new GraphQLObjectType({
 			}
 		},
 		editorsPicks: {
-			type: List,
+			type: Collection,
 			resolve: (root, _, {backend, flags}) => {
 				if (flags.editorsPicksFromList) {
 					return backend.list(sources['editorsPicks'].uuid);

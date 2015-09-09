@@ -25,7 +25,15 @@ const Collection = new GraphQLInterfaceType({
 			}
 		}
 	},
-	resolveType: (value) => (value.conceptId == null ? Page : ContentByConcept)
+	resolveType: (value) => {
+		if (value.apiUrl && value.apiUrl.search(/lists\/[\da-z\-]{36}$/) > -1) {
+			return List;
+		} else if (value.conceptId == null) {
+			return Page;
+		} else {
+			return ContentByConcept;
+		}
+	}
 });
 
 const Page = new GraphQLObjectType({
@@ -96,7 +104,8 @@ const List = new GraphQLObjectType({
 	interfaces: [Collection],
 	fields: {
 		title: {
-			type: GraphQLString
+			type: GraphQLString,
+			resolve: list => list.title
 		},
 		url: {
 			type: GraphQLString,

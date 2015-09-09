@@ -24,7 +24,7 @@
 			<div class="o-grid-row">
 				<div class="main-content" data-o-grid-colspan="12">
 					<div class="flexipod flexipod--editors" data-trackable="editors-picks" id="editors-picks">
-						<h1 class='carousel-heading' id="editors-picks-title" aria-hidden="true">Editor's Picks</h1>
+						<h1 class='carousel-heading' id="editors-picks-title" aria-hidden="true">{{content.editorsPicks.title}}</h1>
 						{{> editors items=content.editorsPicks.items id="editors-picks"}}
 					</div>
 				</div>
@@ -55,7 +55,7 @@
 		</aside>
 	</div>
 </div>
-{{#flags.frontPageVideo}}
+{{#ifAll flags.frontPageVideo content.videos}}
 	<div class="o-grid-container bordered-row nh-header-tabs__panel video-hub">
 		<div class="fixed-width-container">
 			<div class="o-grid-row">
@@ -69,4 +69,4 @@
 			</div>
 		</div>
 	</div>
-{{/flags.frontPageVideo}}
+{{/ifAll}}
