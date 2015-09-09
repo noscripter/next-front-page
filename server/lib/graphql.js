@@ -3,13 +3,13 @@ import {graphql} from 'graphql';
 import schema from '../graphql/schema';
 import {factory as backend} from '../graphql/backend';
 
-const fetch = (backend) => {
+const fetch = (backend, opts = {}) => {
 	return (query) => {
 		const then = new Date().getTime();
 
-		return graphql(schema, query, {
+		return graphql(schema, query, Object.assign(opts, {
 			backend: backend
-		})
+		}))
 		.then(it => {
 			const now = new Date().getTime();
 
@@ -21,11 +21,13 @@ const fetch = (backend) => {
 	};
 };
 
-const fetchEs = fetch(backend(true));
-const fetchCapi = fetch(backend(false));
+export default (elastic, mock, opts = {}) => {
+	var fetchEs = fetch(backend(true), opts);
+	var fetchCapi = fetch(backend(false), opts);
 
-const fetchMock = fetch(backend(true, true));
+	var fetchMock = fetch(backend(true, true), opts);
 
-export default (elastic, mock) => ({
-	fetch: (mock ? fetchMock : (elastic ? fetchEs : fetchCapi))
-});
+	return {
+		fetch: (mock ? fetchMock : (elastic ? fetchEs : fetchCapi))
+	}
+};

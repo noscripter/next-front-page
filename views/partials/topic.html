@@ -1,18 +1,20 @@
-<div class="flexipod flexipod--topic" data-trackable="topic-{{id}}" aria-labelledby="{{id}}-title" tabindex="0" role="region">
-	<div class="pod-heading" role="presentation">
-		<h1 id="{{id}}-title" aria-hidden="true">{{title}}</h1>
-		<a class="pod-heading--link" href="{{url}}" data-trackable="go-to-link">
-			<i class="module-more-icon more-icon"></i>
-			<span>Go to {{title}}</span>
-		</a>
-	</div>
-	<div role="presentation">
-		<div class="article-group">
-			{{#slice items limit=2}}
-				<div class="article">
-					{{> story-card }}
-				</div>
-			{{/slice}}
+{{#if items}}
+	<div class="flexipod flexipod--topic" data-trackable="topic-{{id}}" aria-labelledby="{{id}}-title" tabindex="0" role="region">
+		<div class="pod-heading" role="presentation">
+			<h1 id="{{id}}-title" aria-hidden="true">{{title}}</h1>
+			<a class="pod-heading--link" href="{{url}}" data-trackable="go-to-link">
+				<i class="module-more-icon more-icon"></i>
+				<span>Go to {{title}}</span>
+			</a>
+		</div>
+		<div role="presentation">
+			<div class="article-group">
+				{{#slice items limit=2}}
+					<div class="article">
+						{{> story-card }}
+					</div>
+				{{/slice}}
+			</div>
 		</div>
 	</div>
-</div>
+{{/if}}

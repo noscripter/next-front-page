@@ -137,6 +137,12 @@ class Backend {
 	videos(id, ttl = 50) {
 		return this.adapters.videos.fetch(id, ttl);
 	}
+
+	list(uuid, ttl = 50) {
+		return this.adapters.capi.list(uuid, ttl)
+			// return 'fake' list, so Collection can resolveType correctly
+			.catch(e => ({ apiUrl: `http://api.ft.com/lists/${uuid}` }));
+	}
 }
 
 // Assemble the beast
@@ -165,7 +171,7 @@ const esBackend = new Backend({fastFT: esFastFT, capi: esCAPI, popular: popular,
 const capiBackend = new Backend({fastFT: capiFastFT, capi: directCAPI, popular: popular, liveblog: liveblog, videos: playlist}, 'direct');
 
 // Mock backend
-const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: popular, liveblog: mockLiveblog, videos: playlist});
+const mockBackend = new Backend({fastFT: esFastFT, capi: mockedCAPI, popular: popular, liveblog: mockLiveblog, videos: playlist}, 'mocked');
 
 export default {
 	Backend: Backend,
