@@ -22,10 +22,10 @@ const fetch = (backend, opts = {}) => {
 };
 
 export default (elastic, mock, opts = {}) => {
-	const fetchEs = fetch(backend(true), opts);
-	const fetchCapi = fetch(backend(false), opts);
+	var fetchEs = fetch(backend(true), opts);
+	var fetchCapi = fetch(backend(false), opts);
 
-	const fetchMock = fetch(backend(true, true), opts);
+	var fetchMock = fetch(backend(true, true), opts);
 
 	return {
 		fetch: (mock ? fetchMock : (elastic ? fetchEs : fetchCapi))

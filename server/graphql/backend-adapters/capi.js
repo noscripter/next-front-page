@@ -51,7 +51,8 @@ class CAPI {
 	}
 
 	list(uuid, ttl = 50) {
-		return this.cache.cached(`${this.type}.lists.${uuid}`, ttl, () => ApiClient.lists({uuid: uuid}));
+		// NOTE: for now, list api is bronze, so handle errors
+		return this.cache.cached(`${this.type}.lists.${uuid}`, ttl, () => ApiClient.lists({uuid: uuid}).catch(e => ({})));
 	}
 }
 

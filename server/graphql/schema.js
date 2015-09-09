@@ -42,7 +42,7 @@ const queryType = new GraphQLObjectType({
 				if (flags.editorsPicksFromList) {
 					return backend.list(sources['editorsPicks'].uuid);
 				} else {
-					return backend.list(sources['editorsPicks'].uuid);
+					return [];
 				}
 			}
 		},
