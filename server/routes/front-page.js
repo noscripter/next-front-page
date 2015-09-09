@@ -5,7 +5,7 @@ import {FastFtFeed} from '../../components/fastft/main';
 import {Feed} from '../../components/feed/main';
 
 export default (region) => {
-	return (req, res) => {
+	return (req, res, next) => {
 		const useElasticSearch = res.locals.flags.elasticSearchItemGet;
 		const mockBackend = res.locals.flags.mockFrontPage;
 
@@ -24,8 +24,6 @@ export default (region) => {
 				region: region
 			});
 		})
-		.catch(it => {
-			console.log(it);
-		});
+		.catch(next);
 	};
 };
