@@ -13,7 +13,7 @@ import articleGenres from 'ft-next-article-genre';
 
 // internal content filtering logic shared for ContentV1 and ContentV2
 const filterContent = ({from, limit, genres, type}, resolveType) => {
-	return (items) => {
+	return (items = []) => {
 		if(genres && genres.length) {
 			items = items.filter(it => genres.indexOf(articleGenres(it.item.metadata, {requestedProp: 'editorialTone'})) > -1);
 		}

@@ -1,5 +1,6 @@
 import fastFT from '../components/fastft/main';
 import headerTabs from './components/header-tabs/main';
+import highlightDomPath from './components/highlight-dom-path/main';
 
 import layout from 'n-layout';
 import setup from 'next-js-setup';
@@ -29,4 +30,5 @@ setup.bootstrap(({flags}) => {
 	}
 	oDate.init();
 	prompts.init();
+	highlightDomPath();
 });
