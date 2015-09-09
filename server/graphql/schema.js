@@ -39,7 +39,7 @@ const queryType = new GraphQLObjectType({
 		editorsPicks: {
 			type: Collection,
 			resolve: (root, _, {backend, flags}) => {
-				if (flags.editorsPicksFromList) {
+				if (flags && flags.editorsPicksFromList) {
 					return backend.list(sources['editorsPicks'].uuid);
 				} else {
 					return [];

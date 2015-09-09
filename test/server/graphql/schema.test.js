@@ -11,7 +11,7 @@ import graphql from '../../../server/lib/graphql';
 describe('GraphQL Schema', () => {
 	describe('#list', () => {
 		it('fetches list', () => {
-			return graphql(false, true)
+			return graphql(false, true, { flags: { editorsPicksFromList: true } })
 				.fetch(`
 					query List {
 						editorsPicks {
