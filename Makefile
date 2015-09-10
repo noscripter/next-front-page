@@ -50,5 +50,5 @@ deploy:
 clean-deploy: clean install build-production deploy
 
 smoke:
-	nbt test-urls ${TEST_HOST}
+	#nbt test-urls ${TEST_HOST}
 	export TEST_URL=${TEST_URL}; nbt nightwatch test/browser/tests/*
