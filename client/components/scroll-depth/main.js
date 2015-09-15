@@ -5,23 +5,23 @@ var throttle = require('../../utils/throttle');
 
 var toArray = nodeList => Array.prototype.slice.call(nodeList);
 
-var track = componentId => {
-	fireTracking('oTracking.event', { category: 'page', action: 'scrolldepth', component: componentId });
+var track = componentPos => fireTracking('oTracking.event', { category: 'page', action: 'scrolldepth', componentPos: componentPos });
+
+var scrollHandlerFactory = () => {
+	var components = toArray(document.querySelectorAll('.flexipod'));
+	var componentsViewed = [];
+	return () => {
+		components.forEach((component, index) => {
+			if (component.getBoundingClientRect().top < window.innerHeight && componentsViewed.indexOf(component) === -1) {
+				track(index + 1);
+				componentsViewed.push(component);
+			}
+		});
+	};
 };
 
-var components;
-var scrollHandler = () => {
-	components.forEach((componentEl, index) => {
-		if (componentEl.getBoundingClientRect().top < window.innerHeight) {
-			track(componentEl.dataset.trackable);
-			components.splice(index, 1);
-		}
-	});
-};
-
-var init = flags => {
-	components = toArray(document.querySelectorAll('.flexipod'));
-	window.addEventListener('scroll', throttle(scrollHandler, 250));
+var init = () => {
+	window.addEventListener('scroll', throttle(scrollHandlerFactory(), 250));
 };
 
 module.exports = {

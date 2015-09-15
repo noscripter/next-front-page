@@ -5,6 +5,9 @@ module.exports = (fn, threshold) => {
 	var timer;
 
 	return () => {
+		if (timer) {
+			return;
+		}
 		var now = +new Date();
 		if (!lastFired || lastFired + threshold < now) {
 			fn.apply(this, arguments);
