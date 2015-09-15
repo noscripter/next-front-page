@@ -3,6 +3,8 @@
 var fireTracking = require('../../utils/fire-tracking');
 var throttle = require('../../utils/throttle');
 
+var toArray = nodeList => Array.prototype.slice.call(nodeList);
+
 var track = componentId => {
 	fireTracking('oTracking.event', { category: 'page', action: 'scrolldepth', component: componentId });
 };
@@ -18,7 +20,7 @@ var scrollHandler = () => {
 };
 
 var init = flags => {
-	components = Array.from(document.querySelectorAll('.flexipod'));
+	components = toArray(document.querySelectorAll('.flexipod'));
 	window.addEventListener('scroll', throttle(scrollHandler, 250));
 };
 
