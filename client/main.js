@@ -6,7 +6,6 @@ import layout from 'n-layout';
 import setup from 'next-js-setup';
 import oDate from 'o-date';
 import nVideo from 'n-video';
-import nAds from 'next-ads-component';
 import prompts from 'n-message-prompts';
 
 setup.bootstrap(({flags}) => {
@@ -25,9 +24,6 @@ setup.bootstrap(({flags}) => {
 		selector: '.js-video'
 	});
 
-	if(flags.get('frontPageAds')) {
-		nAds.init(flags);
-	}
 	oDate.init();
 	prompts.init();
 	highlightDomPath();
