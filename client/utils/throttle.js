@@ -1,5 +1,13 @@
 'use strict';
 
+var requestAnimationFrame = (fn, args) => {
+	if (window.requestAnimationFrame) {
+		window.requestAnimationFrame(() => fn(args));
+	} else {
+		fn(arguments);
+	}
+};
+
 module.exports = (fn, threshold) => {
 	var lastFired;
 	var timer;
@@ -10,13 +18,13 @@ module.exports = (fn, threshold) => {
 		}
 		var now = +new Date();
 		if (!lastFired || lastFired + threshold < now) {
-			fn.apply(this, arguments);
+			requestAnimationFrame(fn, arguments);
 			lastFired = now;
 		} else if (!timer) {
 			var delay = threshold - (now - lastFired);
 			timer = setTimeout(() => {
 				timer = null;
-				fn.apply(this, arguments);
+				requestAnimationFrame(fn, arguments);
 				lastFired = +new Date();
 			}, delay);
 		}
