@@ -2,7 +2,7 @@
 
 var requestAnimationFrame = (fn, args) => {
 	if (window.requestAnimationFrame) {
-		window.requestAnimationFrame(() => fn(args));
+		window.requestAnimationFrame(() => fn.apply(null, args));
 	} else {
 		fn(arguments);
 	}
@@ -12,19 +12,19 @@ module.exports = (fn, threshold) => {
 	var lastFired;
 	var timer;
 
-	return () => {
+	return (...args) => {
 		if (timer) {
 			return;
 		}
 		var now = +new Date();
 		if (!lastFired || lastFired + threshold < now) {
-			requestAnimationFrame(fn, arguments);
+			requestAnimationFrame(fn, args);
 			lastFired = now;
-		} else if (!timer) {
+		} else {
 			var delay = threshold - (now - lastFired);
 			timer = setTimeout(() => {
 				timer = null;
-				requestAnimationFrame(fn, arguments);
+				requestAnimationFrame(fn, args);
 				lastFired = +new Date();
 			}, delay);
 		}

@@ -7,8 +7,7 @@ var toArray = nodeList => Array.prototype.slice.call(nodeList);
 
 var track = componentPos => fireTracking('oTracking.event', { category: 'page', action: 'scrolldepth', componentPos: componentPos });
 
-var scrollHandlerFactory = () => {
-	var components = toArray(document.querySelectorAll('.flexipod'));
+var scrollHandlerFactory = components => {
 	var componentsViewed = [];
 	return () => {
 		components.forEach((component, index) => {
@@ -21,7 +20,8 @@ var scrollHandlerFactory = () => {
 };
 
 var init = () => {
-	window.addEventListener('scroll', throttle(scrollHandlerFactory(), 250));
+	var components = toArray(document.querySelectorAll('.flexipod'));
+	window.addEventListener('scroll', throttle(scrollHandlerFactory(components), 250));
 };
 
 module.exports = {
