@@ -16,10 +16,13 @@
     "graphql": "^0.1.10",
     "next-ft-api-client": "^3.9.0",
     "o-date": "https://github.com/Financial-Times/o-date/archive/1.1.1.tar.gz",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "snyk": "^1.189.0"
   },
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "pre-commit": "make verify",
   "devDependencies": {
@@ -46,5 +49,6 @@
     "sass-loader": "^1.0.3",
     "style-loader": "^0.12.3",
     "webpack": "^1.10.5"
-  }
+  },
+  "snyk": true
 }
